@@ -3,7 +3,7 @@ import { Link } from "react-router";
 export default function NavBar() {
   return (
     <nav className="group fixed top-2 grid grid-cols-2 left-1/2 -translate-x-1/2 w-[calc(100%-12rem)] 
-    bg-gray-500/10 hover:bg-gray-500/50 px-8 py-1 rounded-4xl transition-colors duration-100">
+    bg-gray-500/10 hover:bg-gray-300/90 px-8 py-1 rounded-4xl transition-colors duration-100">
       <Link to="/" className="flex gap-4 items-center justify-self-start">
         <img src="/imgs/HCM.png" className="size-10" />
         <h1 className="text-xl font-semibold text-black/10 group-hover:text-black/80 transition-colors duration-100">Đại Đoàn Kết</h1>
@@ -13,8 +13,8 @@ export default function NavBar() {
           <p className="font-semibold text-black/10 group-hover:text-black/80 transition-colors duration-100">Nguồn</p>
         </Link>
 
-        <Link to="https://github.com/PTPhongKMF/hcm202-daidoanket-sucmanhdantocvietnam-web">
-          <img className="size-7 opacity-10 group-hover:opacity-100" src="/imgs/Octicons-mark-github.svg" />
+        <Link to="https://github.com/PTPhongKMF/hcm202-daidoanket-sucmanhdantocvietnam-web" target="_blank">
+          <img className="size-7 opacity-10 group-hover:opacity-100 transition-colors duration-100" src="/imgs/Octicons-mark-github.svg" />
         </Link>
       </div>
     </nav>
