@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Bot, SendHorizonal, SquareMinus } from "lucide-react";
+import { SendHorizonal, SquareMinus } from "lucide-react";
 import { createPortal } from "react-dom";
 import { Popover, PopoverContent, PopoverTrigger } from "./shadcn/popover";
 import { ScrollArea } from "./shadcn/scroll-area";
@@ -24,7 +24,7 @@ export default function FloatAIChat() {
   });
 
   const [userMsg, setUserMsg] = useState("")
-  const [tempMsg, setTempMsg] = useState();
+  const [tempMsg, setTempMsg] = useState("");
 
   const viewportRef = useRef(null);
 
@@ -45,6 +45,9 @@ export default function FloatAIChat() {
 
     // giả bộ load 3 giây
     await new Promise(resolve => setTimeout(resolve, 3000));
+
+    setTempMsg("dsds");
+    setChatHistory([])
 
     // if (Math.random() >= 0.5) {
     //   setChatHistory()
