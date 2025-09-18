@@ -1,1 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 @import "tailwindcss";
+
+@font-face {
+  font-family: "UTM-Gunslinger";
+  src: url("/fonts/UTM-Gunslinger.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-title: "UTM-Gunslinger", system-ui;
+
+  @keyframes arrowGrow {
+    0%   { opacity: 0; transform: scale(0.2) translateY(-10px); }
+    50%  { opacity: 1; transform: scale(1) translateY(0); }
+    100% { opacity: 0; transform: scale(1) translateY(0); }
+  }
+
+  @keyframes arrowShrink {
+    0%   { opacity: 1; transform: scale(1) translateY(0); }
+    100% { opacity: 0; transform: scale(0.2) translateY(10px); }
+  }
+
+  @keyframes arrowFadeMove {
+    0%   { opacity: 0; transform: translateY(-10px) scale(0.5); }
+    30%  { opacity: 1; transform: translateY(0) scale(1); }
+    70%  { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(10px) scale(0.5); }
+  }
+
+  --animate-arrowFlow: arrowFadeMove 1.5s ease-in-out infinite;
+
+  --animate-arrowGrow: arrowGrow 1.5s ease-in-out infinite;
+  --animate-arrowShrink: arrowShrink 1.5s ease-in-out infinite;
+}
