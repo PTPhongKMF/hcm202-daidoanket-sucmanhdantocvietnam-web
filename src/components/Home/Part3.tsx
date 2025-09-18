@@ -1,7 +1,6 @@
 export default function Part3() {
   const cardData = [
     {
-      id: "a",
       title: "Phải lấy lợi ích chung làm điểm quy tụ",
       subtitle: "đồng thời tôn trọng những lợi ích khác biệt chính đáng",
       color: "#dc2626",
@@ -13,7 +12,6 @@ export default function Part3() {
       ],
     },
     {
-      id: "b",
       title: "Kế thừa truyền thống yêu nước",
       subtitle: "nhân nghĩa – đoàn kết",
       color: "#d97706",
@@ -23,7 +21,6 @@ export default function Part3() {
       ],
     },
     {
-      id: "c",
       title: "Có lòng khoan dung, độ lượng",
       subtitle: "Lời dạy của Chủ tịch Hồ Chí Minh",
       color: "#059669",
@@ -33,7 +30,6 @@ export default function Part3() {
       ],
     },
     {
-      id: "d",
       title: "Có niềm tin vào nhân dân",
       subtitle: "Nhân dân là nền tảng của cách mạng",
       color: "#2563eb",
@@ -49,25 +45,38 @@ export default function Part3() {
 
   return (
     <section
-      className="min-h-screen"
+      className="min-h-screen relative"
       style={{
-        background: "#0f172a",
         fontFamily: '"Poppins", sans-serif',
       }}
     >
+      {/* Background Image with Overlay */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: 'url("/imgs/HCM đoàn kết dân tộc.jpg")',
+        }}
+      ></div>
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.75) 50%, rgba(15, 23, 42, 0.85) 100%)",
+        }}
+      ></div>
       {/* Header */}
-      <div className="text-center py-12">
+      <div className="text-center py-12 relative z-10">
         <h1
           className="text-4xl md:text-5xl font-bold text-white mb-4"
-          style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.3)" }}
+          style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}
         >
-          3. Điều kiện để xây dựng khối đại đoàn kết toàn dân tộc
+          Điều kiện để xây dựng khối đại đoàn kết toàn dân tộc
         </h1>
         <div className="w-32 h-1 bg-gradient-to-r from-red-600 to-yellow-500 mx-auto"></div>
       </div>
 
       {/* Cards Container */}
-      <div className="container mx-auto px-6 pb-12">
+      <div className="container mx-auto px-6 pb-12 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {cardData.map((card) => (
             <div key={card.id} className="card-container">
@@ -203,10 +212,10 @@ export default function Part3() {
 
         .card:hover .product_img {
           transition-delay: 0.75s;
-          top: 25%;
-          left: 75%;
-          width: 200px;
-          height: 200px;
+          top: 50%;
+          left: 80%;
+          width: 180px;
+          height: 180px;
           transform: translate(-50%, -50%) scale(1) rotate(15deg);
         }
 
