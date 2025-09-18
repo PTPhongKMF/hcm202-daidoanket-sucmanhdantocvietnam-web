@@ -2,7 +2,7 @@ import { Link } from "react-router";
 
 export default function NavBar() {
   return (
-    <nav className="group fixed top-2 grid grid-cols-2 left-1/2 -translate-x-1/2 w-[calc(100%-12rem)] 
+    <nav className="group z-50 fixed top-2 grid grid-cols-2 left-1/2 -translate-x-1/2 w-[calc(100%-12rem)] 
     bg-gray-500/10 hover:bg-gray-100/90 hover:shadow-2xl px-8 py-1 rounded-4xl transition-colors duration-100"
     >
       <Link to="/" className="flex gap-4 items-center justify-self-start">
