@@ -1,6 +1,7 @@
 export default function Part3() {
   const cardData = [
     {
+      id: "a",
       title: "Phải lấy lợi ích chung làm điểm quy tụ",
       subtitle: "đồng thời tôn trọng những lợi ích khác biệt chính đáng",
       color: "#dc2626",
@@ -12,6 +13,7 @@ export default function Part3() {
       ],
     },
     {
+      id: "b",
       title: "Kế thừa truyền thống yêu nước",
       subtitle: "nhân nghĩa – đoàn kết",
       color: "#d97706",
@@ -21,6 +23,7 @@ export default function Part3() {
       ],
     },
     {
+      id: "c",
       title: "Có lòng khoan dung, độ lượng",
       subtitle: "Lời dạy của Chủ tịch Hồ Chí Minh",
       color: "#059669",
@@ -30,6 +33,7 @@ export default function Part3() {
       ],
     },
     {
+      id: "d",
       title: "Có niềm tin vào nhân dân",
       subtitle: "Nhân dân là nền tảng của cách mạng",
       color: "#2563eb",
