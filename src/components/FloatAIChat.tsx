@@ -60,7 +60,7 @@ export default function FloatAIChat() {
         <button title="Chat với mình đi"
           onClick={() => { setAnimate(false); setIsOpen(!isOpen) }}
           className={clsx(`flex flex-col justify-center items-center fixed bottom-4 right-4 cursor-pointer border-2 border-amber-400
-          rounded-2xl bg-gray-200/50 p-1 hover:bg-red-500`,
+          rounded-2xl bg-gray-200/50 p-1 hover:bg-red-500 z-[9999]`,
             animate && "animate-bounce")}
         >
           <img src="/imgs/avatar/vietnamball.png"

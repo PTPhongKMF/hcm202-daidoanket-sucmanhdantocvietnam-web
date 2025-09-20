@@ -197,14 +197,16 @@ export default function Quiz() {
           backgroundImage: 'url("/imgs/Quiz đại đoàn kết dân tộc.jpg")',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
+          backgroundRepeat: 'no-repeat',
+          zIndex: 1
         }}
       >
         {/* Background overlay */}
         <div 
-          className="absolute inset-0 z-10"
+          className="absolute inset-0"
           style={{
             background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 58, 138, 0.85) 50%, rgba(15, 23, 42, 0.9) 100%)',
+            zIndex: 2
           }}
         ></div>
         <div className="max-w-4xl mx-auto relative z-40">
@@ -387,14 +389,16 @@ export default function Quiz() {
         backgroundImage: 'url("/imgs/Quiz đại đoàn kết dân tộc.jpg")',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
+        backgroundRepeat: 'no-repeat',
+        zIndex: 1
       }}
     >
       {/* Background overlay */}
       <div 
-        className="absolute inset-0 z-10"
+        className="absolute inset-0"
         style={{
           background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 58, 138, 0.85) 50%, rgba(15, 23, 42, 0.9) 100%)',
+          zIndex: 2
         }}
       ></div>
       <div className="max-w-4xl w-full relative z-40">
