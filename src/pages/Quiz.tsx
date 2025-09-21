@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router';
-import QuizComponent from '../components/Quiz';
-import QuizSelection from '../components/QuizSelection';
+import QuizComponent from '../components/Quiz/Quiz';
+import QuizSelection from '../components/Quiz/QuizSelection';
 
 export default function QuizPage() {
   const [searchParams] = useSearchParams();

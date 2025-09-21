@@ -69,7 +69,12 @@ export default function FloatAIChat() {
       </PopoverTrigger>
 
       <PopoverContent side="left" align="end"
-        className="w-100 h-130 grid grid-rows-[auto_1fr_auto] p-0 border-0">
+        className={clsx(
+          "w-100 h-130 grid grid-rows-[auto_1fr_auto] p-0 border-0",
+          "transition-all duration-300 ease-out",
+          "data-[state=open]:animate-popover-in",
+          "data-[state=closed]:animate-popover-out"
+        )}>
 
         <div className="flex justify-between items-center bg-yellow-500 rounded-t-md p-2">
           <div className="flex gap-4 justify-between items-center w-fit">
@@ -82,7 +87,7 @@ export default function FloatAIChat() {
           </button>
         </div>
 
-        <div className="flex-1 min-h-0 bg-gray-200 pt-2">
+        <div className="flex-1 min-h-0 pt-2 bg-amber-50">
           <ScrollArea viewportRef={viewportRef}
             className="h-full w-full px-2 pt-0 pb-3">
             <div className="h-full w-full grid auto-rows-auto gap-2">
@@ -141,15 +146,15 @@ export default function FloatAIChat() {
           </ScrollArea>
         </div>
 
-        <div className="flex bg-gray-300 justify-between items-center min-h-8 p-2 gap-2 border-t-1 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+        <div className="flex rounded-b-md bg-gray-200 justify-between items-center min-h-8 p-2 gap-2 border-t-1 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
           <Textarea
             value={userMsg}
             onChange={(e) => setUserMsg(e.target.value)}
             placeholder="chat..."
-            className="text-sm w-80 h-10 p-2 bg-gray-100 ring-red-400" />
+            className="text-sm w-80 h-10 p-2 bg-gray-100 ring-blue-400" />
 
           <button disabled={!userMsg}
-            className="p-2 cursor-pointer border-2 border-blue-400 rounded-md hover:bg-cyan-200 disabled:border-gray-400 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+            className="p-2 cursor-pointer border-2 bg-blue-300 border-blue-400 rounded-md hover:bg-cyan-200 disabled:border-gray-400 disabled:cursor-not-allowed disabled:bg-transparent"
             onClick={testHandleSendMsg}>
             <SendHorizonal className={clsx(!userMsg ? "text-gray-400" : "text-blue-700")} />
           </button>
