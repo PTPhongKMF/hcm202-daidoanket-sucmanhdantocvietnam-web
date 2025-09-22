@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { SendHorizonal, SquareMinus } from "lucide-react";
+import { Play, Pause, SendHorizonal, Speech, SquareMinus } from "lucide-react";
 import { createPortal } from "react-dom";
 import { Popover, PopoverContent, PopoverTrigger } from "./shadcn/popover";
 import { ScrollArea } from "./shadcn/scroll-area";
 import ReactMarkdown from 'react-markdown'
 import { Textarea } from "./shadcn/textarea";
 import { clsx } from "clsx";
+import { useAiChatMutation } from "../hooks/useGoogleAI";
 
-interface ChatMessage {
+export interface ChatMessage {
   isBot: boolean;
   msg: string;
   sentAt: Date;
@@ -16,20 +17,96 @@ interface ChatMessage {
 export default function FloatAIChat() {
   const [animate, setAnimate] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const [chatHistory, setChatHistory] = useState(() => {
     const chatHistoryStr = sessionStorage.getItem("chatHistory");
-    return chatHistoryStr ? JSON.parse(chatHistoryStr)?.history as ChatMessage[] : [] as ChatMessage[];
+    return chatHistoryStr ? JSON.parse(chatHistoryStr) as ChatMessage[] : [] as ChatMessage[];
   });
 
   const [userMsg, setUserMsg] = useState("")
-  const [tempMsg, setTempMsg] = useState("");
 
   const viewportRef = useRef(null);
 
+  // Speech synthesis state
+  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const [speakingIndex, setSpeakingIndex] = useState<number | null>(null);
+  const [isPaused, setIsPaused] = useState(false);
+
+  // Cleanup any speaking on unmount
   useEffect(() => {
-    const chatHistoryStr = JSON.stringify({ history: chatHistory });
+    return () => {
+      try {
+        if (typeof window !== "undefined" && "speechSynthesis" in window) {
+          window.speechSynthesis.cancel();
+        }
+      } catch {
+        // ignore cleanup errors
+      }
+    };
+  }, []);
+
+  function getVietnameseVoice(): SpeechSynthesisVoice | null {
+    if (!(typeof window !== "undefined" && "speechSynthesis" in window)) return null;
+    const voices = window.speechSynthesis.getVoices();
+    const viCandidates = voices.filter(v => v.lang?.toLowerCase().startsWith("vi"));
+    if (viCandidates.length > 0) return viCandidates[0];
+    return null;
+  };
+
+  const speakText = (index: number, text: string) => {
+    if (!(typeof window !== "undefined" && "speechSynthesis" in window) || typeof window.SpeechSynthesisUtterance === "undefined") {
+      alert("Trình duyệt của bạn không hỗ trợ đọc văn bản.");
+      return;
+    }
+
+    const synth = window.speechSynthesis;
+
+    // If clicking same bubble, toggle using our own state for reliability
+    if (speakingIndex === index) {
+      if (isPaused) {
+        try { synth.resume(); } catch { /* ignore */ }
+        setIsPaused(false);
+        setTimeout(() => {
+          if (synth.paused) {
+            try { synth.resume(); } catch { /* ignore */ }
+          }
+        }, 0);
+      } else {
+        try { synth.pause(); } catch { /* ignore */ }
+        setIsPaused(true);
+      }
+      return;
+    }
+
+    // If switching to another bubble, stop previous
+    if (synth.speaking || synth.paused) {
+      synth.cancel();
+    }
+
+    const voice = getVietnameseVoice();
+    if (!voice) {
+      alert("Trình duyệt của bạn không hỗ trợ đọc văn bản.");
+      return;
+    }
+    const ut = new SpeechSynthesisUtterance(text);
+    ut.voice = voice;
+    ut.lang = voice?.lang ?? "vi-VN";
+    ut.rate = 1;
+    ut.onpause = () => setIsPaused(true);
+    ut.onresume = () => setIsPaused(false);
+    ut.onend = () => {
+      setSpeakingIndex(null);
+      setIsPaused(false);
+      utteranceRef.current = null;
+    };
+    utteranceRef.current = ut;
+    setSpeakingIndex(index);
+    setIsPaused(false);
+    synth.speak(ut);
+  };
+
+  useEffect(() => {
+    const chatHistoryStr = JSON.stringify(chatHistory);
     sessionStorage.setItem("chatHistory", chatHistoryStr);
   }, [chatHistory])
 
@@ -38,21 +115,9 @@ export default function FloatAIChat() {
       const scrollArea = viewportRef.current as HTMLDivElement;
       scrollArea.scroll({ top: scrollArea.scrollHeight, behavior: "smooth" });
     }
-  }, [chatHistory, tempMsg]);
+  }, [chatHistory]);
 
-  async function testHandleSendMsg() {
-    setIsLoading(true);
-
-    // giả bộ load 3 giây
-    await new Promise(resolve => setTimeout(resolve, 3000));
-
-    setTempMsg("dsds");
-    setChatHistory([])
-
-    // if (Math.random() >= 0.5) {
-    //   setChatHistory()
-    // }
-  }
+  const aiChat = useAiChatMutation();
 
   return createPortal(
     <Popover open={isOpen}>
@@ -70,7 +135,7 @@ export default function FloatAIChat() {
 
       <PopoverContent side="left" align="end"
         className={clsx(
-          "w-100 h-130 grid grid-rows-[auto_1fr_auto] p-0 border-0",
+          "w-100 h-160 grid grid-rows-[auto_1fr_auto] p-0 border-0",
           "transition-all duration-300 ease-out",
           "data-[state=open]:animate-popover-in",
           "data-[state=closed]:animate-popover-out"
@@ -78,7 +143,7 @@ export default function FloatAIChat() {
 
         <div className="flex justify-between items-center bg-yellow-500 rounded-t-md p-2">
           <div className="flex gap-4 justify-between items-center w-fit">
-            <h3 className="text-xl font-semibold text-white">Chat với mình</h3>
+            <h3 className="text-xl font-semibold text-white">DoanKetBot</h3>
             <div className="size-3 rounded-full bg-green-500 mt-1"></div>
           </div>
 
@@ -95,20 +160,40 @@ export default function FloatAIChat() {
               <div className="flex justify-start items-start gap-1 pe-2">
                 <img src="/imgs/avatar/vietnamball.png" alt="Bot Image" className="size-10 rounded-full object-cover border-2 border-gray-300" />
                 <div className="text-xs rounded-lg p-2 bg-gray-300 mt-1">
-                  Có thắc mắc gì về chủ đề bọn mình sao? Đừng ngần ngại hỏi!
+                  Xin chào! Tôi là DoanKetBot – trợ lý ảo giúp bạn học nhanh về tư tưởng Hồ Chí Minh.<br />
+                  Bạn muốn tìm hiểu phần nào? (Ví dụ: “Vai trò của đại đoàn kết”, “Điều kiện để xây dựng khối đoàn kết”)
                 </div>
               </div>
 
-              {chatHistory ? (
+              {chatHistory && (
                 chatHistory.map((msg, index) => {
                   if (msg.isBot) {
                     return (
                       <div key={index} className="flex justify-start items-start gap-1 pe-2">
                         <img src="/imgs/avatar/vietnamball.png" alt="Bot Image" className="size-10 rounded-full object-cover border-2 border-gray-300" />
-                        <div className="text-xs rounded-lg p-2 bg-gray-300 mt-1">
-                          <ReactMarkdown>
-                            {msg.msg}
-                          </ReactMarkdown>
+
+                        <div className="flex flex-col">
+                          <button onClick={() => speakText(index, msg.msg)} className="group flex justify-start items-center gap-1 ps-2 cursor-pointer w-fit" title="Đọc nội dung">
+                            <Speech className={clsx(
+                              "group-hover:text-green-500",
+                              speakingIndex === index && !isPaused && "group-hover:text-orange-500",
+                              speakingIndex === index && "text-blue-500"
+                            )}/>
+                            {speakingIndex === index && !isPaused ? (
+                              <Pause className="group-hover:text-orange-500 text-blue-500"/>
+                            ) : (
+                              <Play className={clsx(
+                                "group-hover:text-green-500",
+                                speakingIndex === index && isPaused && "text-blue-500"
+                              )}/>
+                            )}
+                          </button>
+
+                          <div className="text-xs rounded-lg p-2 bg-gray-300 mt-1">
+                            <ReactMarkdown>
+                              {msg.msg}
+                            </ReactMarkdown>
+                          </div>
                         </div>
                       </div>
                     );
@@ -123,19 +208,17 @@ export default function FloatAIChat() {
                     );
                   }
                 })
-              ) : (
-                <p className="italic flex justify-center items-center text-gray-500">trống</p>
               )}
 
-              {isLoading && (
+              {aiChat.isPending && (
                 <div className="flex justify-start items-start gap-1 pe-2">
                   <img src="/imgs/avatar/vietnamball.png" alt="Bot Image" className="size-10 rounded-full object-cover border-2 border-gray-300" />
                   <div className="text-xs rounded-lg p-2 bg-gray-300 mt-1 flex justify-between items-center gap-4">
                     Xíu nhen
                     <span className="flex justify-center items-center gap-2 h-4">
-                      <span className="size-2 bg-red-600 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
-                      <span className="size-2 bg-yellow-400 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
-                      <span className="size-2 bg-red-600 rounded-full animate-bounce"></span>
+                      <span className="size-1 bg-red-600 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
+                      <span className="size-1 bg-yellow-400 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
+                      <span className="size-1 bg-red-600 rounded-full animate-bounce"></span>
                     </span>
                   </div>
                 </div>
@@ -155,7 +238,7 @@ export default function FloatAIChat() {
 
           <button disabled={!userMsg}
             className="p-2 cursor-pointer border-2 bg-blue-300 border-blue-400 rounded-md hover:bg-cyan-200 disabled:border-gray-400 disabled:cursor-not-allowed disabled:bg-transparent"
-            onClick={testHandleSendMsg}>
+            onClick={() => { setUserMsg(""); aiChat.mutate({ userChat: userMsg, chatHistory, setChatHistory }) }}>
             <SendHorizonal className={clsx(!userMsg ? "text-gray-400" : "text-blue-700")} />
           </button>
         </div>

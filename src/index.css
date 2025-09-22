@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 @import "tailwindcss";
+@import "tw-animate-css";
 
 @font-face {
   font-family: "UTM-Gunslinger";
@@ -12,7 +12,23 @@
 @theme {
   --font-title: "UTM-Gunslinger", system-ui;
 
-  @keyframes arrowGrow {
+  --animate-arrowFlow: arrowFadeMove 1.5s ease-in-out infinite;
+
+  --animate-arrowGrow: arrowGrow 1.5s ease-in-out infinite;
+  --animate-arrowShrink: arrowShrink 1.5s ease-in-out infinite;
+
+  --animate-popover-in: popover-in 0.25s ease-out forwards;
+  --animate-popover-out: popover-out 0.2s ease-in forwards;
+
+  --animate-fallDown: fallDown 1.2s ease-out forwards;
+  --animate-slideLeft: slideLeft 1.2s ease-out forwards;
+  --animate-slideRight: slideRight 1.2s ease-out forwards;
+  --animate-riseUp: riseUp 1.2s ease-out forwards;
+
+  --animate-wiggle: wiggle 0.8s ease-in-out infinite;
+}
+
+@keyframes arrowGrow {
     0%   { opacity: 0; transform: scale(0.2) translateY(-10px); }
     50%  { opacity: 1; transform: scale(1) translateY(0); }
     100% { opacity: 0; transform: scale(1) translateY(0); }
@@ -30,12 +46,7 @@
     100% { opacity: 0; transform: translateY(10px) scale(0.5); }
   }
 
-  --animate-arrowFlow: arrowFadeMove 1.5s ease-in-out infinite;
-
-  --animate-arrowGrow: arrowGrow 1.5s ease-in-out infinite;
-  --animate-arrowShrink: arrowShrink 1.5s ease-in-out infinite;
-
-  @keyframes popover-in {
+@keyframes popover-in {
     0% { opacity: 0; transform: translateY(10px) scale(0.95); }
     100% { opacity: 1; transform: translateY(0) scale(1); }
   }
@@ -45,6 +56,35 @@
     100% { opacity: 0; transform: translateY(10px) scale(0.95); }
   }
 
-  --animate-popover-in: popover-in 0.25s ease-out forwards;
-  --animate-popover-out: popover-out 0.2s ease-in forwards;
+@keyframes fallDown {
+  0%   { transform: translateY(-200%) scaleY(1.1); opacity: 0; }
+  60%  { transform: translateY(20%) scaleY(0.95); opacity: 1; }
+  80%  { transform: translateY(-10%) scaleY(1.05); }
+  100% { transform: translateY(0) scaleY(1); }
+}
+
+@keyframes slideLeft {
+  0%   { transform: translateX(-200%) scaleX(1.1); opacity: 0; }
+  60%  { transform: translateX(10%) scaleX(0.95); opacity: 1; }
+  80%  { transform: translateX(-5%) scaleX(1.05); }
+  100% { transform: translateX(0) scaleX(1); }
+}
+
+@keyframes slideRight {
+  0%   { transform: translateX(200%) scaleX(1.1); opacity: 0; }
+  60%  { transform: translateX(-10%) scaleX(0.95); opacity: 1; }
+  80%  { transform: translateX(5%) scaleX(1.05); }
+  100% { transform: translateX(0) scaleX(1); }
+}
+
+@keyframes riseUp {
+  0%   { transform: translateY(200%) scaleY(1.1); opacity: 0; }
+  60%  { transform: translateY(-10%) scaleY(0.95); opacity: 1; }
+  80%  { transform: translateY(5%) scaleY(1.05); }
+  100% { transform: translateY(0) scaleY(1); }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-3deg); }
+  50%      { transform: rotate(3deg); }
 }

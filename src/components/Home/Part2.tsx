@@ -1,6 +1,6 @@
 
 export default function Part2() {
   return (
-    <div>Part2</div>
+    <div className="h-[50svh]">Part2</div>
   )
 }

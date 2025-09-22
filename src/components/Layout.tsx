@@ -7,7 +7,7 @@ export default function Layout() {
     <>
       <NavBar />
 
-      <main className='size-full'>
+      <main className='size-full bg-amber-50'>
         <Outlet />
       </main>
 
