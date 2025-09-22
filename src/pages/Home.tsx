@@ -6,7 +6,7 @@ import Part3 from "../components/Home/Part3";
 import Part4 from "../components/Home/Part4";
 import Part5 from "../components/Home/Part5";
 import Title from "../components/Home/Title";
-import TOC, { type TocSection } from "../components/toc";
+import TOC, { type TocSection } from "../components/TOC";
 
 export default function Home() {
   const sections: TocSection[] = useMemo(() => ([
