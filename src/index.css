@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
+
 @import "tailwindcss";
 @import "tw-animate-css";
+@plugin "@tailwindcss/typography";
 
 @font-face {
   font-family: "UTM-Gunslinger";
@@ -11,6 +14,7 @@
 
 @theme {
   --font-title: "UTM-Gunslinger", system-ui;
+  --font-heading: "EB Garamond", system-ui;
 
   --animate-arrowFlow: arrowFadeMove 1.5s ease-in-out infinite;
 
@@ -26,6 +30,8 @@
   --animate-riseUp: riseUp 1.2s ease-out forwards;
 
   --animate-wiggle: wiggle 0.8s ease-in-out infinite;
+
+  --animate-swipeLeftHint: swipeLeftHint 1.8s ease-in-out infinite;
 }
 
 @keyframes arrowGrow {
@@ -87,4 +93,12 @@
 @keyframes wiggle {
   0%, 100% { transform: rotate(-3deg); }
   50%      { transform: rotate(3deg); }
+}
+
+@keyframes swipeLeftHint {
+  0%   { opacity: 0; transform: translateX(0) translateY(0) scale(0.98); }
+  15%  { opacity: 0.9; transform: translateX(0) translateY(0) scale(1); }
+  60%  { opacity: 1; transform: translateX(-26px) translateY(-6px) scale(1); }
+  80%  { opacity: 0.85; transform: translateX(-30px) translateY(-6px) scale(0.99); }
+  100% { opacity: 0; transform: translateX(0) translateY(0) scale(0.98); }
 }

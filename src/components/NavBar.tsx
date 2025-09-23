@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import GithubIcon from "../assets/Octicons-mark-github.svg?react"
 
 export default function NavBar() {
   return (
@@ -29,10 +30,7 @@ export default function NavBar() {
           to="https://github.com/PTPhongKMF/hcm202-daidoanket-sucmanhdantocvietnam-web"
           target="_blank"
         >
-          <img
-            className="size-7 opacity-10 group-hover:opacity-100 transition-colors duration-100"
-            src="/imgs/Octicons-mark-github.svg"
-          />
+          <GithubIcon className="size-7 text-black/10 group-hover:text-black hover:text-red-700 transition-colors duration-100"/>
         </Link>
       </div>
     </nav>

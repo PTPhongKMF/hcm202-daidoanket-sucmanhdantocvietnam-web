@@ -189,7 +189,7 @@ export default function FloatAIChat() {
                             )}
                           </button>
 
-                          <div className="text-xs rounded-lg p-2 bg-gray-300 mt-1">
+                          <div className="text-xs rounded-lg p-2 bg-gray-300 mt-1 prose">
                             <ReactMarkdown>
                               {msg.msg}
                             </ReactMarkdown>

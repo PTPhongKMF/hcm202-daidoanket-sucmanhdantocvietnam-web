@@ -29,11 +29,6 @@ export default function Title() {
 
           <img src="/imgs/vn-ctr.png"
             className={clsx("z-50 absolute top-26 left-10 rotate-12", !loaded ? "animate-fallDown" : "hover:animate-spin")} />
-
-          <button className={clsx("w-70 h-auto z-50 overflow-hidden rounded-4xl absolute top-26 right-4", !loaded && "animate-slideRight")}>
-            <img src="/imgs/bacho.webp" className={clsx("transform scale-x-[-1] cursor-pointer")} />
-          </button>
-
         </div>
 
 

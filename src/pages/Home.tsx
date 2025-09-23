@@ -11,16 +11,15 @@ import TOC, { type TocSection } from "../components/TOC";
 export default function Home() {
   const sections: TocSection[] = useMemo(() => ([
     { id: "part-title", title: "Tiêu đề" },
-    { id: "part-1", title: "Phần 1" },
-    { id: "part-2", title: "Phần 2" },
-    { id: "part-3", title: "Phần 3" },
-    { id: "part-4", title: "Phần 4" },
-    { id: "part-5", title: "Phần 5" },
+    { id: "part-1", title: "1. Vai trò của đại đoàn kết toàn dân tộc" },
+    { id: "part-2", title: "2. Lực lượng của khối đại đoàn kết toàn dân tộc" },
+    { id: "part-3", title: "3. Điều kiện để xây dựng khối đại đoàn kết toàn dân tộc" },
+    { id: "part-4", title: "4. Hình thức, nguyên tắc tổ chức của khối đại đoàn kết toàn dân tộc – Mặt trận dân tộc thống nhất" },
+    { id: "part-5", title: "5. Phương thức xây dựng khối đại đoàn kết dân tộc" },
   ]), []);
 
   const [activeId, setActiveId] = useState<string | null>(null);
 
-  // Refs to each section container
   const titleRef = useRef<HTMLDivElement>(null);
   const part1Ref = useRef<HTMLDivElement>(null);
   const part2Ref = useRef<HTMLDivElement>(null);
@@ -118,6 +117,7 @@ export default function Home() {
     </>
   )
 }
+
 type SectionProps = React.PropsWithChildren<{ id: string } & React.HTMLAttributes<HTMLDivElement>>;
 
 const Section = React.forwardRef<HTMLDivElement, SectionProps>(function Section({ id, children, className, ...rest }, ref) {
