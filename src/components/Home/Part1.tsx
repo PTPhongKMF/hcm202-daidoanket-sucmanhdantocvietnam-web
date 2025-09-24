@@ -5,7 +5,7 @@ import ReactMarkdown from "react-markdown";
 import { Hand } from "lucide-react";
 import clsx from "clsx";
 import { TypingAnimation } from "../magicui/TypingAnimation";
-import { Lens } from "../../aceternityui/lens";
+import { Lens } from "../aceternityui/lens";
 
 const texts = [
   `
