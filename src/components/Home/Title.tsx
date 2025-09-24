@@ -30,14 +30,17 @@ export default function Title() {
           <img src="/imgs/vn-ctr.png"
             className={clsx("z-50 absolute top-26 left-10 rotate-12", !loaded ? "animate-fallDown" : "hover:animate-spin")} />
         </div>
+      </div>
+
+      <div className="relative flex flex-col py-6 justify-center items-center bg-gradient-to-br from-red-400/60 to-yellow-400/60">
+        <ChevronDownIcon className="size-10 animate-arrowFlow text-white font-bold" />
+        <ChevronDownIcon className="size-10 animate-arrowFlow text-white font-bold" />
+        <ChevronDownIcon className="size-10 animate-arrowFlow text-white font-bold" />
+
+        <div className="pointer-events-none absolute top-0 size-full bg-gradient-to-b from-transparent from-50% to-gray-50" />
+      </div>
 
 
-      </div>
-      <div className="flex flex-col py-6 justify-center items-center bg-linear-to-br from-red-400/60 to-yellow-400/60">
-        <ChevronDownIcon className="size-10 animate-arrowFlow text-white font-bold" />
-        <ChevronDownIcon className="size-10 animate-arrowFlow text-white font-bold" />
-        <ChevronDownIcon className="size-10 animate-arrowFlow text-white font-bold" />
-      </div>
     </>
   )
 }

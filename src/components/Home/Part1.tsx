@@ -219,19 +219,20 @@ export default function Part1() {
   }
 
   return (
-    <div className="w-full h-fit bg-[url(/imgs/part1-2.jpg)] grid auto-rows-auto">
-      <div className="w-full h-210 p-10 bg-gray-800/50">
-        <h3 className="text-white font-bold text-5xl drop-shadow-2xl font-heading mb-16">
+    <div className="w-full h-fit bg-[url(/imgs/hcm.jpg)] bg-cover grid auto-rows-auto relative">
+      <div className="z-0 absolute size-full top-0 bg-linear-to-b from-gray-50 from-[0.1%] via-transparent to-gray-50 to-99%" />
+
+      <div className="w-full h-210 p-10 bg-amber-100/50">
+        <h3 className="relative uppercase text-white font-heading text-6xl mb-16 z-10">
           <TypingAnimation
             startOnView={true}
             duration={70}
-            className="text-white font-heading font-bold text-6xl drop-shadow-2xl"
+            className="text-white font-heading text-6xl z-90 [text-shadow:-3px_2px_0px_black] drop-shadow-lg drop-shadow-black"
           >
             Vai trò của đại đoàn kết toàn dân tộc
           </TypingAnimation>
         </h3>
 
-        {/* wrapper — size controlled by className passed below */}
         <div
           className="relative inline-block ms-30"
           style={{ touchAction: "none" }}
@@ -387,6 +388,7 @@ export default function Part1() {
           </Lens>
         </div>
       </div>
+
     </div>
   );
 }

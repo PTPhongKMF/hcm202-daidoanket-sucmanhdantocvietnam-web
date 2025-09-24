@@ -107,11 +107,13 @@ export default function Home() {
   return (
     <>
       <Section id="part-title" ref={titleRef}><Title /></Section>
-      <Section id="part-1" ref={part1Ref}><Part1 /></Section>
-      <Section id="part-2" ref={part2Ref}><Part2 /></Section>
-      <Section id="part-3" ref={part3Ref}><Part3 /></Section>
-      <Section id="part-4" ref={part4Ref}><Part4 /></Section>
-      <Section id="part-5" ref={part5Ref}><Part5 /></Section>
+      <div className="mt-20 flex flex-col gap-10">
+        <Section id="part-1" ref={part1Ref}><Part1 /></Section>
+        <Section id="part-2" ref={part2Ref}><Part2 /></Section>
+        <Section id="part-3" ref={part3Ref}><Part3 /></Section>
+        <Section id="part-4" ref={part4Ref}><Part4 /></Section>
+        <Section id="part-5" ref={part5Ref}><Part5 /></Section>
+      </div>
 
       <TOC sections={sections} activeId={activeId} onSelect={handleSelect} />
     </>
@@ -154,8 +156,8 @@ const Section = React.forwardRef<HTMLDivElement, SectionProps>(function Section(
   const preClass = variant === "slide-left"
     ? "opacity-0 -translate-x-6"
     : variant === "slide-right"
-    ? "opacity-0 translate-x-6"
-    : "opacity-0 scale-95";
+      ? "opacity-0 translate-x-6"
+      : "opacity-0 scale-95";
   const doneClass = "opacity-100 translate-x-0 scale-100";
 
   return (
