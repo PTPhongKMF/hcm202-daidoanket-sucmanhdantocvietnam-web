@@ -5,9 +5,15 @@ import { TypingAnimation } from "../magicui/TypingAnimation";
 
 export default function Part3() {
   const [isVisible, setIsVisible] = useState(false);
+  const [cardsVisible, setCardsVisible] = useState(false);
   
   useEffect(() => {
     setIsVisible(true);
+    // Delay card animations
+    const timer = setTimeout(() => {
+      setCardsVisible(true);
+    }, 1000);
+    return () => clearTimeout(timer);
   }, []);
 
   const cardData = [
@@ -58,10 +64,15 @@ export default function Part3() {
     },
   ];
 
-  const renderCard = (card: (typeof cardData)[number]) => (
+  const renderCard = (card: (typeof cardData)[number], index: number) => (
     <div
-      className="card group"
-      style={{ "--clr": card.color } as React.CSSProperties}
+      className={`card group transition-all duration-700 ${
+        cardsVisible ? 'animate-slide-in' : 'opacity-0 translate-y-8'
+      }`}
+      style={{ 
+        "--clr": card.color,
+        animationDelay: `${index * 200}ms`
+      } as React.CSSProperties}
     >
       <div className="circle">
         <img src={card.image} alt={card.title} className="logo" />
@@ -99,9 +110,13 @@ export default function Part3() {
         <div className="mt-4">
           <Link
             to={`/part3/${card.id}`}
-            className="inline-block px-4 py-2 rounded-md bg-red-600 hover:bg-red-700 text-white font-semibold shadow-md"
+            className="modern-btn group/btn relative overflow-hidden"
           >
-            Xem thêm
+            <span className="relative z-10 flex items-center gap-2">
+              🔎 Khám phá chi tiết
+            </span>
+            <div className="absolute inset-0 bg-gradient-to-r from-red-500 via-red-600 to-red-700 transition-transform duration-300 group-hover/btn:scale-105"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-red-600 via-red-700 to-red-800 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
           </Link>
         </div>
       </div>
@@ -115,14 +130,16 @@ export default function Part3() {
         fontFamily: '"Poppins", sans-serif',
       }}
     >
-      {/* Background Image with Overlay */}
+      {/* Background Image with Enhanced Overlay */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: 'url("/imgs/HCM đoàn kết dân tộc.jpg")',
         }}
       ></div>
-      <div className="absolute inset-0 animated-bg"></div>
+      <div className="absolute inset-0 animated-bg-enhanced"></div>
+      {/* Additional patriotic gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-red-900/20 via-transparent to-blue-900/20"></div>
       {/* Header */}
       <div className="text-center py-12 relative z-10">
         <h1 className="flex justify-center items-center relative uppercase text-white font-heading text-4xl md:text-5xl mb-4 min-h-[120px] z-10">
@@ -169,16 +186,24 @@ export default function Part3() {
             <defs>
               <linearGradient id="dashGlow" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stopColor="#ef4444" />
+                <stop offset="50%" stopColor="#f97316" />
                 <stop offset="100%" stopColor="#b91c1c" />
               </linearGradient>
               <filter id="shadow">
                 <feDropShadow
                   dx="0"
                   dy="0"
-                  stdDeviation="0.6"
+                  stdDeviation="1"
                   floodColor="#ef4444"
-                  floodOpacity="0.9"
+                  floodOpacity="0.8"
                 />
+              </filter>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                <feMerge> 
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
               </filter>
             </defs>
             {/* Five-point star path connecting nodes: A, Meaning, D, B, C, back to A */}
@@ -193,11 +218,21 @@ export default function Part3() {
               strokeDasharray="2 3"
               filter="url(#shadow)"
             ></path>
-            {/* Moving red dot */}
-            <circle r="1.6" fill="#ef4444">
-              <animateMotion dur="6s" repeatCount="indefinite" rotate="auto">
+            {/* Moving glow dot with pulse */}
+            <circle r="2" fill="#ef4444" filter="url(#glow)">
+              <animateMotion dur="8s" repeatCount="indefinite" rotate="auto">
                 <mpath href="#starPath" />
               </animateMotion>
+              <animate attributeName="r" values="2;3;2" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
+            </circle>
+            
+            {/* Additional sparkle effects */}
+            <circle r="1" fill="#fbbf24" opacity="0.6">
+              <animateMotion dur="8s" repeatCount="indefinite" rotate="auto" begin="1s">
+                <mpath href="#starPath" />
+              </animateMotion>
+              <animate attributeName="opacity" values="0;0.8;0" dur="1.5s" repeatCount="indefinite"/>
             </circle>
             {/* Dash offset animation */}
             <animate
@@ -212,22 +247,25 @@ export default function Part3() {
 
           {/* Nodes positioned to match the star points (percent-based, responsive) */}
           <div className="node node-a" style={{ left: "12%", top: "18%" }}>
-            {renderCard(cardData[0])}
+            {renderCard(cardData[0], 0)}
           </div>
           <div className="node node-mean" style={{ left: "50%", top: "6%" }}>
-            <div className="meaning-card">
+            <div className={`meaning-card glassmorphism ${cardsVisible ? 'animate-bounce-in' : 'opacity-0 scale-75'}`}>
+              <div className="flex items-center justify-center mb-2">
+                <span className="text-2xl">📘</span>
+              </div>
               <h3>Ôn tập kiến thức</h3>
               <p>Củng cố kiến thức nắm bắt tư tưởng</p>
             </div>
           </div>
           <div className="node node-d" style={{ left: "88%", top: "18%" }}>
-            {renderCard(cardData[3])}
+            {renderCard(cardData[3], 1)}
           </div>
           <div className="node node-b" style={{ left: "30%", top: "70%" }}>
-            {renderCard(cardData[1])}
+            {renderCard(cardData[1], 2)}
           </div>
           <div className="node node-c" style={{ left: "70%", top: "70%" }}>
-            {renderCard(cardData[2])}
+            {renderCard(cardData[2], 3)}
           </div>
         </div>
       </div>
@@ -274,10 +312,50 @@ export default function Part3() {
           }
         }
         
-        .animated-bg {
-          background: linear-gradient(-45deg, rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.9));
+        .animated-bg-enhanced {
+          background: linear-gradient(-45deg, 
+            rgba(15, 23, 42, 0.85), 
+            rgba(30, 41, 59, 0.75), 
+            rgba(15, 23, 42, 0.85), 
+            rgba(30, 41, 59, 0.9));
           background-size: 400% 400%;
           animation: backgroundPulse 8s ease-in-out infinite;
+        }
+
+        /* Enhanced animations */
+        @keyframes slideInFromDirection {
+          0% {
+            opacity: 0;
+            transform: scale(0.8) translateY(30px);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+          }
+        }
+
+        @keyframes bounceIn {
+          0% {
+            opacity: 0;
+            transform: scale(0.3) translateY(-50px);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1.1) translateY(0);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+          }
+        }
+
+        .animate-slide-in {
+          animation: slideInFromDirection 0.8s ease-out forwards;
+        }
+
+        .animate-bounce-in {
+          animation: bounceIn 1.2s ease-out forwards;
+          animation-delay: 0.5s;
         }
         
         .path-stage { max-width: 1100px; }
@@ -285,16 +363,41 @@ export default function Part3() {
         .meaning-card {
           width: 280px;
           background: rgba(255,255,255,0.1);
-          backdrop-filter: blur(2px);
-          border-radius: 16px;
-          border: 2px dashed #ef4444;
-          box-shadow: 0 0 20px rgba(239,68,68,0.35);
-          padding: 16px;
+          backdrop-filter: blur(12px);
+          border-radius: 20px;
+          border: 2px solid rgba(239,68,68,0.3);
+          box-shadow: 0 8px 32px rgba(239,68,68,0.25), 
+                      0 0 0 1px rgba(255,255,255,0.1) inset;
+          padding: 20px;
           color: #fff;
           text-align: center;
+          transition: all 0.3s ease;
         }
-        .meaning-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 6px; color: #ef4444; }
-        .meaning-card p { font-size: .95rem; color: #e5e7eb; }
+        
+        .meaning-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 12px 40px rgba(239,68,68,0.35), 
+                      0 0 0 1px rgba(255,255,255,0.2) inset;
+        }
+        
+        .glassmorphism {
+          background: rgba(255, 255, 255, 0.15);
+          backdrop-filter: blur(15px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .meaning-card h3 { 
+          font-size: 1.25rem; 
+          font-weight: 700; 
+          margin-bottom: 8px; 
+          color: #fbbf24; 
+          text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .meaning-card p { 
+          font-size: .95rem; 
+          color: #f3f4f6; 
+          text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
 
         .card {
           position: relative;
@@ -335,10 +438,11 @@ export default function Part3() {
           height: 100%;
           background: #191919;
           border: 8px solid var(--clr);
-          border-radius: 20px;
+          border-radius: 24px;
           transition: 0.5s, background 0.5s;
           transition-delay: 0.75s, 1s;
-          filter: drop-shadow(0 0 10px var(--clr)) drop-shadow(0 0 60px var(--clr));
+          filter: drop-shadow(0 0 15px var(--clr)) drop-shadow(0 0 80px var(--clr));
+          box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         .card:hover .circle::before {
@@ -482,6 +586,41 @@ export default function Part3() {
         .card .content .scroll-content::-webkit-scrollbar-thumb {
           background: var(--clr);
           border-radius: 4px;
+        }
+
+        /* Modern button styling */
+        .modern-btn {
+          display: inline-block;
+          padding: 12px 24px;
+          border-radius: 12px;
+          text-decoration: none;
+          color: white;
+          font-weight: 600;
+          font-size: 0.9rem;
+          position: relative;
+          overflow: hidden;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .modern-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+        }
+
+        .modern-btn::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+          transition: left 0.5s;
+        }
+
+        .modern-btn:hover::before {
+          left: 100%;
         }
 
         @media (max-width: 1024px) {
