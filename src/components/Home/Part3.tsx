@@ -1,10 +1,12 @@
+import { Link } from "react-router";
+
 export default function Part3() {
   const cardData = [
     {
       id: "a",
       title: "Phải lấy lợi ích chung làm điểm quy tụ",
       subtitle: "đồng thời tôn trọng những lợi ích khác biệt chính đáng",
-      color: "#dc2626",
+      color: "#FA8072",
       image: "/imgs/Part3/Phải lấy lợi ích chung làm điểm quy tụ.jpg",
       content: [
         "Phải xử lý tốt quan hệ lợi ích, tìm ra điểm tương đồng và lợi ích chung.",
@@ -16,7 +18,7 @@ export default function Part3() {
       id: "b",
       title: "Kế thừa truyền thống yêu nước",
       subtitle: "nhân nghĩa – đoàn kết",
-      color: "#d97706",
+      color: "#E49B0F",
       image: "/imgs/Part3/Kế thừa truyền thống yêu nước.jpg",
       content: [
         "Yêu nước – nhân nghĩa – đoàn kết là cội nguồn sức mạnh giúp dân tộc vượt qua thiên tai, địch họa và giành thắng lợi.",
@@ -36,7 +38,7 @@ export default function Part3() {
       id: "d",
       title: "Có niềm tin vào nhân dân",
       subtitle: "Nhân dân là nền tảng của cách mạng",
-      color: "#2563eb",
+      color: "#6495ED",
       image: "/imgs/Part3/Có niềm tin vào nhân dân.jpg",
       content: [
         "Nhân dân là nền tảng, gốc rễ, chủ thể của mặt trận.",
@@ -46,6 +48,56 @@ export default function Part3() {
       ],
     },
   ];
+
+  const renderCard = (card: (typeof cardData)[number]) => (
+    <div
+      className="card group"
+      style={{ "--clr": card.color } as React.CSSProperties}
+    >
+      <div className="circle">
+        <img src={card.image} alt={card.title} className="logo" />
+      </div>
+
+      <img
+        src={card.image}
+        alt={`${card.title} - Đại đoàn kết dân tộc`}
+        className="product_img"
+      />
+
+      <div className="content">
+        <div className="badge">{card.id}</div>
+        <h2>{card.title}</h2>
+        <p className="subtitle">{card.subtitle}</p>
+
+        <div className="scroll-content">
+          {card.content.map((text, index) => (
+            <p key={index} className="content-text">
+              {card.id === "c" && index === 0 ? (
+                <em>"{text.replace(/"/g, "")}"</em>
+              ) : (
+                text
+              )}
+            </p>
+          ))}
+        </div>
+
+        <div className="modern-meaning">
+          <strong>Ý nghĩa hôm nay:</strong> Trong xã hội hiện đại, khi mâu thuẫn
+          lợi ích xuất hiện, việc đặt lợi ích chung lên cao nhất và có thái độ
+          khoan dung vẫn là chìa khóa để giữ gìn sự ổn định và đoàn kết.
+        </div>
+
+        <div className="mt-4">
+          <Link
+            to={`/part3/${card.id}`}
+            className="inline-block px-4 py-2 rounded-md bg-red-600 hover:bg-red-700 text-white font-semibold shadow-md"
+          >
+            Xem thêm
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <section
@@ -76,65 +128,106 @@ export default function Part3() {
         >
           Điều kiện để xây dựng khối đại đoàn kết toàn dân tộc
         </h1>
-        <div className="w-32 h-1 bg-gradient-to-r from-red-600 to-yellow-500 mx-auto"></div>
+        <div className="w-32 h-1 bg-gradient-to-r from-red-600 to-yellow-500 mx-auto mb-6"></div>
+        <Link
+          to="/part3"
+          className="inline-block px-6 py-3 rounded-lg bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+        >
+          📖 Xem chi tiết đầy đủ
+        </Link>
       </div>
 
-      {/* Cards Container */}
+      {/* Cards + Path Stage */}
       <div className="container mx-auto px-6 pb-12 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {cardData.map((card) => (
-            <div key={card.id} className="card-container">
-              <div
-                className="card group"
-                style={{ "--clr": card.color } as React.CSSProperties}
-              >
-                <div className="circle">
-                  <img src={card.image} alt={card.title} className="logo" />
-                </div>
-
-                <img
-                  src={card.image}
-                  alt={`${card.title} - Đại đoàn kết dân tộc`}
-                  className="product_img"
+        <div className="path-stage relative mx-auto" style={{ height: 700 }}>
+          {/* Animated star path */}
+          <svg
+            className="absolute inset-0 w-full h-full"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+          >
+            <defs>
+              <linearGradient id="dashGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#ef4444" />
+                <stop offset="100%" stopColor="#b91c1c" />
+              </linearGradient>
+              <filter id="shadow">
+                <feDropShadow
+                  dx="0"
+                  dy="0"
+                  stdDeviation="0.6"
+                  floodColor="#ef4444"
+                  floodOpacity="0.9"
                 />
+              </filter>
+            </defs>
+            {/* Five-point star path connecting nodes: A, Meaning, D, B, C, back to A */}
+            <path
+              id="starPath"
+              d="M 12 18 L 50 6 L 88 18 L 70 70 L 30 70 Z"
+              fill="none"
+              stroke="url(#dashGlow)"
+              strokeWidth="1.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeDasharray="2 3"
+              filter="url(#shadow)"
+            ></path>
+            {/* Moving red dot */}
+            <circle r="1.6" fill="#ef4444">
+              <animateMotion dur="6s" repeatCount="indefinite" rotate="auto">
+                <mpath href="#starPath" />
+              </animateMotion>
+            </circle>
+            {/* Dash offset animation */}
+            <animate
+              xlinkHref="#starPath"
+              attributeName="stroke-dashoffset"
+              from="0"
+              to="-50"
+              dur="3s"
+              repeatCount="indefinite"
+            />
+          </svg>
 
-                <div className="content">
-                  <div className="badge">{card.id}</div>
-                  <h2>{card.title}</h2>
-                  <p className="subtitle">{card.subtitle}</p>
-
-                  <div className="scroll-content">
-                    {card.content.map((text, index) => (
-                      <p key={index} className="content-text">
-                        {card.id === "c" && index === 0 ? (
-                          <em>"{text.replace(/"/g, "")}"</em>
-                        ) : (
-                          text
-                        )}
-                      </p>
-                    ))}
-                  </div>
-
-                  <div className="modern-meaning">
-                    <strong>Ý nghĩa hôm nay:</strong> Trong xã hội hiện đại, khi
-                    mâu thuẫn lợi ích xuất hiện, việc đặt lợi ích chung lên cao
-                    nhất và có thái độ khoan dung vẫn là chìa khóa để giữ gìn sự
-                    ổn định và đoàn kết.
-                  </div>
-                </div>
-              </div>
+          {/* Nodes positioned to match the star points (percent-based, responsive) */}
+          <div className="node node-a" style={{ left: "12%", top: "18%" }}>
+            {renderCard(cardData[0])}
+          </div>
+          <div className="node node-mean" style={{ left: "50%", top: "6%" }}>
+            <div className="meaning-card">
+              <h3>Ôn tập kiến thức</h3>
+              <p>Củng cố kiến thức nắm bắt tư tưởng</p>
             </div>
-          ))}
+          </div>
+          <div className="node node-d" style={{ left: "88%", top: "18%" }}>
+            {renderCard(cardData[3])}
+          </div>
+          <div className="node node-b" style={{ left: "30%", top: "70%" }}>
+            {renderCard(cardData[1])}
+          </div>
+          <div className="node node-c" style={{ left: "70%", top: "70%" }}>
+            {renderCard(cardData[2])}
+          </div>
         </div>
       </div>
 
       <style>{`
-        .card-container {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          min-height: 400px;
+        .path-stage { max-width: 1100px; }
+        .node { position: absolute; transform: translate(-50%, -50%); }
+        .meaning-card {
+          width: 280px;
+          background: rgba(255,255,255,0.1);
+          backdrop-filter: blur(2px);
+          border-radius: 16px;
+          border: 2px dashed #ef4444;
+          box-shadow: 0 0 20px rgba(239,68,68,0.35);
+          padding: 16px;
+          color: #fff;
+          text-align: center;
         }
+        .meaning-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 6px; color: #ef4444; }
+        .meaning-card p { font-size: .95rem; color: #e5e7eb; }
 
         .card {
           position: relative;
@@ -324,6 +417,11 @@ export default function Part3() {
           border-radius: 4px;
         }
 
+        @media (max-width: 1024px) {
+          .meaning-card { width: 240px; }
+          .card { width: 300px; height: 360px; }
+        }
+
         @media (max-width: 768px) {
           .card {
             width: 280px;
@@ -334,6 +432,9 @@ export default function Part3() {
             width: 320px;
           }
           
+          .meaning-card { width: 210px; }
+          .path-stage { height: 620px; }
+
           .card .content {
             width: 70%;
             left: 10%;

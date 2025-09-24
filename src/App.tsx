@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Source from "./pages/Source";
 import Quiz from "./pages/Quiz";
 import FloatAIChat from "./components/FloatAIChat";
+import Part3Detail from "./components/Part3/Part3Detail";
 
 function App() {
   return (
@@ -13,6 +14,8 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/sources" element={<Source />} />
+          <Route path="/part3" element={<Part3Detail />} />
+          <Route path="/part3/:id" element={<Part3Detail />} />
         </Route>
       </Routes>
 
