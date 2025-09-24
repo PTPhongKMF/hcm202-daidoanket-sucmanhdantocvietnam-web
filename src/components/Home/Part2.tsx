@@ -1,4 +1,4 @@
-import { DraggableCardBody, DraggableCardContainer } from "../../aceternityui/draggable-card";
+import { DraggableCardBody, DraggableCardContainer } from "../aceternityui/draggable-card";
 import ReactMarkdown from "react-markdown";
 import { TypingAnimation } from "../magicui/TypingAnimation";
 

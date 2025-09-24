@@ -7,7 +7,7 @@ export default function Layout() {
     <>
       <NavBar />
 
-      <main className='h-full max-w-[100svw] bg-gray-50 overflow-x-hidden'>
+      <main id="view-root" className="view-page h-full max-w-[100svw] bg-gray-50 overflow-x-hidden">
         <Outlet />
       </main>
 
