@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import { useState, useEffect, useRef, useCallback } from "react";
 import NavBar from "../NavBar";
 import data from "../../data/dai-doan-ket.json";
+import { TypingAnimation } from "../magicui/TypingAnimation";
 
 type SectionData = {
   id: string;
@@ -23,6 +24,12 @@ type CarouselItem = {
   highlight: boolean;
   contentHtml: string;
   color: string;
+  // Audio content
+  audio?: {
+    src: string;
+    transcript: string;
+    duration?: number;
+  };
   // Detailed content for modal
   subtitle?: string;
   quote?: {
@@ -76,6 +83,11 @@ const carouselData: CarouselItem[] = [
     highlight: true,
     contentHtml: "Phải lấy lợi ích chung làm điểm quy tụ, đồng thời tôn trọng những lợi ích khác biệt chính đáng. Phải xử lý tốt quan hệ lợi ích, tìm ra điểm tương đồng và lợi ích chung. Lấy lợi ích tối cao của dân tộc và lợi ích căn bản của nhân dân lao động làm mục tiêu phấn đấu.",
     color: "#dc2626",
+    audio: {
+      src: "/audios/P1.mp3",
+      transcript: "Phải lấy lợi ích chung làm điểm quy tụ, đồng thời tôn trọng những lợi ích khác biệt chính đáng. Phải xử lý tốt quan hệ lợi ích, tìm ra điểm tương đồng và lợi ích chung.",
+      duration: 4282
+    },
     subtitle: "Xây dựng khối đại đoàn kết toàn dân tộc",
     quote: {
       text: "Phải xử lý tốt quan hệ lợi ích, tìm ra điểm tương đồng và lợi ích chung. Lấy lợi ích tối cao của dân tộc và lợi ích căn bản của nhân dân lao động làm mục tiêu phấn đấu.",
@@ -123,6 +135,11 @@ const carouselData: CarouselItem[] = [
     highlight: false,
     contentHtml: "Yêu nước – nhân nghĩa – đoàn kết là cội nguồn sức mạnh giúp dân tộc vượt qua thiên tai, địch họa và giành thắng lợi.",
     color: "#d97706",
+    audio: {
+      src: "/audios/P2.mp3",
+      transcript: "Yêu nước – nhân nghĩa – đoàn kết là cội nguồn sức mạnh giúp dân tộc vượt qua thiên tai, địch họa và giành thắng lợi.",
+      duration: 755
+    },
     subtitle: "Truyền thống dân tộc Việt Nam",
     quote: {
       text: "Yêu nước – nhân nghĩa – đoàn kết là cội nguồn sức mạnh giúp dân tộc vượt qua thiên tai, địch họa và giành thắng lợi.",
@@ -163,6 +180,11 @@ const carouselData: CarouselItem[] = [
     highlight: true,
     contentHtml: "Hồ Chí Minh dạy: \"Năm ngón tay có ngón dài ngón ngắn, nhưng cả năm ngón đều thuộc về một bàn tay. Trong mấy triệu người cũng có người thế này thế khác, nhưng thế này hay thế khác đều dòng dõi tổ tiên ta. Vậy nên phải khoan hồng, đại độ... Có như thế mới thành đoàn kết, có đại đoàn kết thì tương lai chắc chắn sẽ vẻ vang.\"",
     color: "#059669",
+    audio: {
+      src: "/audios/P3.mp3",
+      transcript: "Năm ngón tay có ngón dài ngón ngắn, nhưng cả năm ngón đều thuộc về một bàn tay. Trong mấy triệu người cũng có người thế này thế khác, nhưng thế này hay thế khác đều dòng dõi tổ tiên ta.",
+      duration: 1086
+    },
     subtitle: "Tinh thần khoan dung, độ lượng",
     quote: {
       text: "Năm ngón tay có ngón dài ngón ngắn, nhưng cả năm ngón đều thuộc về một bàn tay. Trong mấy triệu người cũng có người thế này thế khác, nhưng thế này hay thế khác đều dòng dõi tổ tiên ta. Vậy nên phải khoan hồng, đại độ... Có như thế mới thành đoàn kết, có đại đoàn kết thì tương lai chắc chắn sẽ vẻ vang.",
@@ -203,6 +225,11 @@ const carouselData: CarouselItem[] = [
     highlight: false,
     contentHtml: "Nhân dân là nền tảng, gốc rễ, chủ thể của mặt trận. Là chỗ dựa vững chắc của Đảng, là cội nguồn sức mạnh vô tận quyết định thắng lợi của cách mạng.",
     color: "#2563eb",
+    audio: {
+      src: "/audios/P4.mp3",
+      transcript: "Nhân dân là nền tảng, gốc rễ, chủ thể của mặt trận. Là chỗ dựa vững chắc của Đảng, là cội nguồn sức mạnh vô tận quyết định thắng lợi của cách mạng.",
+      duration: 835
+    },
     subtitle: "Niềm tin vào sức mạnh nhân dân",
     quote: {
       text: "Nhân dân là nền tảng, gốc rễ, chủ thể của mặt trận. Là chỗ dựa vững chắc của Đảng, là cội nguồn sức mạnh vô tận quyết định thắng lợi của cách mạng.",
@@ -236,14 +263,16 @@ const carouselData: CarouselItem[] = [
 ];
 
 // Center Mode Carousel Component
-function CenterModeCarousel() {
+function CenterModeCarousel({ 
+  onOpenModal 
+}: { 
+  onOpenModal: (item: CarouselItem) => void;
+}) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
-  const [selectedItem, setSelectedItem] = useState<CarouselItem | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const intervalRef = useRef<number | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
 
@@ -266,29 +295,14 @@ function CenterModeCarousel() {
 
   // Handle autoplay based on state
   useEffect(() => {
-    if (isPlaying && !isHovered && !isModalOpen) {
+    if (isPlaying && !isHovered) {
       startAutoplay();
     } else {
       stopAutoplay();
     }
     return () => stopAutoplay();
-  }, [isPlaying, isHovered, isModalOpen, startAutoplay, stopAutoplay]);
+  }, [isPlaying, isHovered, startAutoplay, stopAutoplay]);
 
-  // Handle modal open/close
-  const handleOpenModal = (item: CarouselItem) => {
-    setSelectedItem(item);
-    setIsModalOpen(true);
-    setIsPlaying(false); // Pause autoplay when modal opens
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedItem(null);
-    // Resume autoplay if it was playing before
-    if (isPlaying) {
-      setIsPlaying(true);
-    }
-  };
 
   // Navigation functions
   const goToPrevious = () => {
@@ -478,7 +492,7 @@ function CenterModeCarousel() {
 
                     {/* CTA Button */}
                     <button 
-                      onClick={() => handleOpenModal(item)}
+                      onClick={() => onOpenModal(item)}
                       className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500"
                     >
                       Xem chi tiết đầy đủ
@@ -496,14 +510,242 @@ function CenterModeCarousel() {
         {carouselData[currentIndex]?.title}
       </div>
 
-      {/* Detail Modal */}
-      {selectedItem && (
-        <DetailModal
-          item={selectedItem}
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
+    </div>
+  );
+}
+
+// Audio Player Component
+function AudioPlayer({ 
+  item, 
+  isActive, 
+  onPlay, 
+  onPause 
+}: { 
+  item: CarouselItem; 
+  isActive: boolean; 
+  onPlay: (id: string) => void; 
+  onPause: () => void;
+}) {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [playbackRate, setPlaybackRate] = useState(1);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+
+  // Format time helper
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  // Load audio metadata
+  useEffect(() => {
+    if (!item.audio || !audioRef.current) return;
+
+    const audio = audioRef.current;
+    
+    const handleLoadedMetadata = () => {
+      setDuration(audio.duration);
+    };
+
+    const handleTimeUpdate = () => {
+      setCurrentTime(audio.currentTime);
+    };
+
+    const handleEnded = () => {
+      setIsPlaying(false);
+      setCurrentTime(0);
+    };
+
+    const handleLoadStart = () => {
+      setIsLoading(true);
+    };
+
+    const handleCanPlay = () => {
+      setIsLoading(false);
+    };
+
+    audio.addEventListener('loadedmetadata', handleLoadedMetadata);
+    audio.addEventListener('timeupdate', handleTimeUpdate);
+    audio.addEventListener('ended', handleEnded);
+    audio.addEventListener('loadstart', handleLoadStart);
+    audio.addEventListener('canplay', handleCanPlay);
+
+    return () => {
+      audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      audio.removeEventListener('timeupdate', handleTimeUpdate);
+      audio.removeEventListener('ended', handleEnded);
+      audio.removeEventListener('loadstart', handleLoadStart);
+      audio.removeEventListener('canplay', handleCanPlay);
+    };
+  }, [item.audio]);
+
+  // Handle play/pause
+  const togglePlayPause = async () => {
+    if (!audioRef.current || !item.audio) return;
+
+    try {
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+        onPause();
+      } else {
+        // Pause other audio players
+        onPlay(item.id);
+        
+        await audioRef.current.play();
+        setIsPlaying(true);
+      }
+    } catch (error) {
+      console.error('Error playing audio:', error);
+    }
+  };
+
+  // Handle progress bar click
+  const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!audioRef.current || !duration) return;
+
+    const rect = progressRef.current?.getBoundingClientRect();
+    if (!rect) return;
+
+    const clickX = e.clientX - rect.left;
+    const newTime = (clickX / rect.width) * duration;
+    
+    audioRef.current.currentTime = newTime;
+    setCurrentTime(newTime);
+  };
+
+  // Handle download
+  const handleDownload = () => {
+    if (!item.audio) return;
+    
+    const link = document.createElement('a');
+    link.href = item.audio.src;
+    link.download = `P${item.index}.mp3`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  // Handle keyboard events
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
+      togglePlayPause();
+    }
+  };
+
+  // Handle playback rate change
+  const handleRateChange = (rate: number) => {
+    if (audioRef.current) {
+      audioRef.current.playbackRate = rate;
+      setPlaybackRate(rate);
+    }
+  };
+
+  if (!item.audio) return null;
+
+  return (
+    <div className={`bg-gray-50 rounded-lg p-4 border transition-all duration-300 ${
+      isActive ? 'border-red-500 bg-red-50' : 'border-gray-200 hover:border-gray-300'
+    }`}>
+      {/* Audio element */}
+      <audio
+        ref={audioRef}
+        src={item.audio.src}
+        preload="metadata"
+        onError={(e) => console.error('Audio load error:', e)}
+      />
+
+      {/* Header with title and status */}
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2">
+          <h4 className="font-semibold text-gray-900">P{item.index}</h4>
+          {isActive && isPlaying && (
+            <div className="flex items-center gap-1">
+              <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+              <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+              <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+            </div>
+          )}
+        </div>
+        
+        {/* Playback rate selector */}
+        <select
+          value={playbackRate}
+          onChange={(e) => handleRateChange(parseFloat(e.target.value))}
+          className="text-sm border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-red-500"
+          aria-label="Tốc độ phát"
+        >
+          <option value={0.75}>0.75x</option>
+          <option value={1}>1x</option>
+          <option value={1.25}>1.25x</option>
+        </select>
+      </div>
+
+      {/* Transcript */}
+      <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+        {item.audio.transcript}
+      </p>
+
+      {/* Progress bar */}
+      <div 
+        ref={progressRef}
+        className="w-full h-2 bg-gray-200 rounded-full cursor-pointer mb-2 hover:bg-gray-300 transition-colors"
+        onClick={handleProgressClick}
+        role="progressbar"
+        aria-label="Thanh tiến trình âm thanh"
+        tabIndex={0}
+        onKeyDown={handleKeyDown}
+      >
+        <div 
+          className="h-full bg-red-500 rounded-full transition-all duration-100"
+          style={{ width: duration ? `${(currentTime / duration) * 100}%` : '0%' }}
         />
-      )}
+      </div>
+
+      {/* Time display */}
+      <div className="flex justify-between text-sm text-gray-500 mb-3">
+        <span>{formatTime(currentTime)}</span>
+        <span>{formatTime(duration)}</span>
+      </div>
+
+      {/* Controls */}
+      <div className="flex items-center justify-between">
+        <button
+          onClick={togglePlayPause}
+          onKeyDown={handleKeyDown}
+          disabled={isLoading}
+          className="flex items-center justify-center w-10 h-10 bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-red-500"
+          aria-label={isPlaying ? 'Tạm dừng' : 'Phát'}
+        >
+          {isLoading ? (
+            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+          ) : isPlaying ? (
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+            </svg>
+          ) : (
+            <svg className="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          )}
+        </button>
+
+        <button
+          onClick={handleDownload}
+          className="flex items-center gap-2 px-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-red-500"
+          aria-label="Tải xuống file âm thanh"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          Tải xuống
+        </button>
+      </div>
     </div>
   );
 }
@@ -568,11 +810,17 @@ function useFocusTrap(isActive: boolean) {
 function DetailModal({ 
   item, 
   isOpen, 
-  onClose 
+  onClose,
+  activeAudioId,
+  onAudioPlay,
+  onAudioPause
 }: { 
   item: CarouselItem; 
   isOpen: boolean; 
   onClose: () => void;
+  activeAudioId: string | null;
+  onAudioPlay: (id: string) => void;
+  onAudioPause: () => void;
 }) {
   const modalRef = useFocusTrap(isOpen);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
@@ -685,6 +933,19 @@ function DetailModal({
                       <cite className="text-red-600 font-semibold">
                         — {item.quote.source}
                       </cite>
+                    </div>
+                  )}
+
+                  {/* Audio Player */}
+                  {item.audio && (
+                    <div className="bg-white border border-gray-200 rounded-lg p-6">
+                      <h3 className="text-xl font-bold text-gray-900 mb-4">Nghe âm thanh</h3>
+                      <AudioPlayer
+                        item={item}
+                        isActive={activeAudioId === item.id}
+                        onPlay={onAudioPlay}
+                        onPause={onAudioPause}
+                      />
                     </div>
                   )}
 
@@ -841,6 +1102,44 @@ function DetailModal({
 
 export default function Part3Detail() {
   const pageData = data as PageData;
+  const [activeAudioId, setActiveAudioId] = useState<string | null>(null);
+  const [selectedItem, setSelectedItem] = useState<CarouselItem | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    // Force scroll to top immediately
+    window.scrollTo(0, 0);
+    
+    // Also ensure body scroll is reset
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    
+    // Prevent any scroll restoration
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+  }, []); // Empty dependency array means this runs only once when component mounts
+
+  // Audio player handlers
+  const handleAudioPlay = (audioId: string) => {
+    setActiveAudioId(audioId);
+  };
+
+  const handleAudioPause = () => {
+    setActiveAudioId(null);
+  };
+
+  // Modal handlers
+  const handleOpenModal = (item: CarouselItem) => {
+    setSelectedItem(item);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedItem(null);
+  };
 
   // Set page title and meta description
   useEffect(() => {
@@ -880,8 +1179,14 @@ export default function Part3Detail() {
                style={{ backgroundImage: 'url("/imgs/Part3/Hồ Chí MInh.jpg")' }}>
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent" />
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4">
-            {pageData.pageTitle}
+          <h1 className="flex justify-center items-center relative uppercase text-white font-heading text-4xl md:text-5xl mb-4 z-10">
+            <TypingAnimation
+              startOnView={true}
+              duration={70}
+              className="text-white font-heading text-4xl md:text-5xl z-90 [text-shadow:-3px_2px_0px_black] drop-shadow-lg drop-shadow-black"
+            >
+              {pageData.pageTitle}
+            </TypingAnimation>
           </h1>
           <p className="text-xl md:text-2xl text-slate-200 mb-6">
             {pageData.hero.subtitle}
@@ -897,14 +1202,21 @@ export default function Part3Detail() {
       <div className="relative z-10 bg-gray-50 min-h-screen">
         {/* Page title */}
         <div className="text-center py-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Khám phá chi tiết từng mục tiêu
+          <h2 className="flex justify-center items-center relative uppercase text-gray-900 font-heading text-3xl md:text-4xl mb-4 z-10">
+            <TypingAnimation
+              startOnView={true}
+              duration={70}
+              className="text-gray-900 font-heading text-3xl md:text-4xl z-90 font-bold"
+            >
+              Khám phá chi tiết từng mục tiêu
+            </TypingAnimation>
           </h2>
           <div className="w-32 h-1 bg-gradient-to-r from-red-600 to-yellow-500 mx-auto"></div>
         </div>
 
         {/* Center Mode Carousel */}
-        <CenterModeCarousel />
+        <CenterModeCarousel onOpenModal={handleOpenModal} />
+
 
         {/* References Section */}
         <section aria-label="Tài liệu tham khảo" className="bg-white py-16">
@@ -917,8 +1229,8 @@ export default function Part3Detail() {
                     <p className="font-semibold text-gray-900 mb-2">{ref.title}</p>
                     {ref.note && <p className="text-sm text-gray-600">{ref.note}</p>}
                   </div>
-                ))}
-              </div>
+            ))}
+          </div>
             </div>
           </div>
         </section>
@@ -935,9 +1247,21 @@ export default function Part3Detail() {
               </svg>
               Quay lại trang chủ
             </Link>
+            </div>
           </div>
         </div>
-      </div>
+
+      {/* Detail Modal */}
+      {selectedItem && (
+        <DetailModal
+          item={selectedItem}
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          activeAudioId={activeAudioId}
+          onAudioPlay={handleAudioPlay}
+          onAudioPause={handleAudioPause}
+        />
+      )}
 
       {/* Print Styles */}
       <style>{`
