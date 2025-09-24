@@ -1,27 +1,31 @@
 import { Route, Routes } from "react-router";
-import Layout from "./components/Layout";
-import Home from "./pages/Home";
-import Source from "./pages/Source";
-import Quiz from "./pages/Quiz";
+import { Suspense, lazy } from "react";
 import FloatAIChat from "./components/FloatAIChat";
-import Part3Detail from "./components/Part3/Part3Detail";
-import Member from "./pages/Member";
-import QandA from "./pages/QandA";
+
+const Layout = lazy(() => import("./components/Layout"));
+const Home = lazy(() => import("./pages/Home"));
+const Source = lazy(() => import("./pages/Source"));
+const Quiz = lazy(() => import("./pages/Quiz"));
+const Part3Detail = lazy(() => import("./components/Part3/Part3Detail"));
+const Member = lazy(() => import("./pages/Member"));
+const QandA = lazy(() => import("./pages/QandA"));
 
 function App() {
   return (
     <>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="/quiz" element={<Quiz />} />
-          <Route path="/members" element={<Member />} />
-          <Route path="/q&a" element={<QandA />} />
-          <Route path="/sources" element={<Source />} />
-          <Route path="/part3" element={<Part3Detail />} />
-          <Route path="/part3/:id" element={<Part3Detail />} />
-        </Route>
-      </Routes>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="/quiz" element={<Quiz />} />
+            <Route path="/members" element={<Member />} />
+            <Route path="/q&a" element={<QandA />} />
+            <Route path="/sources" element={<Source />} />
+            <Route path="/part3" element={<Part3Detail />} />
+            <Route path="/part3/:id" element={<Part3Detail />} />
+          </Route>
+        </Routes>
+      </Suspense>
 
       <FloatAIChat />
     </>

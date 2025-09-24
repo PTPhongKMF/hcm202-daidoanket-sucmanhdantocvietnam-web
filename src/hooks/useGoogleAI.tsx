@@ -1,5 +1,6 @@
-import { GenerateContentResponse, GoogleGenAI } from "@google/genai";
+import { type GenerateContentResponse } from "@google/genai";
 import { useMutation } from "@tanstack/react-query";
+import ky from "ky";
 import type { ChatMessage } from "../components/FloatAIChat";
 
 interface chatData {
@@ -8,53 +9,37 @@ interface chatData {
   setChatHistory: React.Dispatch<React.SetStateAction<ChatMessage[]>>
 }
 
-const googleAi = new GoogleGenAI({ apiKey: "AIzaSyCABLZZ3MtFdDjZX4eNURBB7GNlxSV9WCo" })
-
-const aiInstruction = `Bạn là DoanKetBot. 
-Nhiệm vụ của bạn:
-1. Chỉ trả lời cho:
-   - Các câu chào hỏi xã giao.
-   - Các câu hỏi liên quan đến "Tư tưởng Hồ Chí Minh về đại đoàn kết toàn dân tộc", bao gồm:
-     + Vai trò, ý nghĩa chiến lược của đại đoàn kết.
-     + Lực lượng tham gia khối đại đoàn kết.
-     + Điều kiện để xây dựng khối đại đoàn kết.
-     + Hình thức, nguyên tắc tổ chức của Mặt trận dân tộc thống nhất.
-     + Phương thức xây dựng khối đại đoàn kết.
-     + Ý nghĩa lịch sử và hiện tại của tư tưởng này.
-     + ...có thể mở rộng nhiều nữa, miễn là trong phạm vi "tư tưởng hồ chí minh"...
-2. Với mọi câu hỏi khác, bạn phải từ chối và trả lời thân thiện, ví dụ:
-   "Xin lỗi, câu hỏi này nằm ngoài phạm vi bài học. Bạn hãy thử hỏi một câu khác liên quan đến chủ đề đoàn kết nhé!"
-3. Phong cách trả lời:
-   - Luôn trả lời bằng tiếng việt, dù cho câu hỏi có là tiếng anh.
-   - Ngắn gọn, rõ ràng, dễ hiểu.
-   - Thân thiện, khuyến khích người học hỏi thêm trong phạm vi bài học.
-   - Có thể trích dẫn lời Hồ Chí Minh nếu phù hợp (ví dụ: “Đoàn kết, đoàn kết, đại đoàn kết – Thành công, thành công, đại thành công.”).
-`
+// const googleAi = new GoogleGenAI({ apiKey: "" })
 
 export function useAiChatMutation() {
   return useMutation<GenerateContentResponse, Error, chatData>({
     mutationFn: async (chatData) => {
-      chatData.setChatHistory(prev => [...prev, {
-        isBot: false,
-        msg: chatData.userChat,
-        sentAt: new Date()
-      }])
+      if (!chatData.userChat) throw new Error("Không chat thì gửi làm gì? >:(");
+      
 
-      const chatModel = googleAi.chats.create({
-        model: "gemini-2.5-flash",
-        history: chatData.chatHistory?.map(chat => ({
-          role: chat.isBot ? "model" : "user",
-          parts: [{ text: chat.msg }]
-        })),
-        config: {
-          thinkingConfig: {
-            thinkingBudget: 0
-          },
-          systemInstruction: aiInstruction
-        }
-      })
+      chatData.setChatHistory(prev => [...prev,
+      { isBot: false, msg: chatData.userChat, sentAt: new Date() }
+      ])
 
-      return await chatModel.sendMessage({ message: chatData.userChat })
+      // const chatModel = googleAi.chats.create({
+      //   model: "gemini-2.5-flash",
+      //   history: chatData.chatHistory?.map(chat => ({
+      //     role: chat.isBot ? "model" : "user",
+      //     parts: [{ text: chat.msg }]
+      //   })),
+      //   config: {
+      //     thinkingConfig: {
+      //       thinkingBudget: 0
+      //     },
+      //     systemInstruction: aiInstruction
+      //   }
+      // })
+
+      // return await chatModel.sendMessage({ message: chatData.userChat })
+
+      return await ky.post("/api/gemini", {
+        json: chatData
+      }).json<GenerateContentResponse>()
     },
     onSuccess: (data, chatData) => {
       chatData.setChatHistory(prev => [...prev, {
