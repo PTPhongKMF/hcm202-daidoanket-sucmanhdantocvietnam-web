@@ -32,6 +32,15 @@ export default function Footer() {
         </Link>
         {", "}
         <Link
+          to="https://github.com/HoangTranNhat"
+          target="_blank"
+          className="text-blue-400 underline"
+        >
+          {" "}
+          Nhat Hoang
+        </Link>
+        {", "}
+        <Link
           to="https://github.com/TeddyPhamDat"
           target="_blank"
           className="text-blue-400 underline"
