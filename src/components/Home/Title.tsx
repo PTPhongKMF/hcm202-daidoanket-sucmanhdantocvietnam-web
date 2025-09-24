@@ -32,12 +32,12 @@ export default function Title() {
         </div>
       </div>
 
-      <div className="relative flex flex-col py-6 justify-center items-center bg-gradient-to-br from-red-400/60 to-yellow-400/60">
+      <div className="relative flex flex-col py-6 justify-center items-center bg-gradient-to-br from-red-400/60 to-yellow-400/60 mask-b-from-90% mask-b-to-100%">
         <ChevronDownIcon className="size-10 animate-arrowFlow text-white font-bold" />
         <ChevronDownIcon className="size-10 animate-arrowFlow text-white font-bold" />
         <ChevronDownIcon className="size-10 animate-arrowFlow text-white font-bold" />
 
-        <div className="pointer-events-none absolute top-0 size-full bg-gradient-to-b from-transparent from-50% to-gray-50" />
+        {/* <div className="pointer-events-none absolute top-0 size-full bg-gradient-to-b from-transparent from-50% to-gray-50" /> */}
       </div>
 
 
