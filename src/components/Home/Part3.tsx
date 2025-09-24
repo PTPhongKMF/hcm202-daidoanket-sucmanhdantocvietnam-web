@@ -1,6 +1,15 @@
 import { Link } from "react-router";
+import { useState, useEffect } from "react";
+import { TypingAnimation } from "../magicui/TypingAnimation";
+
 
 export default function Part3() {
+  const [isVisible, setIsVisible] = useState(false);
+  
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
   const cardData = [
     {
       id: "a",
@@ -113,28 +122,39 @@ export default function Part3() {
           backgroundImage: 'url("/imgs/HCM đoàn kết dân tộc.jpg")',
         }}
       ></div>
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.75) 50%, rgba(15, 23, 42, 0.85) 100%)",
-        }}
-      ></div>
+      <div className="absolute inset-0 animated-bg"></div>
       {/* Header */}
       <div className="text-center py-12 relative z-10">
-        <h1
-          className="text-4xl md:text-5xl font-bold text-white mb-4"
-          style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}
-        >
-          Điều kiện để xây dựng khối đại đoàn kết toàn dân tộc
+        <h1 className="flex justify-center items-center relative uppercase text-white font-heading text-4xl md:text-5xl mb-4 min-h-[120px] z-10">
+          <TypingAnimation
+            startOnView={true}
+            duration={70}
+            className="text-white font-heading text-4xl md:text-5xl z-90 [text-shadow:-3px_2px_0px_black] drop-shadow-lg drop-shadow-black"
+          >
+            Điều kiện để xây dựng khối đại đoàn kết toàn dân tộc
+          </TypingAnimation>
         </h1>
-        <div className="w-32 h-1 bg-gradient-to-r from-red-600 to-yellow-500 mx-auto mb-6"></div>
-        <Link
-          to="/part3"
-          className="inline-block px-6 py-3 rounded-lg bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+        
+        {/* Animated divider */}
+        <div 
+          className={`w-32 h-1 bg-gradient-to-r from-red-600 to-yellow-500 mx-auto mb-6 scale-in`}
+          style={{ animationDelay: '2s' }}
+        ></div>
+        
+        {/* Animated button */}
+        <div
+          className={`transition-all duration-700 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+          }`}
+          style={{ transitionDelay: '2.5s' }}
         >
-          📖 Xem chi tiết đầy đủ
-        </Link>
+          <Link
+            to="/part3"
+            className="inline-block px-6 py-3 rounded-lg bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+          >
+            📖 Xem chi tiết đầy đủ
+          </Link>
+        </div>
       </div>
 
       {/* Cards + Path Stage */}
@@ -213,6 +233,53 @@ export default function Part3() {
       </div>
 
       <style>{`
+        
+        /* Fade in animation for header elements */
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .fade-in-up {
+          animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        /* Scale animation for divider */
+        @keyframes scaleIn {
+          from {
+            transform: scaleX(0);
+          }
+          to {
+            transform: scaleX(1);
+          }
+        }
+        
+        .scale-in {
+          animation: scaleIn 1s ease-out forwards;
+        }
+        
+        /* Subtle background animation */
+        @keyframes backgroundPulse {
+          0%, 100% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+        }
+        
+        .animated-bg {
+          background: linear-gradient(-45deg, rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.9));
+          background-size: 400% 400%;
+          animation: backgroundPulse 8s ease-in-out infinite;
+        }
+        
         .path-stage { max-width: 1100px; }
         .node { position: absolute; transform: translate(-50%, -50%); }
         .meaning-card {
