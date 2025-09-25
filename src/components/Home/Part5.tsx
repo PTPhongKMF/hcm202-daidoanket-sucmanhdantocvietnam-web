@@ -83,12 +83,16 @@ export default function Part5() {
               <ul className="list-disc list-inside space-y-2 text-gray-200">
                 <li>Phải gần dân, hiểu dân, tin dân và làm cho dân tin Đảng</li>
                 <li>
-                  Hồ Chí Minh dặn: cần phải giải thích cho dân thấy mọi việc đều
-                  vì lợi ích của chính họ
+                  Hồ Chí Minh dặn:
+                  <span className="italic text-blue-300">
+                    "cần phải chịu khó tìm đủ cách giải thích cho họ hiểu rằng: những việc đó là vì ích lợi của họ mà phải làm"
+                  </span>
                 </li>
                 <li>
-                  Thành lập các đoàn thể, tổ chức quần chúng phù hợp với từng
-                  đối tượng
+                  Theo Hồ Chí Minh mọi phương pháp tiếp cận và vận động quần chúng đều phải phù hợp với tâm tư, nguyện vọng của quần chúng
+                </li>
+                <li>
+                  Phải xuất phát từ thực tế trình độ dân trí và văn hoá, theo cả nghĩa rộng và nghĩa hẹp, bao gồm cả phong tục, tập quán và cụ thể đối với từng địa phương, từng đối tượng của nhân dân
                 </li>
               </ul>
               <div
@@ -100,23 +104,25 @@ export default function Part5() {
                 <div className="bg-black/30 rounded-2xl p-4 border border-white/20">
                   <p className="text-gray-200 leading-relaxed">
                     Dân vận không chỉ là tuyên truyền mà còn là tổ chức, lắng
-                    nghe và phản hồi kịp thời lợi ích chính đáng của nhân dân;
-                    xây dựng cơ chế đối thoại định kỳ giữa chính quyền và người
-                    dân; phát huy vai trò giám sát, phản biện xã hội của Mặt
-                    trận và các đoàn thể.
+                    nghe và phản hồi kịp thời lợi ích chính đáng của nhân dân.
+                    Theo Hồ Chí Minh, mọi phương pháp tiếp cận và vận động quần chúng đều phải phù hợp với tâm tư, nguyện vọng của quần chúng; đồng thời phải xuất phát từ thực tế trình độ dân trí và văn hoá, theo cả nghĩa rộng và nghĩa hẹp, bao gồm cả phong tục, tập quán và cụ thể đối với từng địa phương, từng đối tượng của nhân dân.
                   </p>
                   <ul className="mt-3 list-disc list-inside text-gray-200 space-y-1">
                     <li>
-                      Cán bộ dân vận cần “gần dân, trọng dân, hiểu dân, học
-                      dân”.
+                      Cán bộ dân vận cần "gần dân, trọng dân, hiểu dân, học
+                      dân".
                     </li>
                     <li>
-                      Ứng dụng công nghệ số để tiếp nhận, xử lý kiến nghị minh
-                      bạch.
+                      Phải gần dân, hiểu dân, tin dân và làm cho dân tin Đảng.
                     </li>
                     <li>
-                      Nhân rộng các mô hình “Dân vận khéo” gắn với mục tiêu cụ
-                      thể.
+                      Xây dựng cơ chế đối thoại định kỳ giữa chính quyền và người dân.
+                    </li>
+                    <li>
+                      Phát huy vai trò giám sát, phản biện xã hội của Mặt trận và các đoàn thể.
+                    </li>
+                    <li>
+                      Nhân rộng các mô hình "Dân vận khéo" gắn với mục tiêu cụ thể.
                     </li>
                   </ul>
                 </div>
@@ -261,12 +267,10 @@ export default function Part5() {
               >
                 <div className="bg-black/30 rounded-2xl p-4 border border-white/20">
                   <p className="text-gray-200 leading-relaxed">
-                    Mặt trận dân tộc thống nhất hoạt động theo nguyên tắc hiệp
-                    thương dân chủ, đồng thuận xã hội, tôn trọng sự đa dạng trong
-                    thống nhất. Hồ Chí Minh nhấn mạnh: “Phải đoàn kết các đảng
-                    phái, các đoàn thể, các nhân sĩ trong Mặt trận Tổ quốc Việt
-                    Nam, thực hiện hợp tác lâu dài, giúp đỡ lẫn nhau, cùng nhau
-                    tiến bộ”.
+                    Hồ Chí Minh chỉ rõ:
+                    <span className="italic text-purple-300">
+                      "Mặt trận dân tộc thống nhất vẫn là một trong những lực lượng to lớn của cách mạng Việt Nam...Phải đoàn kết tốt các đảng phái, các đoàn thể, các nhân sĩ trong Mặt trận Tổ quốc Việt Nam, thực hiện hợp tác lâu dài, giúp đỡ lẫn nhau, cùng nhau tiến bộ. Phải đoàn kết các dân tộc anh em,cùng nhau xây dựng Tổ quốc... Phải đoàn kết chặt chẽ giữa đồng bào lương và đồng bào các tôn giáo, cùng nhau xây dựng đời sống hòa thuận ấm no, xây dựng Tổ quốc"
+                    </span>
                   </p>
                   <ul className="mt-3 list-disc list-inside text-gray-200 space-y-1">
                     <li>
@@ -274,11 +278,14 @@ export default function Part5() {
                       tinh thần hòa hợp.
                     </li>
                     <li>
-                      Đẩy mạnh công tác đối ngoại nhân dân, mở rộng đoàn kết quốc
-                      tế.
+                      Phải đoàn kết tốt các đảng phái, các đoàn thể, các nhân sĩ trong Mặt trận Tổ quốc Việt Nam.
                     </li>
                     <li>
-                      Ứng dụng dữ liệu, số hóa để quản trị minh bạch, hiệu quả.
+                      Thực hiện hợp tác lâu dài, giúp đỡ lẫn nhau, cùng nhau tiến bộ.
+                    </li>
+                    <li>
+                      Đẩy mạnh công tác đối ngoại nhân dân, mở rộng đoàn kết quốc
+                      tế.
                     </li>
                   </ul>
                 </div>
@@ -320,28 +327,60 @@ export default function Part5() {
               <div className="space-y-4 text-lg">
                 <p className="text-center leading-relaxed text-gray-200">
                   <span className="font-semibold text-yellow-300">
-                    Đại đoàn kết dân tộc
+                    Đại đoàn kết toàn dân tộc
                   </span>{' '}
-                  là chiến lược cách mạng xuyên suốt do
-                  <span className="font-bold text-red-300"> Hồ Chí Minh</span>{' '}
-                  khởi xướng từ rất sớm.
+                  là chiến lược cách mạng cơ bản, xuyên suốt và lâu dài trong tư tưởng
+                  <span className="font-bold text-red-300"> Hồ Chí Minh</span>.
                 </p>
                 <p className="text-center leading-relaxed text-gray-200">
                   Đây là{' '}
                   <span className="font-bold text-green-300">
                     cội nguồn sức mạnh vô địch
                   </span>
-                  , quyết định mọi thắng lợi của cách mạng Việt Nam.
+                  , quyết định mọi thắng lợi của cách mạng Việt Nam trong kháng chiến và xây dựng đất nước.
                 </p>
+                <p className="text-center leading-relaxed text-gray-200">
+                  Hồ Chí Minh khẳng định: đoàn kết vừa là mục tiêu, vừa là động lực, là then chốt của thành công.
+                </p>
+
                 <div className="bg-black/40 rounded-2xl p-6 border border-blue-400/50 mt-6">
-                  <p className="text-center text-blue-100 font-medium">
+                  <h3 className="text-xl font-bold text-center mb-4 text-blue-300">
+                    Để xây dựng đoàn kết cần:
+                  </h3>
+                  <ul className="list-disc list-inside text-blue-100 space-y-2">
+                    <li>Đặt lợi ích chung dân tộc lên cao nhất</li>
+                    <li>Kế thừa truyền thống yêu nước – nhân nghĩa – đoàn kết</li>
+                    <li>Có lòng khoan dung, tin dân và dựa vào dân</li>
+                    <li>Hình thức tổ chức là Mặt trận dân tộc thống nhất</li>
+                    <li>Hoạt động theo nguyên tắc liên minh công – nông – trí thức dưới sự lãnh đạo của Đảng</li>
+                    <li>Hiệp thương dân chủ, đoàn kết lâu dài</li>
+                  </ul>
+                </div>
+
+                <div className="bg-black/40 rounded-2xl p-6 border border-green-400/50 mt-6">
+                  <h3 className="text-xl font-bold text-center mb-4 text-green-300">
+                    Phương thức cơ bản:
+                  </h3>
+                  <ul className="list-disc list-inside text-green-100 space-y-2">
+                    <li>Dân vận khéo</li>
+                    <li>Tổ chức quần chúng</li>
+                    <li>Quy tụ vào Mặt trận để tạo sức mạnh tổng hợp</li>
+                  </ul>
+                </div>
+
+                <div className="bg-black/40 rounded-2xl p-6 border border-yellow-400/50 mt-6">
+                  <p className="text-center text-yellow-100 font-medium">
                     <span className="text-yellow-300 font-bold">
-                      Ý nghĩa hiện nay:
+                      Trong giai đoạn hiện nay:
                     </span>{' '}
-                    Phải gắn đoàn kết dân tộc với đoàn kết quốc tế, kết hợp sức
-                    mạnh dân tộc với sức mạnh thời đại. Đồng thời đặt lợi ích
-                    dân tộc lên cao nhất, kế thừa truyền thống yêu nước – nhân
-                    nghĩa – đoàn kết, có lòng khoan dung, tin dân và dựa vào dân.
+                    Cần gắn đoàn kết dân tộc với đoàn kết quốc tế, kết hợp sức
+                    mạnh dân tộc với sức mạnh thời đại.
+                  </p>
+                </div>
+
+                <div className="bg-gradient-to-r from-red-600/20 to-yellow-600/20 rounded-2xl p-6 border border-red-400/50 mt-6">
+                  <p className="text-center text-white font-medium">
+                    Qua chuyên đề này, bài viết đã làm rõ một phần quan trọng trong hệ thống tư tưởng Hồ Chí Minh, đáp ứng một phần yêu cầu môn học, đồng thời giúp người học củng cố tinh thần yêu nước và trách nhiệm công dân.
                   </p>
                 </div>
               </div>

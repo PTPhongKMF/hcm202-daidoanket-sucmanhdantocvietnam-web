@@ -112,16 +112,11 @@ export default function Part4() {
           <div className="mb-20">
             <Reveal className="flex items-center mb-12">
               <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mr-6">
-                <span className="text-2xl font-bold text-white">A</span>
+                <span className="text-2xl font-bold text-black">A</span>
               </div>
               <div>
-                <h2 className="text-4xl font-bold text-white mb-2">
-                  Hình thức tổ chức
-                </h2>
-                <div
-                  className="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full scale-in"
-                  style={{ animationDelay: "0.4s" }}
-                ></div>
+                <h2 className="text-4xl font-bold text-black mb-2">Hình thức tổ chức</h2>
+                <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full scale-in" style={{ animationDelay: '0.4s' }}></div>
               </div>
             </Reveal>
 
@@ -283,187 +278,108 @@ export default function Part4() {
 
           {/* Section B: Nguyên tắc xây dựng và hoạt động */}
           {showDetails && (
-            <div className="mb-20">
-              <Reveal className="flex items-center mb-12">
-                <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-pink-500 rounded-full flex items-center justify-center mr-6">
-                  <span className="text-2xl font-bold text-white">B</span>
+          <div className="mb-20">
+            <Reveal className="flex items-center mb-12">
+              <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-pink-500 rounded-full flex items-center justify-center mr-6">
+                <span className="text-2xl font-bold text-black">B</span>
+              </div>
+              <div>
+                <h2 className="text-4xl font-bold text-black mb-2">Nguyên tắc xây dựng và hoạt động</h2>
+                <div className="w-24 h-1 bg-gradient-to-r from-red-500 to-pink-500 rounded-full scale-in" style={{ animationDelay: '0.4s' }}></div>
+              </div>
+            </Reveal>
+
+            {/* Principles Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* Principle 1 */}
+              <Reveal className="bg-black/40 backdrop-blur-lg rounded-3xl p-8 border border-blue-400/50 shadow-2xl hover:shadow-3xl transition-all duration-300">
+                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mb-6">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
                 </div>
-                <div>
-                  <h2 className="text-4xl font-bold text-white mb-2">
-                    Nguyên tắc xây dựng và hoạt động
-                  </h2>
-                  <div
-                    className="w-24 h-1 bg-gradient-to-r from-red-500 to-pink-500 rounded-full scale-in"
-                    style={{ animationDelay: "0.4s" }}
-                  ></div>
+                <h3 className="text-xl font-bold text-white mb-4">Nền tảng liên minh</h3>
+                <p className="text-gray-200 mb-4">
+                  Xây dựng trên nền tảng liên minh công – nông – trí thức, dưới sự lãnh đạo của Đảng
+                </p>
+                <div className="space-y-3">
+                  <div className="bg-black/30 rounded-lg p-3">
+                    <p className="text-sm text-gray-200">
+                      <span className="font-semibold text-blue-300">Công – nông</span> là lực lượng chủ yếu, chiếm số đông, trực tiếp sản xuất ra của cải, chịu nhiều áp bức bóc lột, có chí khí cách mạng bền bỉ nhất.
+                    </p>
+                  </div>
+                  <div className="bg-black/30 rounded-lg p-3">
+                    <p className="text-sm text-gray-200">
+                      <span className="font-semibold text-cyan-300">Liên minh công – nông – trí thức</span> là nền tảng vững chắc của khối đại đoàn kết toàn dân tộc.
+                    </p>
+                  </div>
+                  <div className="bg-black/30 rounded-lg p-3">
+                    <p className="text-sm text-gray-200 italic">
+                      Người viết: "Lực lượng chủ yếu trong khối đoàn kết dân tộc là công nông, cho nên liên minh công nông là nền tảng của Mặt trận dân tộc thống nhất"; phải liên minh với các giai cấp khác, nhất là với đội ngũ trí thức.
+                    </p>
+                  </div>
                 </div>
               </Reveal>
 
-              {/* Principles Grid */}
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {/* Principle 1 */}
-                <Reveal className="bg-black/40 backdrop-blur-lg rounded-3xl p-8 border border-blue-400/50 shadow-2xl hover:shadow-3xl transition-all duration-300">
-                  <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mb-6">
-                    <svg
-                      className="w-8 h-8 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                      />
-                    </svg>
+              {/* Principle 2 */}
+              <Reveal className="bg-black/40 backdrop-blur-lg rounded-3xl p-8 border border-purple-400/50 shadow-2xl hover:shadow-3xl transition-all duration-300" delayMs={80}>
+                <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mb-6">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-4">Hiệp thương dân chủ</h3>
+                <p className="text-gray-200 mb-4">
+                  Hoạt động theo nguyên tắc hiệp thương dân chủ
+                </p>
+                <div className="space-y-3">
+                  <div className="bg-black/30 rounded-lg p-3">
+                    <p className="text-sm text-gray-200">
+                      Mọi vấn đề đều phải bàn bạc công khai, cùng đi đến nhất trí, loại bỏ áp đặt hoặc dân chủ hình thức.
+                    </p>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-4">
-                    Nền tảng liên minh
-                  </h3>
-                  <p className="text-gray-200 mb-4">
-                    Xây dựng trên nền tảng liên minh công – nông – trí thức,
-                    dưới sự lãnh đạo của Đảng
-                  </p>
-                  <div className="space-y-3">
-                    <div className="bg-black/30 rounded-lg p-3">
-                      <p className="text-sm text-gray-200">
-                        <span className="font-semibold text-blue-300">
-                          Công – nông
-                        </span>{" "}
-                        là lực lượng chủ yếu, chiếm số đông, trực tiếp sản xuất
-                        ra của cải, chịu nhiều áp bức bóc lột, có chí khí cách
-                        mạng bền bỉ nhất.
-                      </p>
-                    </div>
-                    <div className="bg-black/30 rounded-lg p-3">
-                      <p className="text-sm text-gray-200">
-                        <span className="font-semibold text-cyan-300">
-                          Liên minh công – nông – trí thức
-                        </span>{" "}
-                        là nền tảng vững chắc của khối đại đoàn kết toàn dân
-                        tộc.
-                      </p>
-                    </div>
-                    <div className="bg-black/30 rounded-lg p-3">
-                      <p className="text-sm text-gray-200 italic">
-                        Người viết: "Lực lượng chủ yếu trong khối đoàn kết dân
-                        tộc là công nông, cho nên liên minh công nông là nền
-                        tảng của Mặt trận dân tộc thống nhất"; phải liên minh
-                        với các giai cấp khác, nhất là với đội ngũ trí thức.
-                      </p>
-                    </div>
+                  <div className="bg-black/30 rounded-lg p-3">
+                    <p className="text-sm text-gray-200">
+                      Các thành viên phải thấm nhuần lợi ích chung, đặt lợi ích dân tộc lên trên hết.
+                    </p>
                   </div>
-                </Reveal>
+                  <div className="bg-black/30 rounded-lg p-3">
+                    <p className="text-sm text-gray-200">
+                      Quan tâm, giải quyết thỏa đáng mối quan hệ lợi ích giữa các thành viên bằng tinh thần <span className="font-semibold text-purple-300 italic">"thấu tình đạt lý"</span>.
+                    </p>
+                  </div>
+                </div>
+              </Reveal>
 
-                {/* Principle 2 */}
-                <Reveal
-                  className="bg-black/40 backdrop-blur-lg rounded-3xl p-8 border border-purple-400/50 shadow-2xl hover:shadow-3xl transition-all duration-300"
-                  delayMs={80}
-                >
-                  <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mb-6">
-                    <svg
-                      className="w-8 h-8 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                      />
-                    </svg>
+              {/* Principle 3 */}
+              <Reveal className="bg-black/40 backdrop-blur-lg rounded-3xl p-8 border border-yellow-400/50 shadow-2xl hover:shadow-3xl transition-all duration-300" delayMs={160}>
+                <div className="w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-2xl flex items-center justify-center mb-6">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-4">Đoàn kết lâu dài</h3>
+                <p className="text-gray-200 mb-4">
+                  Đoàn kết lâu dài, chặt chẽ, chân thành, thân ái
+                </p>
+                <div className="space-y-3">
+                  <div className="bg-black/30 rounded-lg p-3">
+                    <p className="text-sm text-gray-200">
+                      Không phải đoàn kết tạm thời mà là sự gắn bó bền vững, thật sự.
+                    </p>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-4">
-                    Hiệp thương dân chủ
-                  </h3>
-                  <p className="text-gray-200 mb-4">
-                    Hoạt động theo nguyên tắc hiệp thương dân chủ
-                  </p>
-                  <div className="space-y-3">
-                    <div className="bg-black/30 rounded-lg p-3">
-                      <p className="text-sm text-gray-200">
-                        Mọi vấn đề đều phải bàn bạc công khai, cùng đi đến nhất
-                        trí, loại bỏ áp đặt hoặc dân chủ hình thức.
-                      </p>
-                    </div>
-                    <div className="bg-black/30 rounded-lg p-3">
-                      <p className="text-sm text-gray-200">
-                        Các thành viên phải thấm nhuần lợi ích chung, đặt lợi
-                        ích dân tộc lên trên hết.
-                      </p>
-                    </div>
-                    <div className="bg-black/30 rounded-lg p-3">
-                      <p className="text-sm text-gray-200">
-                        Quan tâm, giải quyết thỏa đáng mối quan hệ lợi ích giữa
-                        các thành viên bằng tinh thần{" "}
-                        <span className="font-semibold text-purple-300 italic">
-                          "thấu tình đạt lý"
-                        </span>
-                        .
-                      </p>
-                    </div>
+                  <div className="bg-gradient-to-r from-red-500/20 to-pink-500/20 rounded-lg p-3 border border-red-400/30">
+                    <p className="text-sm text-gray-200 italic">
+                      <span className="font-semibold text-red-300">Hồ Chí Minh nhấn mạnh:</span> đoàn kết phải xuất phát từ lợi ích chung, trên cơ sở lòng tin, tự nguyện và ý chí vì dân tộc; phương châm <span className="font-semibold">“cầu đồng tồn dị”</span>, lấy cái chung để hạn chế cái riêng, cái khác biệt.
+                    </p>
                   </div>
-                </Reveal>
-
-                {/* Principle 3 */}
-                <Reveal
-                  className="bg-black/40 backdrop-blur-lg rounded-3xl p-8 border border-yellow-400/50 shadow-2xl hover:shadow-3xl transition-all duration-300"
-                  delayMs={160}
-                >
-                  <div className="w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-2xl flex items-center justify-center mb-6">
-                    <svg
-                      className="w-8 h-8 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                      />
-                    </svg>
+                  <div className="bg-black/30 rounded-lg p-3">
+                    <p className="text-sm text-gray-200 italic">
+                      “Đoàn kết thực sự nghĩa là mục đích phải nhất trí và lập trường cũng phải nhất trí. Đoàn kết thực sự nghĩa là vừa đoàn kết, vừa đấu tranh, học những cái tốt của nhau, phê bình những cái sai của nhau và phê bình trên lập trường thân ái, vì nước, vì dân”.
+                    </p>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-4">
-                    Đoàn kết lâu dài
-                  </h3>
-                  <p className="text-gray-200 mb-4">
-                    Đoàn kết lâu dài, chặt chẽ, chân thành, thân ái
-                  </p>
-                  <div className="space-y-3">
-                    <div className="bg-black/30 rounded-lg p-3">
-                      <p className="text-sm text-gray-200">
-                        Không phải đoàn kết tạm thời mà là sự gắn bó bền vững,
-                        thật sự.
-                      </p>
-                    </div>
-                    <div className="bg-gradient-to-r from-red-500/20 to-pink-500/20 rounded-lg p-3 border border-red-400/30">
-                      <p className="text-sm text-gray-200 italic">
-                        <span className="font-semibold text-red-300">
-                          Hồ Chí Minh nhấn mạnh:
-                        </span>{" "}
-                        đoàn kết phải xuất phát từ lợi ích chung, trên cơ sở
-                        lòng tin, tự nguyện và ý chí vì dân tộc; phương châm{" "}
-                        <span className="font-semibold">“cầu đồng tồn dị”</span>
-                        , lấy cái chung để hạn chế cái riêng, cái khác biệt.
-                      </p>
-                    </div>
-                    <div className="bg-black/30 rounded-lg p-3">
-                      <p className="text-sm text-gray-200 italic">
-                        “Đoàn kết thực sự nghĩa là mục đích phải nhất trí và lập
-                        trường cũng phải nhất trí. Đoàn kết thực sự nghĩa là vừa
-                        đoàn kết, vừa đấu tranh, học những cái tốt của nhau, phê
-                        bình những cái sai của nhau và phê bình trên lập trường
-                        thân ái, vì nước, vì dân”.
-                      </p>
-                    </div>
-                  </div>
-                </Reveal>
-              </div>
+                </div>
+              </Reveal>
             </div>
           )}
 

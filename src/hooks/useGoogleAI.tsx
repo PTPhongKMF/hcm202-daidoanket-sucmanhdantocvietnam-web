@@ -9,33 +9,14 @@ interface chatData {
   setChatHistory: React.Dispatch<React.SetStateAction<ChatMessage[]>>
 }
 
-// const googleAi = new GoogleGenAI({ apiKey: "" })
-
 export function useAiChatMutation() {
   return useMutation<GenerateContentResponse, Error, chatData>({
     mutationFn: async (chatData) => {
       if (!chatData.userChat) throw new Error("Không chat thì gửi làm gì? >:(");
-      
 
       chatData.setChatHistory(prev => [...prev,
       { isBot: false, msg: chatData.userChat, sentAt: new Date() }
       ])
-
-      // const chatModel = googleAi.chats.create({
-      //   model: "gemini-2.5-flash",
-      //   history: chatData.chatHistory?.map(chat => ({
-      //     role: chat.isBot ? "model" : "user",
-      //     parts: [{ text: chat.msg }]
-      //   })),
-      //   config: {
-      //     thinkingConfig: {
-      //       thinkingBudget: 0
-      //     },
-      //     systemInstruction: aiInstruction
-      //   }
-      // })
-
-      // return await chatModel.sendMessage({ message: chatData.userChat })
 
       return await ky.post("/api/gemini", {
         json: chatData
@@ -44,7 +25,7 @@ export function useAiChatMutation() {
     onSuccess: (data, chatData) => {
       chatData.setChatHistory(prev => [...prev, {
         isBot: true,
-        msg: data.text ?? "Lỗi không xác định",
+        msg: data?.candidates?.[0]?.content?.parts?.[0]?.text ?? "Lỗi không xác định",
         sentAt: new Date()
       }])
     },

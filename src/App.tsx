@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router";
 import { Suspense, lazy } from "react";
 import FloatAIChat from "./components/FloatAIChat";
+import Loading from "./pages/Loading";
 
 const Layout = lazy(() => import("./components/Layout"));
 const Home = lazy(() => import("./pages/Home"));
@@ -13,7 +14,7 @@ const QandA = lazy(() => import("./pages/QandA"));
 function App() {
   return (
     <>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loading />}>
         <Routes>
           <Route element={<Layout />}>
             <Route index element={<Home />} />
