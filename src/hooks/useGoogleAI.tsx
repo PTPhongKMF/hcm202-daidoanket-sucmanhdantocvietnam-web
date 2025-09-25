@@ -43,6 +43,8 @@ export function useAiChatMutation() {
           beforeError: [
             async err => {
               console.log(await err.response.json())
+              console.log(err.message)
+              console.log(err.name)
 
               return err
             }

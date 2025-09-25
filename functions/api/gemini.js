@@ -110,9 +110,9 @@ Nhiệm vụ của bạn:
   })
 
   return new Response(
-    // JSON.stringify(
-      await chatModel.sendMessage({ message: chatData.userChat }),
-    // ),
+    JSON.stringify(
+      await chatModel.sendMessage({ message: chatData.userChat }).response.text()
+    ),
     { status: 200, headers: { "Content-Type": "application/json" } }
   );
 }
