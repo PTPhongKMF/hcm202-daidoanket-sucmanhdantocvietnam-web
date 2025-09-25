@@ -39,13 +39,7 @@ export default function Part5() {
         className="absolute inset-0 bg-cover bg-center bg-fixed"
         style={{ backgroundImage: 'url("/imgs/part1-1.jpg")' }}
       ></div>
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            'linear-gradient(135deg, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.55) 50%, rgba(0, 0, 0, 0.85) 100%)'
-        }}
-      ></div>
+      <div className="z-0 absolute size-full top-0 bg-linear-to-b from-gray-50 from-[0.1%] via-transparent to-gray-50 to-99%" />
 
       <div className="container mx-auto px-6 py-16 relative z-10">
         <div className="max-w-7xl mx-auto">
