@@ -1,70 +1,5 @@
-import { GoogleGenAI } from "@google/genai";
-
-
-
-// export async function onRequestPost(context) {
-//   const { request, env } = context;
-
-//   const chatData = await request.json();
-//   if (!chatData?.userChat) {
-//     return new Response(
-//       JSON.stringify({ error: "userChat required" }),
-//       { status: 400, headers: { "Content-Type": "application/json" } }
-//     );
-//   }
-
-//   const body = {
-//     contents: [
-//       ...(chatData.chatHistory?.map(chat => ({
-//         role: chat.isBot ? "model" : "user",
-//         parts: [{ text: chat.msg }]
-//       })) ?? []),
-//       {
-//         role: "user",
-//         parts: [{ text: chatData.userChat }]
-//       }
-//     ],
-//     config: {
-//       systemInstruction: aiInstruction,
-//       thinkingConfig: {
-//         thinkingBudget: 0
-//       }
-//     }
-
-//   };
-
-//   const res = await fetch(
-//     "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
-//     {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//         "x-goog-api-key": env.GEMINI_API_KEY
-//       },
-//       body: JSON.stringify(body)
-//     }
-//   );
-
-//   if (!res.ok) {
-//     return new Response(
-//       JSON.stringify({ error: `Gemini API error: ${res.status}` }),
-//       { status: res.status, headers: { "Content-Type": "application/json" } }
-//     );
-//   }
-
-//   const data = await res.json();
-//   const text = data.candidates?.content?.parts?.[0]?.text ?? "Không có phản hồi từ Gemini";
-
-//   return new Response(
-//     JSON.stringify({ text }),
-//     { status: 200, headers: { "Content-Type": "application/json" } }
-//   );
-// }
-
-export async function onRequestPost(context) {
-  const { request, env } = context;
-
-  const aiInstruction = `Bạn là DoanKetBot. 
+const aiInstruction = `
+Bạn là DoanKetBot. 
 Nhiệm vụ của bạn:
 1. Chỉ trả lời cho:
    - Các câu chào hỏi xã giao.
@@ -85,6 +20,9 @@ Nhiệm vụ của bạn:
    - Có thể trích dẫn lời Hồ Chí Minh nếu phù hợp (ví dụ: “Đoàn kết, đoàn kết, đại đoàn kết – Thành công, thành công, đại thành công.”).
 `;
 
+export async function onRequestPost(context) {
+  const { request, env } = context;
+
   const chatData = await request.json();
   if (!chatData?.userChat) {
     return new Response(
@@ -93,26 +31,50 @@ Nhiệm vụ của bạn:
     );
   }
 
-  const googleAi = new GoogleGenAI({ apiKey: env.GEMINI_API_KEY })
-
-  const chatModel = googleAi.chats.create({
-    model: "gemini-2.5-flash",
-    history: chatData.chatHistory?.map(chat => ({
-      role: chat.isBot ? "model" : "user",
-      parts: [{ text: chat.msg }]
-    })),
-    config: {
+  const body = {
+    contents: [
+      ...(chatData.chatHistory?.map(chat => ({
+        role: chat.isBot ? "model" : "user",
+        parts: [{ text: chat.msg }]
+      })) ?? []),
+      {
+        role: "user",
+        parts: [{ text: chatData.userChat }]
+      }
+    ],
+    systemInstruction: {
+      role: "user",
+      parts: [{ text: aiInstruction }]
+    },
+    generationConfig: {
       thinkingConfig: {
         thinkingBudget: 0
-      },
-      systemInstruction: aiInstruction
+      }
     }
-  })
+
+  };
+
+  const res = await fetch(
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-goog-api-key": env.GEMINI_API_KEY
+      },
+      body: JSON.stringify(body)
+    }
+  );
+
+  if (!res.ok) {
+    return new Response(
+      JSON.stringify({ error: `Gemini API error: ${res.status}` }),
+      { status: res.status, headers: { "Content-Type": "application/json" } }
+    );
+  }
 
   return new Response(
-    JSON.stringify(
-      await chatModel.sendMessage({ message: chatData.userChat }).response.text()
-    ),
+    JSON.stringify(res),
     { status: 200, headers: { "Content-Type": "application/json" } }
   );
 }

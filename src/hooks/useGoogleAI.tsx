@@ -15,7 +15,7 @@ export function useAiChatMutation() {
   return useMutation<GenerateContentResponse, Error, chatData>({
     mutationFn: async (chatData) => {
       if (!chatData.userChat) throw new Error("Không chat thì gửi làm gì? >:(");
-      
+
 
       chatData.setChatHistory(prev => [...prev,
       { isBot: false, msg: chatData.userChat, sentAt: new Date() }
@@ -37,7 +37,7 @@ export function useAiChatMutation() {
 
       // return await chatModel.sendMessage({ message: chatData.userChat })
 
-      const res = await ky.post("/api/gemini", {
+      return await ky.post("/api/gemini", {
         json: chatData,
         hooks: {
           beforeError: [
@@ -50,11 +50,7 @@ export function useAiChatMutation() {
             }
           ]
         }
-      });
-
-      console.log(res);
-
-      return res.json<GenerateContentResponse>()
+      }).json<GenerateContentResponse>()
     },
     onSuccess: (data, chatData) => {
       chatData.setChatHistory(prev => [...prev, {
