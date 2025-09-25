@@ -1,5 +1,6 @@
 import { BackgroundBeamsWithCollision } from "../components/aceternityui/background-beams-with-collision";
 import { CometCard } from "../components/aceternityui/comet-card";
+import { DraggableCardBody, DraggableCardContainer } from "../components/aceternityui/draggable-card";
 import PinNotePaper from "../components/PinNotePaper";
 
 // NOTE: Fixed the non-standard whitespace characters to prevent ESLint errors.
@@ -41,38 +42,47 @@ export default function Member() {
 
   return (
     <BackgroundBeamsWithCollision>
-    <div className="w-full h-[100svh] bg-amber-100 bg-[url(/imgs/vnmap-3d.png)] bg-blend-multiply bg-cover bg-center flex justify-center items-center gap-32 p-4">
-      <div className="flex flex-col gap-8">
-        {leftMembers.map((member) => (
-          <CometCard>
-            <PinNotePaper key={member.name}>
-              <h3 className="font-bold border-b border-gray-300 pb-1 mb-2 text-lg">{member.name}</h3>
-              <p className="text-sm">{member.works}</p>
-            </PinNotePaper>
-          </CometCard>
-        ))}
-      </div>
+      <DraggableCardContainer className="relative flex min-h-screen w-full items-center justify-center overflow-clip">
+        <div className="w-full h-[100svh] bg-amber-100 bg-[url(/imgs/vnmap-3d.png)] bg-blend-multiply bg-cover bg-center flex justify-center items-center gap-32 p-4">
+          <div className="flex flex-col gap-8">
+            {leftMembers.map((member) => (
+              <DraggableCardBody className="size-fit min-h-0 minw-0 bg-transparent overflow-visible p-0">
+                <CometCard>
+                  <PinNotePaper key={member.name}>
+                    <h3 className="font-bold border-b border-gray-300 pb-1 mb-2 text-lg">{member.name}</h3>
+                    <p className="text-sm">{member.works}</p>
+                  </PinNotePaper>
+                </CometCard>
+              </DraggableCardBody>
 
-      <div>
-        <CometCard>
-          <PinNotePaper key={centerMember.name}>
-            <h3 className="font-bold border-b border-gray-300 pb-1 mb-2 text-lg">{centerMember.name}</h3>
-            <p className="text-sm">{centerMember.works}</p>
-          </PinNotePaper>
-        </CometCard>
-      </div>
+            ))}
+          </div>
 
-      <div className="flex flex-col gap-8">
-        {rightMembers.map((member) => (
-          <CometCard>
-            <PinNotePaper key={member.name}>
-              <h3 className="font-bold border-b border-gray-300 pb-1 mb-2 text-lg">{member.name}</h3>
-              <p className="text-sm">{member.works}</p>
-            </PinNotePaper>
-          </CometCard>
-        ))}
-      </div>
-    </div>
+          <div>
+            <DraggableCardBody className="size-fit min-h-0 minw-0 bg-transparent overflow-visible p-0">
+              <CometCard>
+                <PinNotePaper key={centerMember.name}>
+                  <h3 className="font-bold border-b border-gray-300 pb-1 mb-2 text-lg">{centerMember.name}</h3>
+                  <p className="text-sm">{centerMember.works}</p>
+                </PinNotePaper>
+              </CometCard>
+            </DraggableCardBody>
+          </div>
+
+          <div className="flex flex-col gap-8">
+            {rightMembers.map((member) => (
+              <DraggableCardBody className="size-fit min-h-0 minw-0 bg-transparent overflow-visible p-0">
+                <CometCard>
+                  <PinNotePaper key={member.name}>
+                    <h3 className="font-bold border-b border-gray-300 pb-1 mb-2 text-lg">{member.name}</h3>
+                    <p className="text-sm">{member.works}</p>
+                  </PinNotePaper>
+                </CometCard>
+              </DraggableCardBody>
+            ))}
+          </div>
+        </div>
+      </DraggableCardContainer>
     </BackgroundBeamsWithCollision>
   );
 }

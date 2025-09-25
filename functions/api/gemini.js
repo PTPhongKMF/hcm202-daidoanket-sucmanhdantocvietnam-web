@@ -1,8 +1,3 @@
-// too lazy to do typescript for cloudfare page function :(
-
-import { GoogleGenAI } from "@google/genai";
-
-
 const aiInstruction = `Bạn là DoanKetBot. 
 Nhiệm vụ của bạn:
 1. Chỉ trả lời cho:
@@ -22,32 +17,67 @@ Nhiệm vụ của bạn:
    - Ngắn gọn, rõ ràng, dễ hiểu.
    - Thân thiện, khuyến khích người học hỏi thêm trong phạm vi bài học.
    - Có thể trích dẫn lời Hồ Chí Minh nếu phù hợp (ví dụ: “Đoàn kết, đoàn kết, đại đoàn kết – Thành công, thành công, đại thành công.”).
-`
-
+`;
 
 export async function onRequest(context) {
   const { request, env } = context;
-  if (request.method !== "POST") return new Response("Method Not Allowed", { status: 405 });
+  if (request.method !== "POST") {
+    return new Response("Method Not Allowed", { status: 405 });
+  }
 
   const chatData = await request.json();
-  if (!chatData?.userChat)
-    return new Response(JSON.stringify({ error: "userChat required" }), { status: 400, headers: { "Content-Type": "application/json" } });
+  if (!chatData?.userChat) {
+    return new Response(
+      JSON.stringify({ error: "userChat required" }),
+      { status: 400, headers: { "Content-Type": "application/json" } }
+    );
+  }
 
-  const googleAi = new GoogleGenAI({ apiKey: env.GEMINI_API_KEY })
-
-  const chatModel = googleAi.chats.create({
-    model: "gemini-2.5-flash",
-    history: chatData.chatHistory?.map(chat => ({
-      role: chat.isBot ? "model" : "user",
-      parts: [{ text: chat.msg }]
-    })),
-    config: {
-      thinkingConfig: {
-        thinkingBudget: 0
-      },
-      systemInstruction: aiInstruction
+  // Build the request body for Gemini REST API
+  const body = {
+    contents: [
+      ...(chatData.chatHistory?.map(chat => ({
+        role: chat.isBot ? "model" : "user",
+        parts: [{ text: chat.msg }]
+      })) ?? []),
+      {
+        role: "user",
+        parts: [{ text: chatData.userChat }]
+      }
+    ],
+    systemInstruction: {
+      role: "system",
+      parts: [{ text: aiInstruction }]
+    },
+    thinking: {
+      budgetTokens: 0
     }
-  })
+  };
 
-  return new Response(JSON.stringify(await chatModel.sendMessage({ message: chatData.userChat }), { status: 200, headers: { "Content-Type": "application/json" } }))
+  const res = await fetch(
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-goog-api-key": env.GEMINI_API_KEY
+      },
+      body: JSON.stringify(body)
+    }
+  );
+
+  if (!res.ok) {
+    return new Response(
+      JSON.stringify({ error: `Gemini API error: ${res.status}` }),
+      { status: res.status, headers: { "Content-Type": "application/json" } }
+    );
+  }
+
+  const data = await res.json();
+  const text = data.candidates?.content?.parts?.[0]?.text ?? "Không có phản hồi từ Gemini";
+
+  return new Response(
+    JSON.stringify({ text }),
+    { status: 200, headers: { "Content-Type": "application/json" } }
+  );
 }
