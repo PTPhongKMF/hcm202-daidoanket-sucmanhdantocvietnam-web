@@ -44,9 +44,13 @@ export async function onRequest(context) {
         parts: [{ text: chatData.userChat }]
       }
     ],
-    systemInstruction: {
-      parts: [{ text: aiInstruction }]
+    config: {
+      systemInstruction: aiInstruction,
+      thinkingConfig: {
+        thinkingBudget: 0
+      }
     }
+
   };
 
   const res = await fetch(
