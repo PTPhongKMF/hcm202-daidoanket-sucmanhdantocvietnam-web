@@ -36,23 +36,55 @@
 
   --animate-meteor-effect: meteor 5s linear infinite;
 
-  --animate-scroll: scroll var(--animation-duration, 40s)
-    var(--animation-direction, forwards) linear infinite;
+  --animate-scroll: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
+
+  --animate-aurora: aurora 8s ease-in-out infinite alternate;
 }
+
 @keyframes scroll {
   to {
     transform: translate(calc(-50% - 0.5rem));
   }
 }
+
+@keyframes aurora {
+  0% {
+    background-position: 0% 50%;
+    transform: rotate(-5deg) scale(0.9);
+  }
+
+  25% {
+    background-position: 50% 100%;
+    transform: rotate(5deg) scale(1.1);
+  }
+
+  50% {
+    background-position: 100% 50%;
+    transform: rotate(-3deg) scale(0.95);
+  }
+
+  75% {
+    background-position: 50% 0%;
+    transform: rotate(3deg) scale(1.05);
+  }
+
+  100% {
+    background-position: 0% 50%;
+    transform: rotate(-5deg) scale(0.9);
+  }
+}
+
 @keyframes arrowGrow {
   0% {
     opacity: 0;
     transform: scale(0.2) translateY(-10px);
   }
+
   50% {
     opacity: 1;
     transform: scale(1) translateY(0);
   }
+
   100% {
     opacity: 0;
     transform: scale(1) translateY(0);
@@ -64,6 +96,7 @@
     opacity: 1;
     transform: scale(1) translateY(0);
   }
+
   100% {
     opacity: 0;
     transform: scale(0.2) translateY(10px);
@@ -75,14 +108,17 @@
     opacity: 0;
     transform: translateY(-10px) scale(0.5);
   }
+
   30% {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+
   70% {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+
   100% {
     opacity: 0;
     transform: translateY(10px) scale(0.5);
@@ -94,6 +130,7 @@
     opacity: 0;
     transform: translateY(10px) scale(0.95);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -105,6 +142,7 @@
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+
   100% {
     opacity: 0;
     transform: translateY(10px) scale(0.95);
@@ -116,13 +154,16 @@
     transform: translateY(-200%) scaleY(1.1);
     opacity: 0;
   }
+
   60% {
     transform: translateY(20%) scaleY(0.95);
     opacity: 1;
   }
+
   80% {
     transform: translateY(-10%) scaleY(1.05);
   }
+
   100% {
     transform: translateY(0) scaleY(1);
   }
@@ -133,13 +174,16 @@
     transform: translateX(-200%) scaleX(1.1);
     opacity: 0;
   }
+
   60% {
     transform: translateX(10%) scaleX(0.95);
     opacity: 1;
   }
+
   80% {
     transform: translateX(-5%) scaleX(1.05);
   }
+
   100% {
     transform: translateX(0) scaleX(1);
   }
@@ -150,13 +194,16 @@
     transform: translateX(200%) scaleX(1.1);
     opacity: 0;
   }
+
   60% {
     transform: translateX(-10%) scaleX(0.95);
     opacity: 1;
   }
+
   80% {
     transform: translateX(5%) scaleX(1.05);
   }
+
   100% {
     transform: translateX(0) scaleX(1);
   }
@@ -167,23 +214,28 @@
     transform: translateY(200%) scaleY(1.1);
     opacity: 0;
   }
+
   60% {
     transform: translateY(-10%) scaleY(0.95);
     opacity: 1;
   }
+
   80% {
     transform: translateY(5%) scaleY(1.05);
   }
+
   100% {
     transform: translateY(0) scaleY(1);
   }
 }
 
 @keyframes wiggle {
+
   0%,
   100% {
     transform: rotate(-3deg);
   }
+
   50% {
     transform: rotate(3deg);
   }
@@ -194,18 +246,22 @@
     opacity: 0;
     transform: translateX(0) translateY(0) scale(0.98);
   }
+
   15% {
     opacity: 0.9;
     transform: translateX(0) translateY(0) scale(1);
   }
+
   60% {
     opacity: 1;
     transform: translateX(-26px) translateY(-6px) scale(1);
   }
+
   80% {
     opacity: 0.85;
     transform: translateX(-30px) translateY(-6px) scale(0.99);
   }
+
   100% {
     opacity: 0;
     transform: translateX(0) translateY(0) scale(0.98);
@@ -217,9 +273,11 @@
     transform: rotate(215deg) translateX(0);
     opacity: 1;
   }
+
   70% {
     opacity: 1;
   }
+
   100% {
     transform: rotate(215deg) translateX(-500px);
     opacity: 0;
@@ -245,7 +303,7 @@
       opacity: 1;
     }
     to {
-      opacity: 0;
+      opacity: 1;
     }
   }
 
@@ -253,6 +311,7 @@
     from {
       opacity: 0;
     }
+
     to {
       opacity: 1;
     }
