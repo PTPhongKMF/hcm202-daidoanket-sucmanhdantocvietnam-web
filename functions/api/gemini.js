@@ -73,7 +73,7 @@ export async function onRequestPost(context) {
   }
 
   return new Response(
-    res,
+    JSON.stringify(await res.json()),
     { status: 200, headers: { "Content-Type": "application/json" } }
   );
 }
