@@ -1,6 +1,9 @@
-import { DraggableCardBody, DraggableCardContainer } from "../aceternityui/draggable-card";
+import {
+  DraggableCardBody,
+  DraggableCardContainer,
+} from "../aceternityui/draggable-card";
 import ReactMarkdown from "react-markdown";
-import { TypingAnimation } from "../magicui/TypingAnimation";
+import { TypingAnimation } from "../magicui/Text Animations/TypingAnimation";
 
 const items = [
   {
@@ -55,7 +58,7 @@ const finalText = `
 - Đại đoàn kết **không chỉ là sức mạnh dân tộc** mà còn là **cầu nối để Việt Nam hội nhập quốc tế** trong bối cảnh toàn cầu hóa.  
 - Nền tảng càng vững chắc → Khối đại đoàn kết càng mở rộng.  
 - **Không một thế lực nào có thể làm suy yếu được sức mạnh ấy.**
-`
+`;
 
 export default function Part2() {
   return (
@@ -75,19 +78,15 @@ export default function Part2() {
 
         <DraggableCardContainer className="relative flex min-h-screen w-full items-center justify-center overflow-clip mask-x-from-98% mask-x-to-100% mask-y-from-98% mask-y-to-100%">
           <div className="bg-neutral-100 text-black absolute prose top-1/2 mx-auto max-w-sm -translate-y-3/4 text-start font-semibold p-6 rounded-2xl">
-            <ReactMarkdown>
-              {finalText}
-            </ReactMarkdown>
+            <ReactMarkdown>{finalText}</ReactMarkdown>
           </div>
           {items.map((item) => (
             <DraggableCardBody className={item.className}>
-              <ReactMarkdown>
-                {item.text}
-              </ReactMarkdown>
+              <ReactMarkdown>{item.text}</ReactMarkdown>
             </DraggableCardBody>
           ))}
         </DraggableCardContainer>
       </div>
     </div>
-  )
+  );
 }

@@ -35,8 +35,15 @@
   --animate-swipeLeftHint: swipeLeftHint 1.8s ease-in-out infinite;
 
   --animate-meteor-effect: meteor 5s linear infinite;
-}
 
+  --animate-scroll: scroll var(--animation-duration, 40s)
+    var(--animation-direction, forwards) linear infinite;
+}
+@keyframes scroll {
+  to {
+    transform: translate(calc(-50% - 0.5rem));
+  }
+}
 @keyframes arrowGrow {
   0% {
     opacity: 0;
@@ -173,7 +180,8 @@
 }
 
 @keyframes wiggle {
-  0%, 100% {
+  0%,
+  100% {
     transform: rotate(-3deg);
   }
   50% {
@@ -233,12 +241,20 @@
   }
 
   @keyframes vt-fade-old {
-    from { opacity: 1; }
-    to   { opacity: 0; }
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
   }
 
   @keyframes vt-fade-new {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 }

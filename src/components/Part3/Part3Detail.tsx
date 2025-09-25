@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import { useState, useEffect, useRef, useCallback } from "react";
 import NavBar from "../NavBar";
 import data from "../../data/dai-doan-ket.json";
-import { TypingAnimation } from "../magicui/TypingAnimation";
+import { TypingAnimation } from "../magicui/Text Animations/TypingAnimation";
 
 type SectionData = {
   id: string;
@@ -38,7 +38,7 @@ type CarouselItem = {
   };
   mainPoints?: string[];
   media?: {
-    type: 'image' | 'video';
+    type: "image" | "video";
     src: string;
     alt: string;
     caption?: string;
@@ -81,49 +81,51 @@ const carouselData: CarouselItem[] = [
     heroImage: "/imgs/Part3/Phải lấy lợi ích chung làm điểm quy tụ.jpg",
     badge: "Mục tiêu 1",
     highlight: true,
-    contentHtml: "Phải lấy lợi ích chung làm điểm quy tụ, đồng thời tôn trọng những lợi ích khác biệt chính đáng. Phải xử lý tốt quan hệ lợi ích, tìm ra điểm tương đồng và lợi ích chung. Lấy lợi ích tối cao của dân tộc và lợi ích căn bản của nhân dân lao động làm mục tiêu phấn đấu.",
+    contentHtml:
+      "Phải lấy lợi ích chung làm điểm quy tụ, đồng thời tôn trọng những lợi ích khác biệt chính đáng. Phải xử lý tốt quan hệ lợi ích, tìm ra điểm tương đồng và lợi ích chung. Lấy lợi ích tối cao của dân tộc và lợi ích căn bản của nhân dân lao động làm mục tiêu phấn đấu.",
     color: "#dc2626",
     audio: {
       src: "/audios/P1.mp3",
-      transcript: "Phải lấy lợi ích chung làm điểm quy tụ, đồng thời tôn trọng những lợi ích khác biệt chính đáng. Phải xử lý tốt quan hệ lợi ích, tìm ra điểm tương đồng và lợi ích chung.",
-      duration: 4282
+      transcript:
+        "Phải lấy lợi ích chung làm điểm quy tụ, đồng thời tôn trọng những lợi ích khác biệt chính đáng. Phải xử lý tốt quan hệ lợi ích, tìm ra điểm tương đồng và lợi ích chung.",
+      duration: 4282,
     },
     subtitle: "Xây dựng khối đại đoàn kết toàn dân tộc",
     quote: {
       text: "Phải xử lý tốt quan hệ lợi ích, tìm ra điểm tương đồng và lợi ích chung. Lấy lợi ích tối cao của dân tộc và lợi ích căn bản của nhân dân lao động làm mục tiêu phấn đấu.",
-      source: "Chủ tịch Hồ Chí Minh"
+      source: "Chủ tịch Hồ Chí Minh",
     },
     mainPoints: [
       "Xử lý tốt quan hệ lợi ích giữa các tầng lớp xã hội",
       "Tìm ra điểm tương đồng và lợi ích chung",
       "Lấy lợi ích tối cao của dân tộc làm mục tiêu",
-      "Tôn trọng những lợi ích khác biệt chính đáng"
+      "Tôn trọng những lợi ích khác biệt chính đáng",
     ],
     media: {
       type: "image",
       src: "/imgs/Part3/Phải lấy lợi ích chung làm điểm quy tụ.jpg",
       alt: "Đại đoàn kết dân tộc",
-      caption: "Đại đoàn kết toàn dân tộc là sức mạnh vô địch"
+      caption: "Đại đoàn kết toàn dân tộc là sức mạnh vô địch",
     },
     examples: [
       {
         title: "Chính sách đại đoàn kết dân tộc",
         desc: "Xây dựng khối đại đoàn kết toàn dân tộc trong thời kỳ đổi mới",
         link: "https://example.vn/dai-doan-ket",
-        external: true
+        external: true,
       },
       {
         title: "Đoàn kết các tôn giáo",
         desc: "Tôn trọng quyền tự do tín ngưỡng, tôn giáo của nhân dân",
         link: null,
-        external: false
-      }
+        external: false,
+      },
     ],
     references: [
       "Toàn tập Hồ Chí Minh — tập 5, trang 123",
-      "Tư tưởng Hồ Chí Minh về đại đoàn kết dân tộc"
+      "Tư tưởng Hồ Chí Minh về đại đoàn kết dân tộc",
     ],
-    footerNote: "Tư tưởng Hồ Chí Minh về đại đoàn kết dân tộc"
+    footerNote: "Tư tưởng Hồ Chí Minh về đại đoàn kết dân tộc",
   },
   {
     id: "b-truyen-thong",
@@ -133,42 +135,42 @@ const carouselData: CarouselItem[] = [
     heroImage: "/imgs/Part3/Kế thừa truyền thống yêu nước.jpg",
     badge: "Mục tiêu 2",
     highlight: false,
-    contentHtml: "Yêu nước – nhân nghĩa – đoàn kết là cội nguồn sức mạnh giúp dân tộc vượt qua thiên tai, địch họa và giành thắng lợi.",
+    contentHtml:
+      "Yêu nước – nhân nghĩa – đoàn kết là cội nguồn sức mạnh giúp dân tộc vượt qua thiên tai, địch họa và giành thắng lợi.",
     color: "#d97706",
     audio: {
       src: "/audios/P2.mp3",
-      transcript: "Yêu nước – nhân nghĩa – đoàn kết là cội nguồn sức mạnh giúp dân tộc vượt qua thiên tai, địch họa và giành thắng lợi.",
-      duration: 755
+      transcript:
+        "Yêu nước – nhân nghĩa – đoàn kết là cội nguồn sức mạnh giúp dân tộc vượt qua thiên tai, địch họa và giành thắng lợi.",
+      duration: 755,
     },
     subtitle: "Truyền thống dân tộc Việt Nam",
     quote: {
       text: "Yêu nước – nhân nghĩa – đoàn kết là cội nguồn sức mạnh giúp dân tộc vượt qua thiên tai, địch họa và giành thắng lợi.",
-      source: "Chủ tịch Hồ Chí Minh"
+      source: "Chủ tịch Hồ Chí Minh",
     },
     mainPoints: [
       "Truyền thống yêu nước nồng nàn",
       "Tinh thần nhân nghĩa cao cả",
       "Truyền thống đoàn kết dân tộc",
-      "Sức mạnh vượt qua mọi khó khăn"
+      "Sức mạnh vượt qua mọi khó khăn",
     ],
     media: {
       type: "image",
       src: "/imgs/Part3/Kế thừa truyền thống yêu nước.jpg",
       alt: "Truyền thống yêu nước",
-      caption: "Truyền thống yêu nước của dân tộc Việt Nam"
+      caption: "Truyền thống yêu nước của dân tộc Việt Nam",
     },
     examples: [
       {
         title: "Lịch sử dựng nước và giữ nước",
         desc: "Từ thời Hùng Vương đến thời đại Hồ Chí Minh",
         link: null,
-        external: false
-      }
+        external: false,
+      },
     ],
-    references: [
-      "Toàn tập Hồ Chí Minh — tập 6, trang 89"
-    ],
-    footerNote: "Truyền thống dân tộc Việt Nam"
+    references: ["Toàn tập Hồ Chí Minh — tập 6, trang 89"],
+    footerNote: "Truyền thống dân tộc Việt Nam",
   },
   {
     id: "c-khoan-dung",
@@ -178,42 +180,42 @@ const carouselData: CarouselItem[] = [
     heroImage: "/imgs/Part3/Có lòng khoan dung, độ lượng.jpg",
     badge: "Mục tiêu 3",
     highlight: true,
-    contentHtml: "Hồ Chí Minh dạy: \"Năm ngón tay có ngón dài ngón ngắn, nhưng cả năm ngón đều thuộc về một bàn tay. Trong mấy triệu người cũng có người thế này thế khác, nhưng thế này hay thế khác đều dòng dõi tổ tiên ta. Vậy nên phải khoan hồng, đại độ... Có như thế mới thành đoàn kết, có đại đoàn kết thì tương lai chắc chắn sẽ vẻ vang.\"",
+    contentHtml:
+      'Hồ Chí Minh dạy: "Năm ngón tay có ngón dài ngón ngắn, nhưng cả năm ngón đều thuộc về một bàn tay. Trong mấy triệu người cũng có người thế này thế khác, nhưng thế này hay thế khác đều dòng dõi tổ tiên ta. Vậy nên phải khoan hồng, đại độ... Có như thế mới thành đoàn kết, có đại đoàn kết thì tương lai chắc chắn sẽ vẻ vang."',
     color: "#059669",
     audio: {
       src: "/audios/P3.mp3",
-      transcript: "Năm ngón tay có ngón dài ngón ngắn, nhưng cả năm ngón đều thuộc về một bàn tay. Trong mấy triệu người cũng có người thế này thế khác, nhưng thế này hay thế khác đều dòng dõi tổ tiên ta.",
-      duration: 1086
+      transcript:
+        "Năm ngón tay có ngón dài ngón ngắn, nhưng cả năm ngón đều thuộc về một bàn tay. Trong mấy triệu người cũng có người thế này thế khác, nhưng thế này hay thế khác đều dòng dõi tổ tiên ta.",
+      duration: 1086,
     },
     subtitle: "Tinh thần khoan dung, độ lượng",
     quote: {
       text: "Năm ngón tay có ngón dài ngón ngắn, nhưng cả năm ngón đều thuộc về một bàn tay. Trong mấy triệu người cũng có người thế này thế khác, nhưng thế này hay thế khác đều dòng dõi tổ tiên ta. Vậy nên phải khoan hồng, đại độ... Có như thế mới thành đoàn kết, có đại đoàn kết thì tương lai chắc chắn sẽ vẻ vang.",
-      source: "Chủ tịch Hồ Chí Minh"
+      source: "Chủ tịch Hồ Chí Minh",
     },
     mainPoints: [
       "Khoan dung với những khác biệt",
       "Độ lượng với những sai lầm",
       "Đoàn kết trong đa dạng",
-      "Tương lai vẻ vang nhờ đoàn kết"
+      "Tương lai vẻ vang nhờ đoàn kết",
     ],
     media: {
       type: "image",
       src: "/imgs/Part3/Có lòng khoan dung, độ lượng.jpg",
       alt: "Lòng khoan dung, độ lượng",
-      caption: "Tinh thần khoan dung, độ lượng của Bác Hồ"
+      caption: "Tinh thần khoan dung, độ lượng của Bác Hồ",
     },
     examples: [
       {
         title: "Chính sách hòa hợp dân tộc",
         desc: "Hòa hợp, hòa giải dân tộc sau chiến tranh",
         link: null,
-        external: false
-      }
+        external: false,
+      },
     ],
-    references: [
-      "Toàn tập Hồ Chí Minh — tập 7, trang 156"
-    ],
-    footerNote: "Tư tưởng Hồ Chí Minh về khoan dung, độ lượng"
+    references: ["Toàn tập Hồ Chí Minh — tập 7, trang 156"],
+    footerNote: "Tư tưởng Hồ Chí Minh về khoan dung, độ lượng",
   },
   {
     id: "d-tin-nhan-dan",
@@ -223,49 +225,49 @@ const carouselData: CarouselItem[] = [
     heroImage: "/imgs/Part3/Có niềm tin vào nhân dân.jpg",
     badge: "Mục tiêu 4",
     highlight: false,
-    contentHtml: "Nhân dân là nền tảng, gốc rễ, chủ thể của mặt trận. Là chỗ dựa vững chắc của Đảng, là cội nguồn sức mạnh vô tận quyết định thắng lợi của cách mạng.",
+    contentHtml:
+      "Nhân dân là nền tảng, gốc rễ, chủ thể của mặt trận. Là chỗ dựa vững chắc của Đảng, là cội nguồn sức mạnh vô tận quyết định thắng lợi của cách mạng.",
     color: "#2563eb",
     audio: {
       src: "/audios/P4.mp3",
-      transcript: "Nhân dân là nền tảng, gốc rễ, chủ thể của mặt trận. Là chỗ dựa vững chắc của Đảng, là cội nguồn sức mạnh vô tận quyết định thắng lợi của cách mạng.",
-      duration: 835
+      transcript:
+        "Nhân dân là nền tảng, gốc rễ, chủ thể của mặt trận. Là chỗ dựa vững chắc của Đảng, là cội nguồn sức mạnh vô tận quyết định thắng lợi của cách mạng.",
+      duration: 835,
     },
     subtitle: "Niềm tin vào sức mạnh nhân dân",
     quote: {
       text: "Nhân dân là nền tảng, gốc rễ, chủ thể của mặt trận. Là chỗ dựa vững chắc của Đảng, là cội nguồn sức mạnh vô tận quyết định thắng lợi của cách mạng.",
-      source: "Chủ tịch Hồ Chí Minh"
+      source: "Chủ tịch Hồ Chí Minh",
     },
     mainPoints: [
       "Nhân dân là nền tảng của cách mạng",
       "Tin tưởng vào sức mạnh nhân dân",
       "Dựa vào nhân dân trong mọi hoạt động",
-      "Nhân dân quyết định thắng lợi"
+      "Nhân dân quyết định thắng lợi",
     ],
     media: {
       type: "image",
       src: "/imgs/Part3/Có niềm tin vào nhân dân.jpg",
       alt: "Niềm tin vào nhân dân",
-      caption: "Bác Hồ với nhân dân"
+      caption: "Bác Hồ với nhân dân",
     },
     examples: [
       {
         title: "Phong trào cách mạng",
         desc: "Nhân dân là lực lượng chính của cách mạng",
         link: null,
-        external: false
-      }
+        external: false,
+      },
     ],
-    references: [
-      "Toàn tập Hồ Chí Minh — tập 8, trang 234"
-    ],
-    footerNote: "Tư tưởng Hồ Chí Minh về nhân dân"
-  }
+    references: ["Toàn tập Hồ Chí Minh — tập 8, trang 234"],
+    footerNote: "Tư tưởng Hồ Chí Minh về nhân dân",
+  },
 ];
 
 // Center Mode Carousel Component
-function CenterModeCarousel({ 
-  onOpenModal 
-}: { 
+function CenterModeCarousel({
+  onOpenModal,
+}: {
   onOpenModal: (item: CarouselItem) => void;
 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -302,7 +304,6 @@ function CenterModeCarousel({
     }
     return () => stopAutoplay();
   }, [isPlaying, isHovered, startAutoplay, stopAutoplay]);
-
 
   // Navigation functions
   const goToPrevious = () => {
@@ -343,18 +344,18 @@ function CenterModeCarousel({
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') {
+      if (e.key === "ArrowLeft") {
         goToPrevious();
-      } else if (e.key === 'ArrowRight') {
+      } else if (e.key === "ArrowRight") {
         goToNext();
-      } else if (e.key === ' ') {
+      } else if (e.key === " ") {
         e.preventDefault();
         togglePlayPause();
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   // Get visible items (center + adjacent)
@@ -365,7 +366,7 @@ function CenterModeCarousel({
       items.push({
         ...carouselData[index],
         position: i,
-        isCenter: i === 0
+        isCenter: i === 0,
       });
     }
     return items;
@@ -374,7 +375,7 @@ function CenterModeCarousel({
   const visibleItems = getVisibleItems();
 
   return (
-    <div 
+    <div
       ref={carouselRef}
       className="relative w-full h-[600px] flex items-center justify-center"
       role="region"
@@ -388,26 +389,38 @@ function CenterModeCarousel({
     >
       {/* Progress indicator */}
       <div className="absolute top-4 left-4 flex items-center gap-2 text-sm text-gray-600">
-        <span className="font-semibold">{currentIndex + 1} / {totalItems}</span>
+        <span className="font-semibold">
+          {currentIndex + 1} / {totalItems}
+        </span>
       </div>
 
       {/* Play/Pause button */}
       <button
         onClick={togglePlayPause}
         className="absolute top-4 right-4 px-3 py-1 rounded-full border border-gray-300 bg-white shadow-sm text-sm flex items-center gap-2 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500"
-        aria-label={isPlaying ? "Tạm dừng phát tự động" : "Tiếp tục phát tự động"}
+        aria-label={
+          isPlaying ? "Tạm dừng phát tự động" : "Tiếp tục phát tự động"
+        }
         aria-pressed={!isPlaying}
       >
         {isPlaying ? (
-          <svg className="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+          <svg
+            className="w-4 h-4 text-red-600"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
           </svg>
         ) : (
-          <svg className="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M8 5v14l11-7z"/>
+          <svg
+            className="w-4 h-4 text-red-600"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path d="M8 5v14l11-7z" />
           </svg>
         )}
-        {isPlaying ? 'Tạm dừng' : 'Phát'}
+        {isPlaying ? "Tạm dừng" : "Phát"}
       </button>
 
       {/* Navigation arrows */}
@@ -416,8 +429,18 @@ function CenterModeCarousel({
         className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:scale-105 hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 z-40"
         aria-label="Trước"
       >
-        <svg className="w-5 h-5 md:w-6 md:h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        <svg
+          className="w-5 h-5 md:w-6 md:h-6 text-gray-700"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15 19l-7-7 7-7"
+          />
         </svg>
       </button>
 
@@ -426,8 +449,18 @@ function CenterModeCarousel({
         className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:scale-105 hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 z-40"
         aria-label="Sau"
       >
-        <svg className="w-5 h-5 md:w-6 md:h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        <svg
+          className="w-5 h-5 md:w-6 md:h-6 text-gray-700"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
         </svg>
       </button>
 
@@ -437,16 +470,16 @@ function CenterModeCarousel({
           {visibleItems.map((item, index) => {
             const isCenter = item.isCenter;
             const isLeft = item.position === -1;
-            
+
             return (
               <div
                 key={`${item.id}-${index}`}
                 className={`relative transition-all duration-500 ease-[cubic-bezier(0.22,0.9,0.36,1)] ${
-                  isCenter 
-                    ? 'w-full max-w-[320px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[760px] h-[400px] sm:h-[450px] md:h-[480px] z-30 scale-100' 
-                    : isLeft 
-                    ? 'hidden md:block w-[180px] lg:w-[240px] h-[270px] lg:h-[288px] z-20 scale-90 -translate-x-4 lg:-translate-x-8 opacity-60' 
-                    : 'hidden md:block w-[180px] lg:w-[240px] h-[270px] lg:h-[288px] z-20 scale-90 translate-x-4 lg:translate-x-8 opacity-60'
+                  isCenter
+                    ? "w-full max-w-[320px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[760px] h-[400px] sm:h-[450px] md:h-[480px] z-30 scale-100"
+                    : isLeft
+                    ? "hidden md:block w-[180px] lg:w-[240px] h-[270px] lg:h-[288px] z-20 scale-90 -translate-x-4 lg:-translate-x-8 opacity-60"
+                    : "hidden md:block w-[180px] lg:w-[240px] h-[270px] lg:h-[288px] z-20 scale-90 translate-x-4 lg:translate-x-8 opacity-60"
                 }`}
                 role="group"
                 aria-label={`${item.badge}: ${item.title}`}
@@ -481,7 +514,7 @@ function CenterModeCarousel({
                       <p className="text-gray-600 text-sm mb-4 line-clamp-2">
                         {item.teaser}
                       </p>
-                      
+
                       {/* Quote box */}
                       <div className="border-l-4 border-red-300 bg-red-50 rounded-md p-4 mb-4">
                         <p className="text-sm text-gray-700 italic line-clamp-3">
@@ -491,7 +524,7 @@ function CenterModeCarousel({
                     </div>
 
                     {/* CTA Button */}
-                    <button 
+                    <button
                       onClick={() => onOpenModal(item)}
                       className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500"
                     >
@@ -509,21 +542,20 @@ function CenterModeCarousel({
       <div aria-live="polite" aria-atomic="true" className="sr-only">
         {carouselData[currentIndex]?.title}
       </div>
-
     </div>
   );
 }
 
 // Audio Player Component
-function AudioPlayer({ 
-  item, 
-  isActive, 
-  onPlay, 
-  onPause 
-}: { 
-  item: CarouselItem; 
-  isActive: boolean; 
-  onPlay: (id: string) => void; 
+function AudioPlayer({
+  item,
+  isActive,
+  onPlay,
+  onPause,
+}: {
+  item: CarouselItem;
+  isActive: boolean;
+  onPlay: (id: string) => void;
   onPause: () => void;
 }) {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -538,7 +570,7 @@ function AudioPlayer({
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
   // Load audio metadata
@@ -546,7 +578,7 @@ function AudioPlayer({
     if (!item.audio || !audioRef.current) return;
 
     const audio = audioRef.current;
-    
+
     const handleLoadedMetadata = () => {
       setDuration(audio.duration);
     };
@@ -568,18 +600,18 @@ function AudioPlayer({
       setIsLoading(false);
     };
 
-    audio.addEventListener('loadedmetadata', handleLoadedMetadata);
-    audio.addEventListener('timeupdate', handleTimeUpdate);
-    audio.addEventListener('ended', handleEnded);
-    audio.addEventListener('loadstart', handleLoadStart);
-    audio.addEventListener('canplay', handleCanPlay);
+    audio.addEventListener("loadedmetadata", handleLoadedMetadata);
+    audio.addEventListener("timeupdate", handleTimeUpdate);
+    audio.addEventListener("ended", handleEnded);
+    audio.addEventListener("loadstart", handleLoadStart);
+    audio.addEventListener("canplay", handleCanPlay);
 
     return () => {
-      audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
-      audio.removeEventListener('timeupdate', handleTimeUpdate);
-      audio.removeEventListener('ended', handleEnded);
-      audio.removeEventListener('loadstart', handleLoadStart);
-      audio.removeEventListener('canplay', handleCanPlay);
+      audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      audio.removeEventListener("timeupdate", handleTimeUpdate);
+      audio.removeEventListener("ended", handleEnded);
+      audio.removeEventListener("loadstart", handleLoadStart);
+      audio.removeEventListener("canplay", handleCanPlay);
     };
   }, [item.audio]);
 
@@ -595,12 +627,12 @@ function AudioPlayer({
       } else {
         // Pause other audio players
         onPlay(item.id);
-        
+
         await audioRef.current.play();
         setIsPlaying(true);
       }
     } catch (error) {
-      console.error('Error playing audio:', error);
+      console.error("Error playing audio:", error);
     }
   };
 
@@ -613,7 +645,7 @@ function AudioPlayer({
 
     const clickX = e.clientX - rect.left;
     const newTime = (clickX / rect.width) * duration;
-    
+
     audioRef.current.currentTime = newTime;
     setCurrentTime(newTime);
   };
@@ -621,8 +653,8 @@ function AudioPlayer({
   // Handle download
   const handleDownload = () => {
     if (!item.audio) return;
-    
-    const link = document.createElement('a');
+
+    const link = document.createElement("a");
     link.href = item.audio.src;
     link.download = `P${item.index}.mp3`;
     document.body.appendChild(link);
@@ -632,7 +664,7 @@ function AudioPlayer({
 
   // Handle keyboard events
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === ' ' || e.key === 'Enter') {
+    if (e.key === " " || e.key === "Enter") {
       e.preventDefault();
       togglePlayPause();
     }
@@ -649,15 +681,19 @@ function AudioPlayer({
   if (!item.audio) return null;
 
   return (
-    <div className={`bg-gray-50 rounded-lg p-4 border transition-all duration-300 ${
-      isActive ? 'border-red-500 bg-red-50' : 'border-gray-200 hover:border-gray-300'
-    }`}>
+    <div
+      className={`bg-gray-50 rounded-lg p-4 border transition-all duration-300 ${
+        isActive
+          ? "border-red-500 bg-red-50"
+          : "border-gray-200 hover:border-gray-300"
+      }`}
+    >
       {/* Audio element */}
       <audio
         ref={audioRef}
         src={item.audio.src}
         preload="metadata"
-        onError={(e) => console.error('Audio load error:', e)}
+        onError={(e) => console.error("Audio load error:", e)}
       />
 
       {/* Header with title and status */}
@@ -667,12 +703,18 @@ function AudioPlayer({
           {isActive && isPlaying && (
             <div className="flex items-center gap-1">
               <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-              <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-              <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+              <div
+                className="w-2 h-2 bg-red-500 rounded-full animate-pulse"
+                style={{ animationDelay: "0.2s" }}
+              ></div>
+              <div
+                className="w-2 h-2 bg-red-500 rounded-full animate-pulse"
+                style={{ animationDelay: "0.4s" }}
+              ></div>
             </div>
           )}
         </div>
-        
+
         {/* Playback rate selector */}
         <select
           value={playbackRate}
@@ -692,7 +734,7 @@ function AudioPlayer({
       </p>
 
       {/* Progress bar */}
-      <div 
+      <div
         ref={progressRef}
         className="w-full h-2 bg-gray-200 rounded-full cursor-pointer mb-2 hover:bg-gray-300 transition-colors"
         onClick={handleProgressClick}
@@ -701,9 +743,11 @@ function AudioPlayer({
         tabIndex={0}
         onKeyDown={handleKeyDown}
       >
-        <div 
+        <div
           className="h-full bg-red-500 rounded-full transition-all duration-100"
-          style={{ width: duration ? `${(currentTime / duration) * 100}%` : '0%' }}
+          style={{
+            width: duration ? `${(currentTime / duration) * 100}%` : "0%",
+          }}
         />
       </div>
 
@@ -720,17 +764,21 @@ function AudioPlayer({
           onKeyDown={handleKeyDown}
           disabled={isLoading}
           className="flex items-center justify-center w-10 h-10 bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-red-500"
-          aria-label={isPlaying ? 'Tạm dừng' : 'Phát'}
+          aria-label={isPlaying ? "Tạm dừng" : "Phát"}
         >
           {isLoading ? (
             <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
           ) : isPlaying ? (
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+              <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
             </svg>
           ) : (
-            <svg className="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M8 5v14l11-7z"/>
+            <svg
+              className="w-5 h-5 ml-0.5"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M8 5v14l11-7z" />
             </svg>
           )}
         </button>
@@ -740,8 +788,18 @@ function AudioPlayer({
           className="flex items-center gap-2 px-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-red-500"
           aria-label="Tải xuống file âm thanh"
         >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+            />
           </svg>
           Tải xuống
         </button>
@@ -773,7 +831,7 @@ function useFocusTrap(isActive: boolean) {
     const lastElement = focusableElements[focusableElements.length - 1];
 
     const handleTabKey = (e: KeyboardEvent) => {
-      if (e.key !== 'Tab') return;
+      if (e.key !== "Tab") return;
 
       if (e.shiftKey) {
         // Shift + Tab
@@ -794,10 +852,10 @@ function useFocusTrap(isActive: boolean) {
     firstElement?.focus();
 
     // Add event listener
-    document.addEventListener('keydown', handleTabKey);
+    document.addEventListener("keydown", handleTabKey);
 
     return () => {
-      document.removeEventListener('keydown', handleTabKey);
+      document.removeEventListener("keydown", handleTabKey);
       // Return focus to the previously focused element
       previousActiveElement.current?.focus();
     };
@@ -807,23 +865,19 @@ function useFocusTrap(isActive: boolean) {
 }
 
 // Share Button Component with Web Share API and Social Media fallback
-function ShareButton({ 
-  item 
-}: { 
-  item: CarouselItem;
-}) {
+function ShareButton({ item }: { item: CarouselItem }) {
   const [showSocialButtons, setShowSocialButtons] = useState(false);
   const [isSupported, setIsSupported] = useState(false);
 
   useEffect(() => {
     // Check if Web Share API is supported
-    setIsSupported('share' in navigator);
+    setIsSupported("share" in navigator);
   }, []);
 
   const shareData = {
     title: item.title,
     text: item.teaser,
-    url: `${window.location.origin}/part3#${item.id}`
+    url: `${window.location.origin}/part3#${item.id}`,
   };
 
   const handleNativeShare = async () => {
@@ -831,7 +885,7 @@ function ShareButton({
       try {
         await navigator.share(shareData);
       } catch (err) {
-        console.error('Error sharing:', err);
+        console.error("Error sharing:", err);
         // Fallback to social buttons if native share fails
         setShowSocialButtons(true);
       }
@@ -842,32 +896,38 @@ function ShareButton({
 
   const handleSocialShare = (platform: string) => {
     const { url, title, text } = shareData;
-    let shareUrl = '';
+    let shareUrl = "";
 
     switch (platform) {
-      case 'facebook':
-        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+      case "facebook":
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+          url
+        )}`;
         break;
-      case 'twitter':
-        shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title + ' - ' + text)}`;
+      case "twitter":
+        shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+          url
+        )}&text=${encodeURIComponent(title + " - " + text)}`;
         break;
-      case 'linkedin':
-        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+      case "linkedin":
+        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+          url
+        )}`;
         break;
       default:
         return;
     }
 
-    window.open(shareUrl, '_blank', 'width=600,height=400');
+    window.open(shareUrl, "_blank", "width=600,height=400");
   };
 
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(shareData.url);
       // You could show a toast notification here
-      alert('Đã copy link vào clipboard!');
+      alert("Đã copy link vào clipboard!");
     } catch (err) {
-      console.error('Failed to copy URL:', err);
+      console.error("Failed to copy URL:", err);
     }
   };
 
@@ -878,34 +938,34 @@ function ShareButton({
         <div className="flex items-center gap-3 justify-center">
           {/* Facebook */}
           <button
-            onClick={() => handleSocialShare('facebook')}
+            onClick={() => handleSocialShare("facebook")}
             className="w-10 h-10 rounded-full bg-[#1877F2] hover:bg-[#166FE5] text-white flex items-center justify-center transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#1877F2] focus:ring-offset-2"
             aria-label="Chia sẻ trên Facebook"
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
             </svg>
           </button>
 
           {/* Twitter */}
           <button
-            onClick={() => handleSocialShare('twitter')}
+            onClick={() => handleSocialShare("twitter")}
             className="w-10 h-10 rounded-full bg-[#1DA1F2] hover:bg-[#1A91DA] text-white flex items-center justify-center transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#1DA1F2] focus:ring-offset-2"
             aria-label="Chia sẻ trên Twitter"
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+              <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
             </svg>
           </button>
 
           {/* LinkedIn */}
           <button
-            onClick={() => handleSocialShare('linkedin')}
+            onClick={() => handleSocialShare("linkedin")}
             className="w-10 h-10 rounded-full bg-[#0A66C2] hover:bg-[#085D9C] text-white flex items-center justify-center transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#0A66C2] focus:ring-offset-2"
             aria-label="Chia sẻ trên LinkedIn"
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
             </svg>
           </button>
 
@@ -915,8 +975,18 @@ function ShareButton({
             className="w-10 h-10 rounded-full bg-gray-600 hover:bg-gray-700 text-white flex items-center justify-center transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2"
             aria-label="Copy link"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+              />
             </svg>
           </button>
         </div>
@@ -940,8 +1010,18 @@ function ShareButton({
       className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500 transition-colors duration-200 flex items-center gap-2"
       aria-label="Chia sẻ"
     >
-      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+      <svg
+        className="w-4 h-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"
+        />
       </svg>
       Chia sẻ
     </button>
@@ -949,16 +1029,16 @@ function ShareButton({
 }
 
 // Detailed Modal Component
-function DetailModal({ 
-  item, 
-  isOpen, 
+function DetailModal({
+  item,
+  isOpen,
   onClose,
   activeAudioId,
   onAudioPlay,
-  onAudioPause
-}: { 
-  item: CarouselItem; 
-  isOpen: boolean; 
+  onAudioPause,
+}: {
+  item: CarouselItem;
+  isOpen: boolean;
   onClose: () => void;
   activeAudioId: string | null;
   onAudioPlay: (id: string) => void;
@@ -969,18 +1049,18 @@ function DetailModal({
 
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
 
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [isOpen]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Escape') {
+    if (e.key === "Escape") {
       onClose();
     }
   };
@@ -1010,9 +1090,9 @@ function DetailModal({
           className="bg-white rounded-2xl overflow-hidden shadow-2xl max-h-[90vh] w-full max-w-[min(1100px,92vw)] md:max-w-[min(900px,94vw)] lg:max-w-[1100px]"
         >
           {/* Header */}
-          <div 
+          <div
             className="bg-gradient-to-r from-purple-600 to-pink-500 text-white p-6 relative"
-            style={{ minHeight: '140px' }}
+            style={{ minHeight: "140px" }}
           >
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-4">
@@ -1020,15 +1100,15 @@ function DetailModal({
                 <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-lg">
                   {item.index}
                 </div>
-                
+
                 <div>
-                  <h2 
+                  <h2
                     id={`modal-title-${item.id}`}
                     className="text-2xl md:text-3xl font-extrabold mb-2"
                   >
                     {item.title}
                   </h2>
-                  <p 
+                  <p
                     id={`modal-description-${item.id}`}
                     className="text-lg opacity-90"
                   >
@@ -1043,8 +1123,18 @@ function DetailModal({
                 className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center shadow-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50"
                 aria-label="Đóng"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
             </div>
@@ -1071,7 +1161,9 @@ function DetailModal({
                   {/* Audio Player */}
                   {item.audio && (
                     <div className="bg-white border border-gray-200 rounded-lg p-6">
-                      <h3 className="text-xl font-bold text-gray-900 mb-4">Nghe âm thanh</h3>
+                      <h3 className="text-xl font-bold text-gray-900 mb-4">
+                        Nghe âm thanh
+                      </h3>
                       <AudioPlayer
                         item={item}
                         isActive={activeAudioId === item.id}
@@ -1084,12 +1176,16 @@ function DetailModal({
                   {/* Main Content */}
                   {item.mainPoints && item.mainPoints.length > 0 && (
                     <div className="bg-white border border-gray-200 rounded-lg p-6">
-                      <h3 className="text-xl font-bold text-gray-900 mb-4">Nội dung chính</h3>
+                      <h3 className="text-xl font-bold text-gray-900 mb-4">
+                        Nội dung chính
+                      </h3>
                       <ul className="space-y-3">
                         {item.mainPoints.map((point, index) => (
                           <li key={index} className="flex items-start gap-3">
                             <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                            <span className="text-gray-700 leading-relaxed">{point}</span>
+                            <span className="text-gray-700 leading-relaxed">
+                              {point}
+                            </span>
                           </li>
                         ))}
                       </ul>
@@ -1099,25 +1195,44 @@ function DetailModal({
                   {/* Examples */}
                   {item.examples && item.examples.length > 0 && (
                     <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                      <h3 className="text-xl font-bold text-gray-900 mb-4">Ví dụ thực tiễn</h3>
+                      <h3 className="text-xl font-bold text-gray-900 mb-4">
+                        Ví dụ thực tiễn
+                      </h3>
                       <div className="space-y-4">
                         {item.examples.map((example, index) => (
-                          <div key={index} className="bg-white rounded-lg p-4 border border-blue-100">
-                            <h4 className="font-semibold text-gray-900 mb-2">{example.title}</h4>
+                          <div
+                            key={index}
+                            className="bg-white rounded-lg p-4 border border-blue-100"
+                          >
+                            <h4 className="font-semibold text-gray-900 mb-2">
+                              {example.title}
+                            </h4>
                             <p className="text-gray-700 mb-3">{example.desc}</p>
                             {example.link && (
                               <a
                                 href={example.link}
                                 target={example.external ? "_blank" : "_self"}
-                                rel={example.external ? "noopener noreferrer" : ""}
+                                rel={
+                                  example.external ? "noopener noreferrer" : ""
+                                }
                                 className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium"
                               >
                                 {example.external && (
-                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                  <svg
+                                    className="w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                    />
                                   </svg>
                                 )}
-                                {example.external ? 'Xem thêm' : 'Chi tiết'}
+                                {example.external ? "Xem thêm" : "Chi tiết"}
                               </a>
                             )}
                           </div>
@@ -1129,7 +1244,9 @@ function DetailModal({
                   {/* References */}
                   {item.references && item.references.length > 0 && (
                     <div className="bg-gray-50 rounded-lg p-6">
-                      <h3 className="text-xl font-bold text-gray-900 mb-4">Tài liệu tham khảo</h3>
+                      <h3 className="text-xl font-bold text-gray-900 mb-4">
+                        Tài liệu tham khảo
+                      </h3>
                       <ul className="space-y-2">
                         {item.references.map((ref, index) => (
                           <li key={index} className="text-gray-700 text-sm">
@@ -1177,9 +1294,7 @@ function DetailModal({
 
           {/* Footer */}
           <div className="border-t border-gray-200 bg-gray-50 px-6 py-4 flex items-center justify-between">
-            <div className="text-sm text-gray-600">
-              {item.footerNote}
-            </div>
+            <div className="text-sm text-gray-600">{item.footerNote}</div>
             <div className="flex items-center gap-3">
               <ShareButton item={item} />
               <button
@@ -1210,8 +1325,18 @@ function DetailModal({
               className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors duration-200"
               aria-label="Đóng ảnh"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
           </div>
@@ -1236,14 +1361,14 @@ export default function Part3Detail() {
   useEffect(() => {
     // Force scroll to top immediately
     window.scrollTo(0, 0);
-    
+
     // Also ensure body scroll is reset
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
-    
+
     // Prevent any scroll restoration
-    if ('scrollRestoration' in history) {
-      history.scrollRestoration = 'manual';
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
     }
   }, []); // Empty dependency array means this runs only once when component mounts
 
@@ -1270,23 +1395,23 @@ export default function Part3Detail() {
   // Set page title and meta description
   useEffect(() => {
     document.title = pageData.seo.title;
-    
+
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', pageData.seo.description);
+      metaDescription.setAttribute("content", pageData.seo.description);
     } else {
-      const meta = document.createElement('meta');
-      meta.name = 'description';
+      const meta = document.createElement("meta");
+      meta.name = "description";
       meta.content = pageData.seo.description;
       document.head.appendChild(meta);
     }
 
     const metaKeywords = document.querySelector('meta[name="keywords"]');
     if (metaKeywords) {
-      metaKeywords.setAttribute('content', pageData.seo.keywords);
+      metaKeywords.setAttribute("content", pageData.seo.keywords);
     } else {
-      const meta = document.createElement('meta');
-      meta.name = 'keywords';
+      const meta = document.createElement("meta");
+      meta.name = "keywords";
       meta.content = pageData.seo.keywords;
       document.head.appendChild(meta);
     }
@@ -1301,8 +1426,10 @@ export default function Part3Detail() {
       </div>
 
       {/* Header - now scrolls with content */}
-      <header className="relative z-10 h-80 md:h-96 bg-cover bg-center flex items-center justify-center" 
-               style={{ backgroundImage: 'url("/imgs/Part3/Hồ Chí MInh.jpg")' }}>
+      <header
+        className="relative z-10 h-80 md:h-96 bg-cover bg-center flex items-center justify-center"
+        style={{ backgroundImage: 'url("/imgs/Part3/Hồ Chí MInh.jpg")' }}
+      >
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent" />
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
           <h1 className="flex justify-center items-center relative uppercase text-white font-heading text-4xl md:text-5xl mb-4 z-10">
@@ -1343,20 +1470,25 @@ export default function Part3Detail() {
         {/* Center Mode Carousel */}
         <CenterModeCarousel onOpenModal={handleOpenModal} />
 
-
         {/* References Section */}
         <section aria-label="Tài liệu tham khảo" className="bg-white py-16">
           <div className="container mx-auto px-6">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Tài liệu tham khảo</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">
+                Tài liệu tham khảo
+              </h2>
               <div className="grid md:grid-cols-2 gap-6">
                 {pageData.references.map((ref, index) => (
                   <div key={index} className="bg-gray-50 rounded-lg p-6">
-                    <p className="font-semibold text-gray-900 mb-2">{ref.title}</p>
-                    {ref.note && <p className="text-sm text-gray-600">{ref.note}</p>}
+                    <p className="font-semibold text-gray-900 mb-2">
+                      {ref.title}
+                    </p>
+                    {ref.note && (
+                      <p className="text-sm text-gray-600">{ref.note}</p>
+                    )}
                   </div>
-            ))}
-          </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -1368,14 +1500,24 @@ export default function Part3Detail() {
               to="/"
               className="inline-flex items-center px-6 py-3 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-300"
             >
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              <svg
+                className="w-5 h-5 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                />
               </svg>
               Quay lại trang chủ
             </Link>
-            </div>
           </div>
         </div>
+      </div>
 
       {/* Detail Modal */}
       {selectedItem && (
@@ -1486,5 +1628,3 @@ export default function Part3Detail() {
     </main>
   );
 }
-
-

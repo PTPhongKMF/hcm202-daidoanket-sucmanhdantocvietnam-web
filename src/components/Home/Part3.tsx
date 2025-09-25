@@ -1,12 +1,76 @@
 import { Link } from "react-router";
-import { useState, useEffect } from "react";
-import { TypingAnimation } from "../magicui/TypingAnimation";
+import { useState, useEffect, useRef } from "react";
+import { motion, stagger, useAnimate, useInView } from "motion/react";
+import { cn } from "../../utils/cn";
 
+// Custom TextGenerateEffect with startOnView support
+const TextGenerateEffectOnView = ({
+  words,
+  className,
+  filter = true,
+  duration = 0.5,
+  startOnView = true,
+}: {
+  words: string;
+  className?: string;
+  filter?: boolean;
+  duration?: number;
+  startOnView?: boolean;
+}) => {
+  const [scope, animate] = useAnimate();
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const wordsArray = words.split(" ");
+
+  useEffect(() => {
+    if ((startOnView && isInView) || !startOnView) {
+      animate(
+        "span",
+        {
+          opacity: 1,
+          filter: filter ? "blur(0px)" : "none",
+        },
+        {
+          duration: duration ? duration : 1,
+          delay: stagger(0.2),
+        }
+      );
+    }
+  }, [isInView, startOnView, animate, duration, filter]);
+
+  const renderWords = () => {
+    return (
+      <motion.div ref={scope} className="flex flex-wrap justify-center items-center">
+        {wordsArray.map((word, idx) => {
+          return (
+            <motion.span
+              key={word + idx}
+              className="text-white opacity-0 inline-block mr-2 md:mr-3"
+              style={{
+                filter: filter ? "blur(10px)" : "none",
+              }}
+            >
+              {word}
+            </motion.span>
+          );
+        })}
+      </motion.div>
+    );
+  };
+
+  return (
+    <div ref={ref} className={cn("font-bold", className)}>
+      <div className="text-white font-heading text-4xl md:text-5xl leading-tight tracking-normal uppercase text-center [text-shadow:-3px_2px_0px_black] drop-shadow-lg">
+        {renderWords()}
+      </div>
+    </div>
+  );
+};
 
 export default function Part3() {
   const [isVisible, setIsVisible] = useState(false);
   const [cardsVisible, setCardsVisible] = useState(false);
-  
+
   useEffect(() => {
     setIsVisible(true);
     // Delay card animations
@@ -67,12 +131,14 @@ export default function Part3() {
   const renderCard = (card: (typeof cardData)[number], index: number) => (
     <div
       className={`card group transition-all duration-700 ${
-        cardsVisible ? 'animate-slide-in' : 'opacity-0 translate-y-8'
+        cardsVisible ? "animate-slide-in" : "opacity-0 translate-y-8"
       }`}
-      style={{ 
-        "--clr": card.color,
-        animationDelay: `${index * 200}ms`
-      } as React.CSSProperties}
+      style={
+        {
+          "--clr": card.color,
+          animationDelay: `${index * 200}ms`,
+        } as React.CSSProperties
+      }
     >
       <div className="circle">
         <img src={card.image} alt={card.title} className="logo" />
@@ -134,36 +200,38 @@ export default function Part3() {
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: 'url("/imgs/HCM đoàn kết dân tộc.jpg")',
+          backgroundImage:
+            'url("/imgs/Part3/Điều kiện để xây dựng khối đại đoàn kết toàn dân tộc.jpg")',
         }}
       ></div>
-      <div className="absolute inset-0 animated-bg-enhanced"></div>
+      <div className="z-0 absolute size-full top-0 bg-linear-to-b from-gray-50 from-[0.1%] via-transparent to-gray-50 to-99%" />
+      {/* <div className="absolute inset-0 animated-bg-enhanced"></div> */}
       {/* Additional patriotic gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-red-900/20 via-transparent to-blue-900/20"></div>
       {/* Header */}
       <div className="text-center py-12 relative z-10">
-        <h1 className="flex justify-center items-center relative uppercase text-white font-heading text-4xl md:text-5xl mb-4 min-h-[120px] z-10">
-          <TypingAnimation
+        <h1 className="flex justify-center items-center relative mb-4 min-h-[120px] z-10">
+          <TextGenerateEffectOnView
+            words="Điều kiện để xây dựng khối đại đoàn kết toàn dân tộc"
+            className="w-full"
+            filter={true}
+            duration={2}
             startOnView={true}
-            duration={70}
-            className="text-white font-heading text-4xl md:text-5xl z-90 [text-shadow:-3px_2px_0px_black] drop-shadow-lg drop-shadow-black"
-          >
-            Điều kiện để xây dựng khối đại đoàn kết toàn dân tộc
-          </TypingAnimation>
+          />
         </h1>
-        
+
         {/* Animated divider */}
-        <div 
+        <div
           className={`w-32 h-1 bg-gradient-to-r from-red-600 to-yellow-500 mx-auto mb-6 scale-in`}
-          style={{ animationDelay: '2s' }}
+          style={{ animationDelay: "4s" }}
         ></div>
-        
+
         {/* Animated button */}
         <div
           className={`transition-all duration-700 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
-          style={{ transitionDelay: '2.5s' }}
+          style={{ transitionDelay: "4.5s" }}
         >
           <Link
             to="/part3"
@@ -199,10 +267,10 @@ export default function Part3() {
                 />
               </filter>
               <filter id="glow">
-                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                <feMerge> 
-                  <feMergeNode in="coloredBlur"/>
-                  <feMergeNode in="SourceGraphic"/>
+                <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+                <feMerge>
+                  <feMergeNode in="coloredBlur" />
+                  <feMergeNode in="SourceGraphic" />
                 </feMerge>
               </filter>
             </defs>
@@ -223,16 +291,36 @@ export default function Part3() {
               <animateMotion dur="8s" repeatCount="indefinite" rotate="auto">
                 <mpath href="#starPath" />
               </animateMotion>
-              <animate attributeName="r" values="2;3;2" dur="2s" repeatCount="indefinite"/>
-              <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
+              <animate
+                attributeName="r"
+                values="2;3;2"
+                dur="2s"
+                repeatCount="indefinite"
+              />
+              <animate
+                attributeName="opacity"
+                values="0.8;1;0.8"
+                dur="2s"
+                repeatCount="indefinite"
+              />
             </circle>
-            
+
             {/* Additional sparkle effects */}
             <circle r="1" fill="#fbbf24" opacity="0.6">
-              <animateMotion dur="8s" repeatCount="indefinite" rotate="auto" begin="1s">
+              <animateMotion
+                dur="8s"
+                repeatCount="indefinite"
+                rotate="auto"
+                begin="1s"
+              >
                 <mpath href="#starPath" />
               </animateMotion>
-              <animate attributeName="opacity" values="0;0.8;0" dur="1.5s" repeatCount="indefinite"/>
+              <animate
+                attributeName="opacity"
+                values="0;0.8;0"
+                dur="1.5s"
+                repeatCount="indefinite"
+              />
             </circle>
             {/* Dash offset animation */}
             <animate
@@ -250,7 +338,11 @@ export default function Part3() {
             {renderCard(cardData[0], 0)}
           </div>
           <div className="node node-mean" style={{ left: "50%", top: "6%" }}>
-            <div className={`meaning-card glassmorphism ${cardsVisible ? 'animate-bounce-in' : 'opacity-0 scale-75'}`}>
+            <div
+              className={`meaning-card glassmorphism ${
+                cardsVisible ? "animate-bounce-in" : "opacity-0 scale-75"
+              }`}
+            >
               <div className="flex items-center justify-center mb-2">
                 <span className="text-2xl">📘</span>
               </div>
