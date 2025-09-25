@@ -169,27 +169,27 @@ export default function FloatAIChat() {
                 chatHistory.map((msg, index) => {
                   if (msg.isBot) {
                     return (
-                      <div key={index} className="flex justify-start items-start gap-1 pe-2">
+                      <div key={index} className="flex justify-start items-start gap-1 pe-16">
                         <img src="/imgs/avatar/vietnamball.png" alt="Bot Image" className="size-10 rounded-full object-cover border-2 border-gray-300" />
 
                         <div className="flex flex-col">
                           <button onClick={() => speakText(index, msg.msg)} className="group flex justify-start items-center gap-1 ps-2 cursor-pointer w-fit" title="Đọc nội dung">
-                            <Speech className={clsx(
+                            <Speech className={clsx("size-4",
                               "group-hover:text-green-500",
                               speakingIndex === index && !isPaused && "group-hover:text-orange-500",
                               speakingIndex === index && "text-blue-500"
                             )}/>
                             {speakingIndex === index && !isPaused ? (
-                              <Pause className="group-hover:text-orange-500 text-blue-500"/>
+                              <Pause className="size-4 group-hover:text-orange-500 text-blue-500"/>
                             ) : (
-                              <Play className={clsx(
+                              <Play className={clsx("size-4",
                                 "group-hover:text-green-500",
                                 speakingIndex === index && isPaused && "text-blue-500"
                               )}/>
                             )}
                           </button>
 
-                          <div className="text-xs rounded-lg p-2 bg-gray-300 mt-1 prose">
+                          <div className="text-xs rounded-lg p-2 bg-gray-300 mt-1 prose break-words">
                             <ReactMarkdown>
                               {msg.msg}
                             </ReactMarkdown>
@@ -199,8 +199,8 @@ export default function FloatAIChat() {
                     );
                   } else {
                     return (
-                      <div key={index} className="flex justify-end items-start gap-1 ps-2">
-                        <p className="text-xs rounded-lg p-2 bg-gray-300 mt-1">
+                      <div key={index} className="flex justify-end items-start gap-1 ps-16">
+                        <p className="text-xs rounded-lg p-2 bg-gray-300 mt-1 break-all">
                           {msg.msg}
                         </p>
                         <img src="/imgs/avatar/user.png" alt="User Avatar" className="size-10 rounded-full object-cover border-2 border-gray-300" />
@@ -229,7 +229,7 @@ export default function FloatAIChat() {
           </ScrollArea>
         </div>
 
-        <div className="flex rounded-b-md bg-gray-200 justify-between items-center min-h-8 p-2 gap-2 border-t-1 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+        <div className="flex rounded-b-md bg-gray-200 justify-between items-center min-h-8 p-2 gap-2 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
           <Textarea
             value={userMsg}
             onChange={(e) => setUserMsg(e.target.value)}
