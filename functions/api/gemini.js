@@ -1,4 +1,70 @@
-const aiInstruction = `Bạn là DoanKetBot. 
+import { GoogleGenAI } from "@google/genai";
+
+
+
+// export async function onRequestPost(context) {
+//   const { request, env } = context;
+
+//   const chatData = await request.json();
+//   if (!chatData?.userChat) {
+//     return new Response(
+//       JSON.stringify({ error: "userChat required" }),
+//       { status: 400, headers: { "Content-Type": "application/json" } }
+//     );
+//   }
+
+//   const body = {
+//     contents: [
+//       ...(chatData.chatHistory?.map(chat => ({
+//         role: chat.isBot ? "model" : "user",
+//         parts: [{ text: chat.msg }]
+//       })) ?? []),
+//       {
+//         role: "user",
+//         parts: [{ text: chatData.userChat }]
+//       }
+//     ],
+//     config: {
+//       systemInstruction: aiInstruction,
+//       thinkingConfig: {
+//         thinkingBudget: 0
+//       }
+//     }
+
+//   };
+
+//   const res = await fetch(
+//     "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+//     {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//         "x-goog-api-key": env.GEMINI_API_KEY
+//       },
+//       body: JSON.stringify(body)
+//     }
+//   );
+
+//   if (!res.ok) {
+//     return new Response(
+//       JSON.stringify({ error: `Gemini API error: ${res.status}` }),
+//       { status: res.status, headers: { "Content-Type": "application/json" } }
+//     );
+//   }
+
+//   const data = await res.json();
+//   const text = data.candidates?.content?.parts?.[0]?.text ?? "Không có phản hồi từ Gemini";
+
+//   return new Response(
+//     JSON.stringify({ text }),
+//     { status: 200, headers: { "Content-Type": "application/json" } }
+//   );
+// }
+
+export async function onRequestPost(context) {
+  const { request, env } = context;
+
+  const aiInstruction = `Bạn là DoanKetBot. 
 Nhiệm vụ của bạn:
 1. Chỉ trả lời cho:
    - Các câu chào hỏi xã giao.
@@ -19,12 +85,6 @@ Nhiệm vụ của bạn:
    - Có thể trích dẫn lời Hồ Chí Minh nếu phù hợp (ví dụ: “Đoàn kết, đoàn kết, đại đoàn kết – Thành công, thành công, đại thành công.”).
 `;
 
-export async function onRequest(context) {
-  const { request, env } = context;
-  if (request.method !== "POST") {
-    return new Response("Method Not Allowed", { status: 405 });
-  }
-
   const chatData = await request.json();
   if (!chatData?.userChat) {
     return new Response(
@@ -33,50 +93,24 @@ export async function onRequest(context) {
     );
   }
 
-  const body = {
-    contents: [
-      ...(chatData.chatHistory?.map(chat => ({
-        role: chat.isBot ? "model" : "user",
-        parts: [{ text: chat.msg }]
-      })) ?? []),
-      {
-        role: "user",
-        parts: [{ text: chatData.userChat }]
-      }
-    ],
+  const googleAi = new GoogleGenAI({ apiKey: env.GEMINI_API_KEY })
+
+  const chatModel = googleAi.chats.create({
+    model: "gemini-2.5-flash",
+    history: chatData.chatHistory?.map(chat => ({
+      role: chat.isBot ? "model" : "user",
+      parts: [{ text: chat.msg }]
+    })),
     config: {
-      systemInstruction: aiInstruction,
       thinkingConfig: {
         thinkingBudget: 0
-      }
-    }
-
-  };
-
-  const res = await fetch(
-    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-goog-api-key": env.GEMINI_API_KEY
       },
-      body: JSON.stringify(body)
+      systemInstruction: aiInstruction
     }
-  );
-
-  if (!res.ok) {
-    return new Response(
-      JSON.stringify({ error: `Gemini API error: ${res.status}` }),
-      { status: res.status, headers: { "Content-Type": "application/json" } }
-    );
-  }
-
-  const data = await res.json();
-  const text = data.candidates?.content?.parts?.[0]?.text ?? "Không có phản hồi từ Gemini";
+  })
 
   return new Response(
-    JSON.stringify({ text }),
+    JSON.stringify(await chatModel.sendMessage({ message: chatData.userChat })),
     { status: 200, headers: { "Content-Type": "application/json" } }
   );
 }
