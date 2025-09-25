@@ -41,11 +41,11 @@ export async function onRequestPost(context) {
         role: "user",
         parts: [{ text: chatData.userChat }]
       }
-    ],
-    systemInstruction: {
-      role: "user",
-      parts: [{ text: aiInstruction }]
-    },
+    ]
+    // systemInstruction: {
+    //   role: "user",
+    //   parts: [{ text: aiInstruction }]
+    // },
     // generationConfig: {
     //   thinkingConfig: {
     //     thinkingBudget: 0
