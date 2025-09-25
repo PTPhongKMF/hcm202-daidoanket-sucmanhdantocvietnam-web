@@ -159,7 +159,7 @@ export default function FloatAIChat() {
 
               <div className="flex justify-start items-start gap-1 pe-2">
                 <img src="/imgs/avatar/vietnamball.png" alt="Bot Image" className="size-10 rounded-full object-cover border-2 border-gray-300" />
-                <div className="text-xs rounded-lg p-2 bg-gray-300 mt-1">
+                <div className="text-xs rounded-lg p-2 bg-neutral-300 mt-1">
                   Xin chào! Tôi là DoanKetBot – trợ lý ảo giúp bạn học nhanh về tư tưởng Hồ Chí Minh.<br />
                   Bạn muốn tìm hiểu phần nào? (Ví dụ: “Vai trò của đại đoàn kết”, “Điều kiện để xây dựng khối đoàn kết”)
                 </div>
@@ -189,7 +189,7 @@ export default function FloatAIChat() {
                             )}
                           </button>
 
-                          <div className="text-xs rounded-lg p-2 bg-red-300 mt-1 prose break-words">
+                          <div className="text-xs rounded-lg p-2 bg-neutral-300 mt-1 prose break-words">
                             <ReactMarkdown>
                               {msg.msg}
                             </ReactMarkdown>
@@ -200,7 +200,7 @@ export default function FloatAIChat() {
                   } else {
                     return (
                       <div key={index} className="flex justify-end items-start gap-1 ps-16">
-                        <p className="text-xs rounded-lg p-2 bg-gray-300 mt-1 break-all">
+                        <p className="text-xs rounded-lg p-2 bg-neutral-300 mt-1 break-all">
                           {msg.msg}
                         </p>
                         <img src="/imgs/avatar/user.png" alt="User Avatar" className="size-10 rounded-full object-cover border-2 border-gray-300" />
@@ -213,7 +213,7 @@ export default function FloatAIChat() {
               {aiChat.isPending && (
                 <div className="flex justify-start items-start gap-1 pe-2">
                   <img src="/imgs/avatar/vietnamball.png" alt="Bot Image" className="size-10 rounded-full object-cover border-2 border-gray-300" />
-                  <div className="text-xs rounded-lg p-2 bg-gray-300 mt-1 flex justify-between items-center gap-4">
+                  <div className="text-xs rounded-lg p-2 bg-neutral-300 mt-1 flex justify-between items-center gap-4">
                     Xíu nhen
                     <span className="flex justify-center items-center gap-2 h-4">
                       <span className="size-1 bg-red-600 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
