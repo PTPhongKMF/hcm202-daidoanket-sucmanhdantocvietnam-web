@@ -278,7 +278,7 @@ export default function Part4() {
 
           {/* Section B: Nguyên tắc xây dựng và hoạt động */}
           {showDetails && (
-          <div className="mb-20">
+            <div className="mb-20">
             <Reveal className="flex items-center mb-12">
               <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-pink-500 rounded-full flex items-center justify-center mr-6">
                 <span className="text-2xl font-bold text-black">B</span>
@@ -381,6 +381,7 @@ export default function Part4() {
                 </div>
               </Reveal>
             </div>
+          </div>
           )}
 
           {/* Conclusion Section */}
