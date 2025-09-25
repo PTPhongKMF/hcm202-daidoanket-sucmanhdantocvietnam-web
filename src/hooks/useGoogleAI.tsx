@@ -37,7 +37,7 @@ export function useAiChatMutation() {
 
       // return await chatModel.sendMessage({ message: chatData.userChat })
 
-      return await ky.post("/api/gemini", {
+      const res = await ky.post("/api/gemini", {
         json: chatData,
         hooks: {
           beforeError: [
@@ -50,7 +50,11 @@ export function useAiChatMutation() {
             }
           ]
         }
-      }).json<GenerateContentResponse>()
+      });
+
+      console.log(res);
+
+      return res.json<GenerateContentResponse>()
     },
     onSuccess: (data, chatData) => {
       chatData.setChatHistory(prev => [...prev, {
