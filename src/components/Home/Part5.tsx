@@ -54,7 +54,7 @@ export default function Part5() {
             >
               Phương thức xây dựng khối đại đoàn kết dân tộc
             </h1>
-            <div className="mt-4 inline-block px-6 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
+            <div className="mt-4 inline-block px-6 py-2 bg-black/40 backdrop-blur-lg rounded-3xl p-8 mb-8 border border-white/30 shadow-2xl">
               <p className="text-lg text-white/90 font-medium">
                 Thực hành dân vận, tổ chức, quy tụ sức mạnh
               </p>
