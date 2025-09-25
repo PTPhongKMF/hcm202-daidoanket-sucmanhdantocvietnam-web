@@ -10,6 +10,7 @@ const Quiz = lazy(() => import("./pages/Quiz"));
 const Part3Detail = lazy(() => import("./components/Part3/Part3Detail"));
 const Member = lazy(() => import("./pages/Member"));
 const QandA = lazy(() => import("./pages/QandA"));
+const Overview = lazy(() => import("./pages/Overview"));
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/sources" element={<Source />} />
             <Route path="/part3" element={<Part3Detail />} />
             <Route path="/part3/:id" element={<Part3Detail />} />
+            <Route path="/overview" element={<Overview />} />
           </Route>
         </Routes>
       </Suspense>

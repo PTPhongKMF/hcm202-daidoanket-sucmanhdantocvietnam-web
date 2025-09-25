@@ -200,7 +200,7 @@ export default function FloatAIChat() {
                   } else {
                     return (
                       <div key={index} className="flex justify-end items-start gap-1 ps-16">
-                        <p className="text-xs rounded-lg p-2 bg-neutral-300 mt-1 break-all">
+                        <p className="text-xs rounded-lg p-2 bg-amber-300 mt-1 break-all">
                           {msg.msg}
                         </p>
                         <img src="/imgs/avatar/user.png" alt="User Avatar" className="size-10 rounded-full object-cover border-2 border-gray-300" />
@@ -233,12 +233,33 @@ export default function FloatAIChat() {
           <Textarea
             value={userMsg}
             onChange={(e) => setUserMsg(e.target.value)}
+            onKeyDown={(e) => {
+              if (
+                e.key === "Enter" &&
+                !e.shiftKey &&
+                !e.ctrlKey &&
+                !e.metaKey &&
+                !e.altKey
+              ) {
+                e.preventDefault();
+                if (userMsg.trim()) {
+                  const msg = userMsg;
+                  setUserMsg("");
+                  aiChat.mutate({ userChat: msg, chatHistory, setChatHistory });
+                }
+              }
+            }}
             placeholder="chat..."
             className="text-sm w-80 h-10 p-2 bg-gray-100 ring-blue-400" />
 
           <button disabled={!userMsg}
             className="p-2 cursor-pointer border-2 bg-blue-300 border-blue-400 rounded-md hover:bg-cyan-200 disabled:border-gray-400 disabled:cursor-not-allowed disabled:bg-transparent"
-            onClick={() => { setUserMsg(""); aiChat.mutate({ userChat: userMsg, chatHistory, setChatHistory }) }}>
+            onClick={() => {
+              if (!userMsg.trim()) return;
+              const msg = userMsg;
+              setUserMsg("");
+              aiChat.mutate({ userChat: msg, chatHistory, setChatHistory });
+            }}>
             <SendHorizonal className={clsx(!userMsg ? "text-gray-400" : "text-blue-700")} />
           </button>
         </div>

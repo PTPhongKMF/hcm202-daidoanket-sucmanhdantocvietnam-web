@@ -28,7 +28,7 @@ export default function Title() {
           </div>
 
           <div className={clsx("group z-50 w-80 absolute top-26 left-10")}>
-            <img className={clsx("rotate-16", !loaded ? "animate-fallDown" : "group-hover:animate-spin")} src="/imgs/vn-ctr.png"/>
+            <img className={clsx("rotate-16", !loaded ? "animate-fallDown" : "group-hover:animate-spin")} src="/imgs/vn-ctr.png" />
           </div>
         </div>
       </div>
@@ -37,11 +37,27 @@ export default function Title() {
         <ChevronDownIcon className="size-10 animate-arrowFlow text-white font-bold" />
         <ChevronDownIcon className="size-10 animate-arrowFlow text-white font-bold" />
         <ChevronDownIcon className="size-10 animate-arrowFlow text-white font-bold" />
-
-        {/* <div className="pointer-events-none absolute top-0 size-full bg-gradient-to-b from-transparent from-50% to-gray-50" /> */}
       </div>
+      
+      <div className="flex justify-center items-center gap-26 mt-8">
+        <iframe
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/AtbQeFo0c0U?si=4JkfVJH7e3KUuxtq"
+          title="YouTube video player 1"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
 
-
+        <iframe
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/euqtheBsAYo?si=a7QCMlQutgZRi4ic"
+          title="YouTube video player 2"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+      </div>
     </>
   )
 }
