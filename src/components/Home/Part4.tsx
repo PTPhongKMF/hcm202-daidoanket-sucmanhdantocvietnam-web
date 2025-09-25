@@ -108,10 +108,10 @@ export default function Part4() {
           <div className="mb-20">
             <Reveal className="flex items-center mb-12">
               <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mr-6">
-                <span className="text-2xl font-bold text-white">A</span>
+                <span className="text-2xl font-bold text-black">A</span>
               </div>
               <div>
-                <h2 className="text-4xl font-bold text-white mb-2">Hình thức tổ chức</h2>
+                <h2 className="text-4xl font-bold text-black mb-2">Hình thức tổ chức</h2>
                 <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full scale-in" style={{ animationDelay: '0.4s' }}></div>
               </div>
             </Reveal>
@@ -207,10 +207,10 @@ export default function Part4() {
           <div className="mb-20">
             <Reveal className="flex items-center mb-12">
               <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-pink-500 rounded-full flex items-center justify-center mr-6">
-                <span className="text-2xl font-bold text-white">B</span>
+                <span className="text-2xl font-bold text-black">B</span>
               </div>
               <div>
-                <h2 className="text-4xl font-bold text-white mb-2">Nguyên tắc xây dựng và hoạt động</h2>
+                <h2 className="text-4xl font-bold text-black mb-2">Nguyên tắc xây dựng và hoạt động</h2>
                 <div className="w-24 h-1 bg-gradient-to-r from-red-500 to-pink-500 rounded-full scale-in" style={{ animationDelay: '0.4s' }}></div>
               </div>
             </Reveal>
