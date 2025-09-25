@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, stagger, useAnimate, useInView, AnimatePresence } from "motion/react";
 import { cn } from "../../utils/cn";
+import { CometCard } from "../aceternityui/Card Components/cometCard";
 
 // Custom TextGenerateEffect with startOnView support
 const TextGenerateEffectOnView = ({
@@ -185,7 +186,7 @@ const AnimatedTabs = ({ cardData }: { cardData: CardData[] }) => {
 
       {/* Card Content */}
       <motion.div
-        className="relative min-h-[500px] rounded-3xl overflow-hidden shadow-2xl"
+        className="relative min-h-[600px] rounded-3xl overflow-hidden shadow-2xl"
         style={{
           background: `linear-gradient(135deg, ${activeCard.color}15 0%, ${activeCard.color}25 100%)`
         }}
@@ -208,50 +209,71 @@ const AnimatedTabs = ({ cardData }: { cardData: CardData[] }) => {
           >
             {/* Background Image */}
             <div className="absolute inset-0 overflow-hidden rounded-3xl">
-              <motion.img
-                src={activeCard.image}
-                alt={activeCard.title}
-                className="w-full h-full object-cover opacity-10"
-                loading="lazy"
-                initial={{ scale: 1.1, opacity: 0 }}
-                animate={{ scale: 1, opacity: 0.1 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-transparent to-black/60" />
+              <CometCard className="w-full h-full">
+                <motion.img
+                  src={activeCard.image}
+                  alt={activeCard.title}
+                  className="w-full h-full object-cover opacity-15 rounded-3xl"
+                  loading="lazy"
+                  initial={{ scale: 1.1, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 0.15 }}
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                />
+              </CometCard>
+              <div className="absolute inset-0 bg-gradient-to-br from-black/50 via-black/30 to-black/60 rounded-3xl" />
             </div>
 
             {/* Card Content */}
-            <div className="relative z-10 grid md:grid-cols-2 gap-8 items-center h-full min-h-[450px]">
-              {/* Left: Image Circle */}
+            <div className="relative z-10 grid md:grid-cols-2 gap-8 items-start h-full min-h-[500px] p-4">
+              {/* Left: Image Rectangle */}
               <motion.div
                 className="flex justify-center"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                <div 
-                  className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-2xl"
-                  style={{ 
-                    border: `8px solid ${activeCard.color}`,
-                    boxShadow: `0 0 30px ${activeCard.color}40`
-                  }}
+                <CometCard 
+                  className="relative w-72 h-80 md:w-96 md:h-[420px]"
+                  rotateDepth={15}
+                  translateDepth={12}
                 >
-                  <img
-                    src={activeCard.image}
-                    alt={activeCard.title}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-                  
-                  {/* Badge */}
                   <div 
-                    className="absolute top-4 right-4 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg"
-                    style={{ backgroundColor: activeCard.color }}
+                    className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl"
+                    style={{ 
+                      border: `6px solid ${activeCard.color}`,
+                      boxShadow: `0 0 40px ${activeCard.color}30, 0 20px 60px rgba(0,0,0,0.3)`
+                    }}
                   >
-                    {activeCard.id.toUpperCase()}
+                    <img
+                      src={activeCard.image}
+                      alt={activeCard.title}
+                      className="w-full h-full object-cover rounded-xl"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 rounded-xl" />
+                    
+                    {/* Badge */}
+                    <div 
+                      className="absolute top-4 right-4 w-14 h-14 rounded-2xl flex items-center justify-center text-white font-bold text-xl shadow-lg z-10 backdrop-blur-sm"
+                      style={{ 
+                        backgroundColor: `${activeCard.color}E6`,
+                        border: `2px solid ${activeCard.color}`
+                      }}
+                    >
+                      {activeCard.id.toUpperCase()}
+                    </div>
+
+                    {/* Image Title Overlay */}
+                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 via-black/40 to-transparent rounded-b-xl">
+                      <h3 className="text-white font-bold text-lg md:text-xl mb-1 drop-shadow-lg">
+                        {activeCard.title.length > 30 ? `${activeCard.title.slice(0, 30)}...` : activeCard.title}
+                      </h3>
+                      <p className="text-gray-200 text-sm opacity-90">
+                        {activeCard.subtitle.length > 40 ? `${activeCard.subtitle.slice(0, 40)}...` : activeCard.subtitle}
+                      </p>
+                    </div>
                   </div>
-                </div>
+                </CometCard>
               </motion.div>
 
               {/* Right: Content */}
@@ -451,6 +473,16 @@ export default function Part3() {
       </div>
 
       <style>{`
+        
+        /* CometCard perspective */
+        .perspective-distant {
+          perspective: 1200px;
+          transform-style: preserve-3d;
+        }
+        
+        .transform-3d {
+          transform-style: preserve-3d;
+        }
         
         /* Custom scrollbar */
         .custom-scrollbar::-webkit-scrollbar {
