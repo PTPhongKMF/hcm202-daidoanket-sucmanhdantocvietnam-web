@@ -103,18 +103,20 @@ const AnimatedTabs = ({ cardData }: { cardData: CardData[] }) => {
     if (!tabsRef.current?.contains(document.activeElement)) return;
     
     switch (e.key) {
-      case "ArrowLeft":
+      case "ArrowLeft": {
         e.preventDefault();
         const currentIndex = cardData.findIndex((card: CardData) => card.id === activeTab);
         const newLeftIndex = currentIndex > 0 ? currentIndex - 1 : cardData.length - 1;
         setActiveTab(cardData[newLeftIndex].id);
         break;
-      case "ArrowRight":
+      }
+      case "ArrowRight": {
         e.preventDefault();
         const currentRightIndex = cardData.findIndex((card: CardData) => card.id === activeTab);
         const newRightIndex = currentRightIndex < cardData.length - 1 ? currentRightIndex + 1 : 0;
         setActiveTab(cardData[newRightIndex].id);
         break;
+      }
       case "Enter":
       case " ":
         e.preventDefault();
@@ -445,7 +447,6 @@ export default function Part3() {
 
       {/* Animated Tabs Section */}
       <div className="container mx-auto px-6 pb-12 relative z-10">
-              }`}
         <AnimatedTabs cardData={cardData} />
       </div>
 
