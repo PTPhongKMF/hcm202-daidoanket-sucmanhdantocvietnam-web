@@ -38,7 +38,16 @@ export function useAiChatMutation() {
       // return await chatModel.sendMessage({ message: chatData.userChat })
 
       return await ky.post("/api/gemini", {
-        json: chatData
+        json: chatData,
+        hooks: {
+          beforeError: [
+            async err => {
+              console.log(await err.response.json())
+
+              return err
+            }
+          ]
+        }
       }).json<GenerateContentResponse>()
     },
     onSuccess: (data, chatData) => {

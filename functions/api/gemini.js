@@ -33,7 +33,6 @@ export async function onRequest(context) {
     );
   }
 
-  // Build the request body for Gemini REST API
   const body = {
     contents: [
       ...(chatData.chatHistory?.map(chat => ({
@@ -46,11 +45,7 @@ export async function onRequest(context) {
       }
     ],
     systemInstruction: {
-      role: "system",
       parts: [{ text: aiInstruction }]
-    },
-    thinking: {
-      budgetTokens: 0
     }
   };
 
