@@ -74,11 +74,11 @@ export default function Part2() {
         </h3>
 
         <DraggableCardContainer className="relative flex min-h-screen w-full items-center justify-center overflow-clip mask-x-from-98% mask-x-to-100% mask-y-from-98% mask-y-to-100%">
-          <p className="bg-neutral-100 text-black absolute prose top-1/2 mx-auto max-w-sm -translate-y-3/4 text-start font-semibold p-6 rounded-2xl">
+          <div className="bg-neutral-100 text-black absolute prose top-1/2 mx-auto max-w-sm -translate-y-3/4 text-start font-semibold p-6 rounded-2xl">
             <ReactMarkdown>
               {finalText}
             </ReactMarkdown>
-          </p>
+          </div>
           {items.map((item) => (
             <DraggableCardBody className={item.className}>
               <ReactMarkdown>

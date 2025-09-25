@@ -46,12 +46,11 @@ export async function onRequestPost(context) {
       role: "user",
       parts: [{ text: aiInstruction }]
     },
-    generationConfig: {
-      thinkingConfig: {
-        thinkingBudget: 0
-      }
-    }
-
+    // generationConfig: {
+    //   thinkingConfig: {
+    //     thinkingBudget: 0
+    //   }
+    // }
   };
 
   const res = await fetch(

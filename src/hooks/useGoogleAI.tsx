@@ -37,6 +37,30 @@ export function useAiChatMutation() {
 
       // return await chatModel.sendMessage({ message: chatData.userChat })
 
+      const body = {
+        contents: [
+          ...(chatData.chatHistory?.map(chat => ({
+            role: chat.isBot ? "model" : "user",
+            parts: [{ text: chat.msg }]
+          })) ?? []),
+          {
+            role: "user",
+            parts: [{ text: chatData.userChat }]
+          }
+        ],
+        systemInstruction: {
+          role: "user",
+          parts: [{ text: "aiInstruction" }]
+        },
+        generationConfig: {
+          thinkingConfig: {
+            thinkingBudget: 0
+          }
+        }
+      };
+
+      console.log(JSON.stringify(body))
+
       return await ky.post("/api/gemini", {
         json: chatData,
         hooks: {
