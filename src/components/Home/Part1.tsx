@@ -4,7 +4,7 @@ import { motion, useAnimation } from "motion/react";
 import ReactMarkdown from "react-markdown";
 import { Hand } from "lucide-react";
 import clsx from "clsx";
-import { TypingAnimation } from "../magicui/TypingAnimation";
+import { TypingAnimation } from "../magicui/Text Animations/TypingAnimation";
 import { Lens } from "../aceternityui/lens";
 
 const texts = [
@@ -77,9 +77,11 @@ export default function Part1() {
   const lastRenderedXRef = useRef<number>(0);
   const [showHint, setShowHint] = useState(true);
   const rafIdRef = useRef<number | null>(null);
-  const pendingTransformRef = useRef<
-    { x: number; y: number; rotate: number } | null
-  >(null);
+  const pendingTransformRef = useRef<{
+    x: number;
+    y: number;
+    rotate: number;
+  } | null>(null);
 
   const throwThreshold = 110; // px threshold to trigger throw
 
@@ -91,15 +93,19 @@ export default function Part1() {
     setShowHint(false);
     try {
       e.currentTarget.setPointerCapture(e.pointerId);
-    } catch { /* noop */ }
+    } catch {
+      /* noop */
+    }
     await controls.set({ x: 0, opacity: 1, scale: 1, zIndex: 50 });
   }
 
   async function handlePointerMove(e: React.PointerEvent<HTMLDivElement>) {
     if (
-      !isPointerDownRef.current || hasThrownRef.current ||
+      !isPointerDownRef.current ||
+      hasThrownRef.current ||
       startXRef.current == null
-    ) return;
+    )
+      return;
     const distance = Math.abs(e.clientX - startXRef.current);
     const effective = distance < 2 ? 0 : distance; // deadzone to avoid jitter
     const leftX = -effective; // always move left relative to distance
@@ -165,7 +171,9 @@ export default function Part1() {
       startXRef.current = null;
       try {
         e.currentTarget.releasePointerCapture(e.pointerId);
-      } catch { /* noop */ }
+      } catch {
+        /* noop */
+      }
 
       setIndex((s) => (s + 1) % texts.length);
       await controls.set({ x: 0, y: 0, rotate: 0, opacity: 0, scale: 1 });
@@ -203,7 +211,9 @@ export default function Part1() {
     if (e) {
       try {
         e.currentTarget.releasePointerCapture(e.pointerId);
-      } catch { /* noop */ }
+      } catch {
+        /* noop */
+      }
     }
   }
 
@@ -300,8 +310,7 @@ export default function Part1() {
               className="absolute right-[-6rem] top-1/2 -translate-y-1/2 z-40 pointer-events-none select-none animate-swipeLeftHint"
               aria-hidden
             >
-              {
-                /* <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-white drop-shadow-[0_1px_1px_rgba(0,0,0,0.6)]">
+              {/* <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-white drop-shadow-[0_1px_1px_rgba(0,0,0,0.6)]">
               <path d="M3 12c2-2 4-3 6-3" opacity=".5" />
               <path d="M7 12c2-2 4-3 6-3" opacity=".7" />
               <path d="M9 12c2-2 4-3 6-3" />
@@ -309,8 +318,7 @@ export default function Part1() {
               <path d="M15.5 11v-2a1.5 1.5 0 1 1 3 0v3" />
               <path d="M18.5 12v-1a1.5 1.5 0 1 1 3 0v4c0 2.761-2.239 5-5 5h-2.5c-1.657 0-3-1.343-3-3v-5" />
               <path d="M12.5 12v-1a1.5 1.5 0 1 0-3 0v4" />
-            </svg> */
-              }
+            </svg> */}
               <Hand className="text-white size-20" />
             </div>
           )}
@@ -377,7 +385,7 @@ export default function Part1() {
 
         <div
           className={clsx(
-            "w-80 h-auto z-50 overflow-hidden rounded-4xl absolute top-36 right-20",
+            "w-80 h-auto z-50 overflow-hidden rounded-4xl absolute top-36 right-20"
           )}
         >
           <Lens hovering={hovering} setHovering={setHovering}>
@@ -388,7 +396,6 @@ export default function Part1() {
           </Lens>
         </div>
       </div>
-
     </div>
   );
 }
