@@ -1,6 +1,6 @@
 import { Link } from "react-router";
-import { useState, useEffect, useRef } from "react";
-import { motion, stagger, useAnimate, useInView } from "motion/react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { motion, stagger, useAnimate, useInView, AnimatePresence } from "motion/react";
 import { cn } from "../../utils/cn";
 
 // Custom TextGenerateEffect with startOnView support
@@ -67,20 +67,283 @@ const TextGenerateEffectOnView = ({
   );
 };
 
+// Types
+type CardData = {
+  id: string;
+  title: string;
+  subtitle: string;
+  color: string;
+  image: string;
+  content: string[];
+};
+
+// Animated Tabs Component
+const AnimatedTabs = ({ cardData }: { cardData: CardData[] }) => {
+  const [activeTab, setActiveTab] = useState(cardData[0].id);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const tabsRef = useRef<HTMLDivElement>(null);
+
+  // Check for reduced motion preference
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+      setPrefersReducedMotion(mediaQuery.matches);
+      
+      const handleChange = (e: MediaQueryListEvent) => {
+        setPrefersReducedMotion(e.matches);
+      };
+      
+      mediaQuery.addEventListener("change", handleChange);
+      return () => mediaQuery.removeEventListener("change", handleChange);
+    }
+  }, []);
+
+  // Keyboard navigation
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (!tabsRef.current?.contains(document.activeElement)) return;
+    
+    switch (e.key) {
+      case "ArrowLeft": {
+        e.preventDefault();
+        const currentIndex = cardData.findIndex((card: CardData) => card.id === activeTab);
+        const newLeftIndex = currentIndex > 0 ? currentIndex - 1 : cardData.length - 1;
+        setActiveTab(cardData[newLeftIndex].id);
+        break;
+      }
+      case "ArrowRight": {
+        e.preventDefault();
+        const currentRightIndex = cardData.findIndex((card: CardData) => card.id === activeTab);
+        const newRightIndex = currentRightIndex < cardData.length - 1 ? currentRightIndex + 1 : 0;
+        setActiveTab(cardData[newRightIndex].id);
+        break;
+      }
+      case "Enter":
+      case " ":
+        e.preventDefault();
+        break;
+    }
+  }, [cardData]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.addEventListener("keydown", handleKeyDown);
+      return () => window.removeEventListener("keydown", handleKeyDown);
+    }
+  }, [handleKeyDown]);
+
+  const activeCard = cardData.find((card: CardData) => card.id === activeTab) || cardData[0];
+
+  const handleTabClick = (cardId: string) => {
+    setActiveTab(cardId);
+  };
+
+  return (
+    <div className="w-full max-w-6xl mx-auto">
+      {/* Tabs Bar */}
+      <div 
+        ref={tabsRef}
+        className="relative mb-8"
+        role="tablist"
+        aria-label="Điều kiện xây dựng khối đại đoàn kết"
+      >
+        <div className="flex justify-center gap-2 md:gap-4 bg-black/20 backdrop-blur-sm rounded-full p-2 border border-white/20">
+          {cardData.map((card: CardData) => (
+            <button
+              key={card.id}
+              role="tab"
+              aria-selected={activeTab === card.id}
+              aria-controls={`tabpanel-${card.id}`}
+              tabIndex={activeTab === card.id ? 0 : -1}
+              className={cn(
+                "relative px-3 py-2 md:px-6 md:py-3 rounded-full text-sm md:text-base font-medium transition-all duration-300 z-10",
+                "focus:outline-none focus:ring-2 focus:ring-white/50",
+                activeTab === card.id 
+                  ? "text-white" 
+                  : "text-gray-400 hover:text-gray-200 hover:scale-105"
+              )}
+              onClick={() => handleTabClick(card.id)}
+            >
+              {/* Active pill background */}
+              {activeTab === card.id && (
+                <motion.div
+                  layoutId="activePill"
+                  className="absolute inset-0 rounded-full"
+                  style={{ backgroundColor: card.color }}
+                  transition={prefersReducedMotion ? { duration: 0 } : { type: "spring", bounce: 0.3, duration: 0.6 }}
+                />
+              )}
+              <span className="relative z-10 block uppercase font-bold">
+                {card.id.toUpperCase()}
+              </span>
+              <span className="relative z-10 block text-xs opacity-80 hidden sm:block">
+                {card.title.slice(0, 20)}...
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Card Content */}
+      <motion.div
+        className="relative min-h-[500px] rounded-3xl overflow-hidden shadow-2xl"
+        style={{
+          background: `linear-gradient(135deg, ${activeCard.color}15 0%, ${activeCard.color}25 100%)`
+        }}
+        animate={prefersReducedMotion ? {} : {
+          background: `linear-gradient(135deg, ${activeCard.color}15 0%, ${activeCard.color}25 100%)`
+        }}
+        transition={{ duration: 0.5 }}
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            role="tabpanel"
+            id={`tabpanel-${activeTab}`}
+            aria-labelledby={`tab-${activeTab}`}
+            className="relative w-full h-full p-6 md:p-8"
+            initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.98 }}
+            animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+            exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: -20, scale: 1.02 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+          >
+            {/* Background Image */}
+            <div className="absolute inset-0 overflow-hidden rounded-3xl">
+              <motion.img
+                src={activeCard.image}
+                alt={activeCard.title}
+                className="w-full h-full object-cover opacity-10"
+                loading="lazy"
+                initial={{ scale: 1.1, opacity: 0 }}
+                animate={{ scale: 1, opacity: 0.1 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-transparent to-black/60" />
+            </div>
+
+            {/* Card Content */}
+            <div className="relative z-10 grid md:grid-cols-2 gap-8 items-center h-full min-h-[450px]">
+              {/* Left: Image Circle */}
+              <motion.div
+                className="flex justify-center"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <div 
+                  className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-2xl"
+                  style={{ 
+                    border: `8px solid ${activeCard.color}`,
+                    boxShadow: `0 0 30px ${activeCard.color}40`
+                  }}
+                >
+                  <img
+                    src={activeCard.image}
+                    alt={activeCard.title}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+                  
+                  {/* Badge */}
+                  <div 
+                    className="absolute top-4 right-4 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg"
+                    style={{ backgroundColor: activeCard.color }}
+                  >
+                    {activeCard.id.toUpperCase()}
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Right: Content */}
+              <motion.div
+                className="text-white space-y-6"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+              >
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.4 }}
+                >
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4 leading-tight">
+                    {activeCard.title}
+                  </h2>
+                  <p className="text-xl text-gray-200 mb-6 italic">
+                    {activeCard.subtitle}
+                  </p>
+                </motion.div>
+
+                {/* Content Scroll Area */}
+                <motion.div
+                  className="max-h-60 overflow-y-auto space-y-4 pr-4 custom-scrollbar"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.4, delay: 0.5 }}
+                >
+                  {activeCard.content.map((text: string, index: number) => (
+                    <motion.p
+                      key={index}
+                      className="text-gray-100 leading-relaxed"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: 0.6 + (index * 0.1) }}
+                    >
+                      {activeCard.id === "c" && index === 0 ? (
+                        <em>"{text.replace(/"/g, "")}"</em>
+                      ) : (
+                        text
+                      )}
+                    </motion.p>
+                  ))}
+                </motion.div>
+
+                {/* Modern Meaning */}
+                <motion.div
+                  className="bg-black/30 backdrop-blur-sm rounded-xl p-6 border border-white/20"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.7 }}
+                >
+                  <strong className="text-yellow-300">Ý nghĩa hôm nay:</strong>
+                  <p className="text-gray-200 mt-2">
+                    Trong xã hội hiện đại, khi mâu thuẫn lợi ích xuất hiện, việc đặt lợi ích chung lên cao nhất và có thái độ khoan dung vẫn là chìa khóa để giữ gìn sự ổn định và đoàn kết.
+                  </p>
+                </motion.div>
+
+                {/* Action Button */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.8 }}
+                >
+                  <Link
+                    to={`/part3/${activeCard.id}`}
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                    style={{ 
+                      background: `linear-gradient(135deg, ${activeCard.color} 0%, ${activeCard.color}dd 100%)` 
+                    }}
+                  >
+                    🔎 Khám phá chi tiết
+                  </Link>
+                </motion.div>
+              </motion.div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </motion.div>
+    </div>
+  );
+};
+
 export default function Part3() {
   const [isVisible, setIsVisible] = useState(false);
-  const [cardsVisible, setCardsVisible] = useState(false);
 
   useEffect(() => {
     setIsVisible(true);
-    // Delay card animations
-    const timer = setTimeout(() => {
-      setCardsVisible(true);
-    }, 1000);
-    return () => clearTimeout(timer);
   }, []);
 
-  const cardData = [
+  const cardData: CardData[] = [
     {
       id: "a",
       title: "Phải lấy lợi ích chung làm điểm quy tụ",
@@ -128,66 +391,6 @@ export default function Part3() {
     },
   ];
 
-  const renderCard = (card: (typeof cardData)[number], index: number) => (
-    <div
-      className={`card group transition-all duration-700 ${
-        cardsVisible ? "animate-slide-in" : "opacity-0 translate-y-8"
-      }`}
-      style={
-        {
-          "--clr": card.color,
-          animationDelay: `${index * 200}ms`,
-        } as React.CSSProperties
-      }
-    >
-      <div className="circle">
-        <img src={card.image} alt={card.title} className="logo" />
-      </div>
-
-      <img
-        src={card.image}
-        alt={`${card.title} - Đại đoàn kết dân tộc`}
-        className="product_img"
-      />
-
-      <div className="content">
-        <div className="badge">{card.id}</div>
-        <h2>{card.title}</h2>
-        <p className="subtitle">{card.subtitle}</p>
-
-        <div className="scroll-content">
-          {card.content.map((text, index) => (
-            <p key={index} className="content-text">
-              {card.id === "c" && index === 0 ? (
-                <em>"{text.replace(/"/g, "")}"</em>
-              ) : (
-                text
-              )}
-            </p>
-          ))}
-        </div>
-
-        <div className="modern-meaning">
-          <strong>Ý nghĩa hôm nay:</strong> Trong xã hội hiện đại, khi mâu thuẫn
-          lợi ích xuất hiện, việc đặt lợi ích chung lên cao nhất và có thái độ
-          khoan dung vẫn là chìa khóa để giữ gìn sự ổn định và đoàn kết.
-        </div>
-
-        <div className="mt-4">
-          <Link
-            to={`/part3/${card.id}`}
-            className="modern-btn group/btn relative overflow-hidden"
-          >
-            <span className="relative z-10 flex items-center gap-2">
-              🔎 Khám phá chi tiết
-            </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-red-500 via-red-600 to-red-700 transition-transform duration-300 group-hover/btn:scale-105"></div>
-            <div className="absolute inset-0 bg-gradient-to-r from-red-600 via-red-700 to-red-800 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
 
   return (
     <section
@@ -242,127 +445,31 @@ export default function Part3() {
         </div>
       </div>
 
-      {/* Cards + Path Stage */}
+      {/* Animated Tabs Section */}
       <div className="container mx-auto px-6 pb-12 relative z-10">
-        <div className="path-stage relative mx-auto" style={{ height: 700 }}>
-          {/* Animated star path */}
-          <svg
-            className="absolute inset-0 w-full h-full"
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
-          >
-            <defs>
-              <linearGradient id="dashGlow" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#ef4444" />
-                <stop offset="50%" stopColor="#f97316" />
-                <stop offset="100%" stopColor="#b91c1c" />
-              </linearGradient>
-              <filter id="shadow">
-                <feDropShadow
-                  dx="0"
-                  dy="0"
-                  stdDeviation="1"
-                  floodColor="#ef4444"
-                  floodOpacity="0.8"
-                />
-              </filter>
-              <filter id="glow">
-                <feGaussianBlur stdDeviation="3" result="coloredBlur" />
-                <feMerge>
-                  <feMergeNode in="coloredBlur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-            </defs>
-            {/* Five-point star path connecting nodes: A, Meaning, D, B, C, back to A */}
-            <path
-              id="starPath"
-              d="M 12 18 L 50 6 L 88 18 L 70 70 L 30 70 Z"
-              fill="none"
-              stroke="url(#dashGlow)"
-              strokeWidth="1.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeDasharray="2 3"
-              filter="url(#shadow)"
-            ></path>
-            {/* Moving glow dot with pulse */}
-            <circle r="2" fill="#ef4444" filter="url(#glow)">
-              <animateMotion dur="8s" repeatCount="indefinite" rotate="auto">
-                <mpath href="#starPath" />
-              </animateMotion>
-              <animate
-                attributeName="r"
-                values="2;3;2"
-                dur="2s"
-                repeatCount="indefinite"
-              />
-              <animate
-                attributeName="opacity"
-                values="0.8;1;0.8"
-                dur="2s"
-                repeatCount="indefinite"
-              />
-            </circle>
-
-            {/* Additional sparkle effects */}
-            <circle r="1" fill="#fbbf24" opacity="0.6">
-              <animateMotion
-                dur="8s"
-                repeatCount="indefinite"
-                rotate="auto"
-                begin="1s"
-              >
-                <mpath href="#starPath" />
-              </animateMotion>
-              <animate
-                attributeName="opacity"
-                values="0;0.8;0"
-                dur="1.5s"
-                repeatCount="indefinite"
-              />
-            </circle>
-            {/* Dash offset animation */}
-            <animate
-              xlinkHref="#starPath"
-              attributeName="stroke-dashoffset"
-              from="0"
-              to="-50"
-              dur="3s"
-              repeatCount="indefinite"
-            />
-          </svg>
-
-          {/* Nodes positioned to match the star points (percent-based, responsive) */}
-          <div className="node node-a" style={{ left: "12%", top: "18%" }}>
-            {renderCard(cardData[0], 0)}
-          </div>
-          <div className="node node-mean" style={{ left: "50%", top: "6%" }}>
-            <div
-              className={`meaning-card glassmorphism ${
-                cardsVisible ? "animate-bounce-in" : "opacity-0 scale-75"
-              }`}
-            >
-              <div className="flex items-center justify-center mb-2">
-                <span className="text-2xl">📘</span>
-              </div>
-              <h3>Ôn tập kiến thức</h3>
-              <p>Củng cố kiến thức nắm bắt tư tưởng</p>
-            </div>
-          </div>
-          <div className="node node-d" style={{ left: "88%", top: "18%" }}>
-            {renderCard(cardData[3], 1)}
-          </div>
-          <div className="node node-b" style={{ left: "30%", top: "70%" }}>
-            {renderCard(cardData[1], 2)}
-          </div>
-          <div className="node node-c" style={{ left: "70%", top: "70%" }}>
-            {renderCard(cardData[2], 3)}
-          </div>
-        </div>
+        <AnimatedTabs cardData={cardData} />
       </div>
 
       <style>{`
+        
+        /* Custom scrollbar */
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: rgba(255,255,255,0.1);
+          border-radius: 3px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: rgba(255,255,255,0.3);
+          border-radius: 3px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: rgba(255,255,255,0.5);
+        }
         
         /* Fade in animation for header elements */
         @keyframes fadeInUp {
@@ -448,47 +555,6 @@ export default function Part3() {
         .animate-bounce-in {
           animation: bounceIn 1.2s ease-out forwards;
           animation-delay: 0.5s;
-        }
-        
-        .path-stage { max-width: 1100px; }
-        .node { position: absolute; transform: translate(-50%, -50%); }
-        .meaning-card {
-          width: 280px;
-          background: rgba(255,255,255,0.1);
-          backdrop-filter: blur(12px);
-          border-radius: 20px;
-          border: 2px solid rgba(239,68,68,0.3);
-          box-shadow: 0 8px 32px rgba(239,68,68,0.25), 
-                      0 0 0 1px rgba(255,255,255,0.1) inset;
-          padding: 20px;
-          color: #fff;
-          text-align: center;
-          transition: all 0.3s ease;
-        }
-        
-        .meaning-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 12px 40px rgba(239,68,68,0.35), 
-                      0 0 0 1px rgba(255,255,255,0.2) inset;
-        }
-        
-        .glassmorphism {
-          background: rgba(255, 255, 255, 0.15);
-          backdrop-filter: blur(15px);
-          border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .meaning-card h3 { 
-          font-size: 1.25rem; 
-          font-weight: 700; 
-          margin-bottom: 8px; 
-          color: #fbbf24; 
-          text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-        .meaning-card p { 
-          font-size: .95rem; 
-          color: #f3f4f6; 
-          text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
 
         .card {
@@ -716,7 +782,6 @@ export default function Part3() {
         }
 
         @media (max-width: 1024px) {
-          .meaning-card { width: 240px; }
           .card { width: 300px; height: 360px; }
         }
 
@@ -729,9 +794,6 @@ export default function Part3() {
           .card:hover {
             width: 320px;
           }
-          
-          .meaning-card { width: 210px; }
-          .path-stage { height: 620px; }
 
           .card .content {
             width: 70%;
