@@ -1,9 +1,7 @@
-import { BackgroundBeamsWithCollision } from "../components/aceternityui/background-beams-with-collision";
 import { CometCard } from "../components/aceternityui/comet-card";
 import { DraggableCardBody, DraggableCardContainer } from "../components/aceternityui/draggable-card";
 import PinNotePaper from "../components/PinNotePaper";
 
-// NOTE: Fixed the non-standard whitespace characters to prevent ESLint errors.
 const members = [
   {
     name: "Phạm Thanh Phong",
@@ -41,7 +39,6 @@ export default function Member() {
   const rightMembers = members.slice(4, 7);
 
   return (
-    <BackgroundBeamsWithCollision>
       <DraggableCardContainer className="relative flex min-h-screen w-full items-center justify-center overflow-clip">
         <div className="w-full h-[100svh] bg-amber-100 bg-[url(/imgs/vnmap-3d.png)] bg-blend-multiply bg-cover bg-center flex justify-center items-center gap-32 p-4">
           <div className="flex flex-col gap-8">
@@ -83,6 +80,5 @@ export default function Member() {
           </div>
         </div>
       </DraggableCardContainer>
-    </BackgroundBeamsWithCollision>
   );
 }

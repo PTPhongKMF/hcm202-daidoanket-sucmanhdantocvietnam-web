@@ -11,7 +11,7 @@ export default function Title() {
   }, []);
 
   return (
-    <>
+    <div>
       <div className="h-[50rem] bg-[url(/imgs/part1-1.jpg)] bg-cover">
         <div className="size-full bg-yellow-800/50 grid grid-rows-[1fr_5rem]">
           <div className="flex flex-col gap-6 justify-center items-center
@@ -58,6 +58,6 @@ export default function Title() {
           allowFullScreen
         />
       </div>
-    </>
+    </div>
   )
 }

@@ -416,7 +416,7 @@ export default function Part3() {
 
   return (
     <section
-      className="min-h-screen relative"
+      className="h-[160svh] relative"
       style={{
         fontFamily: '"Poppins", sans-serif',
       }}
