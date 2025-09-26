@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router";
+import { ShineBorder } from "../magicui/Special Effect/shineBorder";
+import { Particles } from "../magicui/Special Effect/particles";
 
 interface QuizChapter {
   id: string;
@@ -30,13 +32,13 @@ const quizChapters: QuizChapter[] = [
     icon: "🏛️",
   },
   {
-    id: "doan-ket-quoc-te",
-    title: "Đoàn kết quốc tế",
+    id: "tu-tuong-ho-chi-minh-dai-doan-ket",
+    title: "Tư tưởng Hồ Chí Minh về đại đoàn kết toàn dân tộc",
     description:
-      "Khám phá tư tưởng đoàn kết quốc tế và sự ủng hộ của bạn bè thế giới",
-    parts: 15,
+      "Ôn tập kiến thức qua 30 thẻ ghi nhớ flashcard về tư tưởng Hồ Chí Minh",
+    parts: 30,
     color: "from-green-500 to-emerald-600",
-    icon: "🌍",
+    icon: "📚",
   },
 ];
 
@@ -61,6 +63,18 @@ export default function QuizSelection() {
             "linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 58, 138, 0.85) 50%, rgba(15, 23, 42, 0.9) 100%)",
         }}
       ></div>
+
+      {/* Particles Background Effect */}
+      <Particles
+        className="absolute inset-0 z-[11]"
+        quantity={80}
+        staticity={30}
+        ease={70}
+        color="#fbbf24"
+        size={1.2}
+        vx={0.1}
+        vy={0.1}
+      />
 
       <div className="max-w-6xl mx-auto relative z-20">
         {/* Header Section */}
@@ -125,10 +139,10 @@ export default function QuizSelection() {
               {/* Footer */}
               <div className="flex items-center justify-between">
                 <Link
-                  to={`/quiz?chapter=${chapter.id}`}
+                  to={chapter.id === "tu-tuong-ho-chi-minh-dai-doan-ket" ? "/flashcard-study" : `/quiz?chapter=${chapter.id}`}
                   className={`inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r ${chapter.color} text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 transform hover:scale-105`}
                 >
-                  Bắt đầu Quiz
+                  {chapter.id === "tu-tuong-ho-chi-minh-dai-doan-ket" ? "Bắt đầu ôn tập" : "Bắt đầu Quiz"}
                   <svg
                     className="w-4 h-4"
                     fill="none"
@@ -157,8 +171,14 @@ export default function QuizSelection() {
 
         {/* Featured Quiz Card (Main Topic) */}
         <div className="mt-16">
-          <div className="bg-gradient-to-r from-gray-800/90 to-gray-700/90 backdrop-blur-sm rounded-3xl p-8 border border-gray-600 hover:border-amber-400/50 transition-all duration-300 hover:shadow-2xl">
-            <div className="flex items-start gap-6">
+          <div className="relative group bg-gradient-to-r from-gray-800/90 to-gray-700/90 backdrop-blur-sm rounded-3xl p-8 hover:shadow-2xl transition-all duration-300">
+            <ShineBorder
+              borderWidth={2}
+              duration={3}
+              shineColor={["#fbbf24", "#f59e0b", "#fbbf24"]}
+            />
+            
+            <div className="flex items-start gap-6 relative z-10">
               <div className="text-6xl">🤝</div>
 
               <div className="flex-1">
