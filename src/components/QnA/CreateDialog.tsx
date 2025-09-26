@@ -59,13 +59,13 @@ export default function CreateDialog() {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger className="group flex flex-col justify-center items-center cursor-pointer transform-gpu will-change-transform">
+      <DialogTrigger className="group flex justify-center items-center cursor-pointer transform-gpu will-change-transform">
         <Tooltip>
           <TooltipTrigger asChild>
             <div className="cursor-pointer z-10 inline-flex items-center justify-center w-12 rounded-full border 
           border-emerald-300/60 bg-gradient-to-br from-emerald-400 to-green-600 text-white shadow-md transition-all 
           duration-200 ease-out hover:shadow-xl group-hover:scale-[1.03] active:scale-100 
-          focus:outline-none focus:ring-2 focus:ring-emerald-300 h-100 -translate-y-1/2">
+          focus:outline-none focus:ring-2 focus:ring-emerald-300 h-90 -translate-y-1/2">
               <Plus className="w-6 h-6" />
             </div>
           </TooltipTrigger>

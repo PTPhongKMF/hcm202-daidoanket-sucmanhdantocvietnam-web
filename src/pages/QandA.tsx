@@ -85,15 +85,15 @@ export default function QandA() {
 }, []);
 
   return (
-    <div className="relative h-[100svh] bg-neutral-200 overflow-hidden flex justify-center items-center -z-30 pt-26">
+    <div className="relative h-screen bg-neutral-200 overflow-hidden flex justify-center items-center -z-30 pt-26">
       <AnimatedGridPattern
         numSquares={30}
         maxOpacity={0.1}
         duration={3}
-        className={cn("inset-x-0 inset-y-[-30%] h-[200%] skew-y-12 -z-20")}
+        className={cn("inset-x-0 inset-y-[-30%] h-[150%] skew-y-12 -z-20")}
       />
 
-      <img className="absolute size-full -z-10" src="/imgs/bg-question.png" />
+      <img className="absolute top-0 left-0 w-full h-full -z-10" src="/imgs/bg-question.png" />
 
       {loading ? (
         <div className="size-full flex flex-col justify-center items-center gap-4 cursor-wait">
@@ -118,7 +118,7 @@ export default function QandA() {
         </div>
       )}
 
-      <div className="absolute flex justify-start items-center top-1/2 left-0 h-fit ps-2 pb-1">
+      <div className="absolute flex justify-start items-center top-1/2 ps-1 left-0 h-fit">
         <CreateDialog />
       </div>
     </div>
