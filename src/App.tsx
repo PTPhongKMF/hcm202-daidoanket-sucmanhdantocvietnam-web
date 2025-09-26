@@ -11,6 +11,8 @@ const Part3Detail = lazy(() => import("./components/Part3/Part3Detail"));
 const Member = lazy(() => import("./pages/Member"));
 const QandA = lazy(() => import("./pages/QandA"));
 const Overview = lazy(() => import("./pages/Overview"));
+const FlashCardStudy = lazy(() => import("./pages/FlashCardStudy"));
+const FlashCardStudySimple = lazy(() => import("./pages/FlashCardStudySimple"));
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
           <Route element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="/quiz" element={<Quiz />} />
+            <Route path="/flashcard-study" element={<FlashCardStudy />} />
+            <Route path="/flashcard-test" element={<FlashCardStudySimple />} />
             <Route path="/members" element={<Member />} />
             <Route path="/q&a" element={<QandA />} />
             <Route path="/sources" element={<Source />} />

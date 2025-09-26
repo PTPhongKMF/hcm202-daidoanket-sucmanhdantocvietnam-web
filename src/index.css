@@ -36,9 +36,45 @@
 
   --animate-meteor-effect: meteor 5s linear infinite;
 
-  --animate-scroll: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
+  --animate-scroll: scroll var(--animation-duration, 40s)
+    var(--animation-direction, forwards) linear infinite;
 
   --animate-aurora: aurora 8s ease-in-out infinite alternate;
+
+  --animate-shine: shine var(--duration) infinite linear;
+}
+
+/* 3D FlashCard CSS */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.rotate-x-180 {
+  transform: rotateX(180deg);
+}
+
+@keyframes shine {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  to {
+    background-position: 0% 0%;
+  }
 }
 
 @keyframes scroll {
@@ -230,7 +266,6 @@
 }
 
 @keyframes wiggle {
-
   0%,
   100% {
     transform: rotate(-3deg);
