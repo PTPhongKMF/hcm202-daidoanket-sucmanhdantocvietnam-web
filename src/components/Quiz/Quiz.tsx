@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router";
 
 interface Question {
   id: number;
@@ -7,126 +8,537 @@ interface Question {
   correctAnswer: number;
 }
 
-const quizData: Question[] = [
+interface QuizDataMap {
+  [key: string]: Question[];
+}
+
+const defaultQuizData: Question[] = [
   {
     id: 1,
     question:
-      'Hồ Chí Minh nhấn mạnh: "Đoàn kết là sức mạnh, đoàn kết là thắng lợi." Câu nói này thể hiện điều gì về vai trò của đại đoàn kết trong cách mạng?',
+      "Theo Hồ Chí Minh, đại đoàn kết toàn dân tộc có vai trò như thế nào?",
     options: [
-      "Là nhiệm vụ nhất thời",
-      "Là mục tiêu và nhiệm vụ hàng đầu",
-      "Chỉ cần trong giai đoạn kháng chiến",
-      "Chỉ là khẩu hiệu chính trị",
+      "Là thủ đoạn chính trị tạm thời",
+      "Là sách lược đối phó ngắn hạn",
+      "Là chiến lược lâu dài, nhất quán",
+      "Là biện pháp tình thế khi cách mạng khó khăn",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
   },
   {
     id: 2,
-    question:
-      "Vì sao các phong trào Cần Vương, Đông Du, Đông Kinh Nghĩa Thục… cuối thế kỷ XIX thất bại?",
+    question: 'Hồ Chí Minh khẳng định: "Đoàn kết là …"',
     options: [
-      "Do thiếu sự lãnh đạo của Đảng",
-      "Do chưa tập hợp được sức mạnh toàn dân",
-      "Do lực lượng vũ trang yếu",
-      "Do không có sự ủng hộ quốc tế",
+      "Niềm tin của dân tộc",
+      "Sức mạnh, then chốt của thành công",
+      "Truyền thống lâu đời",
+      "Con đường duy nhất để chống ngoại xâm",
     ],
     correctAnswer: 1,
   },
   {
     id: 3,
     question:
-      "Thắng lợi nào chứng minh rõ ràng nhất sức mạnh đại đoàn kết toàn dân tộc?",
+      "Nguyên nhân chủ yếu khiến các phong trào Cần Vương, Đông Du, Đông Kinh Nghĩa Thục… cuối thế kỷ XIX thất bại là:",
     options: [
-      "Khởi nghĩa Yên Thế",
-      "Cách mạng Tháng Tám 1945",
-      "Chiến thắng Điện Biên Phủ 1954",
-      "Công cuộc Đổi mới 1986",
+      "Thiếu lãnh đạo kiên định",
+      "Thiếu sự chuẩn bị về vũ khí",
+      "Chưa tập hợp được sức mạnh toàn dân",
+      "Bị thực dân đàn áp khốc liệt",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
   },
   {
     id: 4,
-    question:
-      "Theo Hồ Chí Minh, lực lượng nòng cốt vững chắc trong khối đại đoàn kết là:",
+    question: "Trong khối đại đoàn kết toàn dân tộc, lực lượng nòng cốt là:",
     options: [
-      "Công – thương – binh",
       "Công – nông – trí thức",
-      "Nông dân – trí thức – phụ nữ",
-      "Công – nông – quân đội",
+      "Tư sản dân tộc – tiểu thương",
+      "Quân đội – thanh niên",
+      "Nông dân – binh lính",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
   },
   {
     id: 5,
     question:
-      "Trong kháng chiến chống Mỹ, yếu tố nào thể hiện đoàn kết quốc tế?",
+      "Theo Hồ Chí Minh, Đảng Cộng sản Việt Nam muốn lãnh đạo khối đại đoàn kết toàn dân tộc thì cần:",
     options: [
-      "Sự tham gia của trí thức miền Nam",
-      "Sự ủng hộ từ phong trào phản chiến và bạn bè quốc tế",
-      "Vai trò lãnh đạo của Đảng",
-      "Liên minh công – nông – trí thức",
+      "Chỉ chú trọng lợi ích giai cấp công nhân",
+      "Kết hợp hài hòa lợi ích giai cấp và dân tộc",
+      "Ưu tiên lợi ích quốc tế hơn trong nước",
+      "Đặt lợi ích trí thức lên hàng đầu",
     ],
     correctAnswer: 1,
   },
   {
     id: 6,
-    question:
-      "Một trong những điều kiện quan trọng để xây dựng khối đại đoàn kết toàn dân tộc là:",
+    question: "Đại đoàn kết toàn dân tộc phải gắn liền với:",
     options: [
-      "Chỉ bảo vệ lợi ích của giai cấp công nhân",
-      "Lấy lợi ích tối cao của dân tộc và lợi ích căn bản của nhân dân làm mục tiêu",
-      "Ưu tiên lợi ích quốc tế hơn lợi ích dân tộc",
-      "Tách biệt lợi ích giai cấp và lợi ích dân tộc",
+      "Đoàn kết trong Đảng",
+      "Đoàn kết quốc tế",
+      "Đoàn kết gia đình – làng xã",
+      "Đoàn kết với giai cấp công nhân",
     ],
     correctAnswer: 1,
   },
   {
     id: 7,
     question:
-      'Câu nói: "Năm ngón tay có ngón dài ngón ngắn… nhưng đều thuộc về một bàn tay" thể hiện phẩm chất nào cần có để xây dựng đại đoàn kết?',
+      "Nguyên tắc bất di bất dịch để xây dựng khối đại đoàn kết toàn dân tộc là:",
     options: [
-      "Lòng trung thành",
-      "Tinh thần hy sinh",
-      "Lòng khoan dung, độ lượng",
-      "Ý chí kiên cường",
+      "Lấy lợi ích chung làm điểm quy tụ",
+      "Lấy chủ nghĩa xã hội làm mục tiêu",
+      "Lấy phát triển kinh tế làm trọng tâm",
+      "Lấy giáo dục làm nền tảng",
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
   },
   {
     id: 8,
-    question: "Mặt trận dân tộc thống nhất là gì?",
+    question:
+      "Truyền thống nào được Hồ Chí Minh coi là cội nguồn sức mạnh để đoàn kết dân tộc?",
     options: [
-      "Tổ chức quân sự do Đảng lãnh đạo",
-      "Nơi quy tụ mọi tổ chức, cá nhân yêu nước trong và ngoài nước",
-      "Liên minh chính trị ngắn hạn",
-      "Tổ chức của riêng công nhân và nông dân",
+      "Hiếu học – chăm chỉ – sáng tạo",
+      "Yêu nước – nhân nghĩa – đoàn kết",
+      "Lạc quan – cần cù – dũng cảm",
+      "Nhân ái – kiên cường – sáng suốt",
     ],
     correctAnswer: 1,
   },
   {
     id: 9,
-    question: "Nguyên tắc hoạt động của Mặt trận dân tộc thống nhất là gì?",
+    question:
+      'Hồ Chí Minh ví dụ " Năm ngón tay có ngón dài ngón ngắn, nhưng cả năm ngón đều thuộc về một bàn tay. Trong mấy triệu người cũng có người thế này thế khác, nhưng thế này hay thế khác đều dòng dõi tổ tiên ta. Vậy nên phải khoan hồng, đại độ... Có như thế mới thành đoàn kết, có đại đoàn kết thì tương lai chắc chắn sẽ vẻ vang " để nhấn mạnh điều gì?',
     options: [
-      "Hiệp thương dân chủ, đặt lợi ích dân tộc lên trên hết",
-      "Đảng quyết định tất cả, không cần bàn bạc",
-      "Đoàn kết tạm thời để đạt mục tiêu ngắn hạn",
-      "Mỗi thành viên hoạt động riêng rẽ",
+      "Cần phân biệt giai cấp rõ ràng",
+      "Cần phải khoan dung, độ lượng để đoàn kết",
+      "Cần tập hợp trí thức trước tiên",
+      "Cần chú ý đến thế hệ trẻ",
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
   },
   {
     id: 10,
     question:
-      'Hồ Chí Minh khẳng định: "Dân vận khéo thì việc gì cũng thành công." Câu nói này nhấn mạnh phương thức nào trong xây dựng khối đại đoàn kết?',
+      "Nguyên tắc tối cao trong tư tưởng Hồ Chí Minh về xây dựng khối đại đoàn kết toàn dân tộc là:",
     options: [
-      "Công tác dân vận",
-      "Phát triển kinh tế",
-      "Cải cách giáo dục",
-      "Đoàn kết quốc tế",
+      "Tin vào sự lãnh đạo của quốc tế cộng sản",
+      "Tin vào sự lãnh đạo của trí thức",
+      "Yêu dân, tin dân, dựa vào dân, vì dân",
+      "Xây dựng lực lượng vũ trang mạnh mẽ",
+    ],
+    correctAnswer: 2,
+  },
+  {
+    id: 11,
+    question:
+      "Trong tư tưởng Hồ Chí Minh, chủ thể của khối đại đoàn kết toàn dân tộc là:",
+    options: [
+      "Công nhân, nông dân",
+      "Toàn dân Việt Nam không phân biệt dân tộc, tôn giáo, giai cấp",
+      "Trí thức và thanh niên",
+      "Quân đội nhân dân",
+    ],
+    correctAnswer: 1,
+  },
+  {
+    id: 12,
+    question:
+      "Theo Hồ Chí Minh, để lãnh đạo khối đại đoàn kết, Đảng Cộng sản Việt Nam cần đứng vững trên lập trường nào?",
+    options: [
+      "Giai cấp tư sản dân tộc",
+      "Giai cấp công nhân",
+      "Giai cấp nông dân",
+      "Trí thức ưu tú",
+    ],
+    correctAnswer: 1,
+  },
+  {
+    id: 13,
+    question:
+      "Trong kháng chiến chống Mỹ, sức mạnh của đại đoàn kết dân tộc còn được củng cố nhờ:",
+    options: [
+      "Sự hỗ trợ từ phong trào phản chiến và nhân dân tiến bộ thế giới",
+      "Sự viện trợ vũ khí từ châu Âu",
+      "Sự đồng thuận tuyệt đối trong nội bộ Đảng",
+      "Chính sách cải cách ruộng đất",
     ],
     correctAnswer: 0,
   },
+  {
+    id: 14,
+    question: "Theo Hồ Chí Minh, muốn thực hiện đại đoàn kết phải:",
+    options: [
+      "Đặt lợi ích giai cấp lên hàng đầu",
+      "Đặt lợi ích dân tộc và nhân dân lao động làm mục tiêu phấn đấu",
+      "Chỉ tập trung vào phát triển kinh tế",
+      "Dựa vào viện trợ quốc tế",
+    ],
+    correctAnswer: 1,
+  },
+  {
+    id: 15,
+    question:
+      'Nguyên lý mácxít nào được Hồ Chí Minh quán triệt khi khẳng định "Cách mạng là sự nghiệp của quần chúng"?',
+    options: [
+      "Chủ nghĩa tập thể tuyệt đối",
+      "Chủ nghĩa duy vật biện chứng",
+      "Chủ nghĩa duy vật lịch sử",
+      "Nguyên lý quần chúng là động lực của lịch sử",
+    ],
+    correctAnswer: 3,
+  },
 ];
+
+const matTranDanTocQuizData: Question[] = [
+  {
+    id: 1,
+    question:
+      "Hình thức tổ chức cơ bản của khối đại đoàn kết dân tộc theo Hồ Chí Minh là gì?",
+    options: [
+      "Công đoàn Việt Nam",
+      "Mặt trận dân tộc thống nhất",
+      "Hội Nông dân Việt Nam",
+      "Chính quyền cách mạng",
+    ],
+    correctAnswer: 1,
+  },
+  {
+    id: 2,
+    question:
+      "Nguyên tắc quan trọng nhất trong hoạt động của Mặt trận dân tộc thống nhất là:",
+    options: [
+      "Hiệp thương dân chủ",
+      "Tập trung quan liêu",
+      "Đa số tuyệt đối",
+      "Độc đoán lãnh đạo",
+    ],
+    correctAnswer: 0,
+  },
+  {
+    id: 3,
+    question:
+      "Nội dung nào KHÔNG thuộc nguyên tắc hoạt động của Mặt trận dân tộc thống nhất?",
+    options: [
+      "Đoàn kết lâu dài, chân thành",
+      "Lợi ích dân tộc là điểm quy tụ",
+      "Chỉ tập hợp công – nông",
+      "Giúp nhau tiến bộ",
+    ],
+    correctAnswer: 2,
+  },
+  {
+    id: 4,
+    question:
+      "Theo Hồ Chí Minh, nền tảng để hình thành Mặt trận dân tộc thống nhất là gì?",
+    options: [
+      "Lợi ích giai cấp công nhân",
+      "Lợi ích tối cao của dân tộc",
+      "Quyền lợi địa chủ",
+      "Tín ngưỡng tôn giáo",
+    ],
+    correctAnswer: 1,
+  },
+  {
+    id: 5,
+    question:
+      "Một phương thức quan trọng để xây dựng khối đại đoàn kết dân tộc là:",
+    options: [
+      "Đặt lợi ích cá nhân lên trên hết",
+      "Thống nhất ý chí và hành động trên cơ sở lợi ích dân tộc",
+      "Loại trừ các tôn giáo",
+      "Chỉ dựa vào tầng lớp công nhân",
+    ],
+    correctAnswer: 1,
+  },
+  {
+    id: 6,
+    question:
+      "Để xây dựng đại đoàn kết dân tộc, Hồ Chí Minh đặc biệt coi trọng yếu tố nào?",
+    options: [
+      "Sự cạnh tranh kinh tế",
+      "Lòng tin và tinh thần yêu nước",
+      "Chủ nghĩa cá nhân",
+      "Xung đột giai cấp",
+    ],
+    correctAnswer: 1,
+  },
+  {
+    id: 7,
+    question:
+      "Tinh thần đoàn kết của Hồ Chí Minh được thể hiện qua khẩu hiệu nào?",
+    options: [
+      '"Vô sản tất cả các nước liên hiệp lại"',
+      '"Đoàn kết, đoàn kết, đại đoàn kết. Thành công, thành công, đại thành công"',
+      '"Không có gì quý hơn độc lập tự do"',
+      '"Tất cả vì chủ nghĩa xã hội"',
+    ],
+    correctAnswer: 1,
+  },
+  {
+    id: 8,
+    question: "Trong khối đại đoàn kết dân tộc, Hồ Chí Minh nhấn mạnh phải:",
+    options: [
+      "Tôn trọng sự khác biệt và kết hợp hài hòa lợi ích",
+      "Ép buộc sự đồng nhất tuyệt đối",
+      "Loại bỏ trí thức",
+      "Không coi trọng dân tộc thiểu số",
+    ],
+    correctAnswer: 0,
+  },
+  {
+    id: 9,
+    question: "Một phương thức xây dựng khối đại đoàn kết dân tộc là:",
+    options: [
+      "Phân hóa dân tộc, tôn giáo",
+      "Củng cố mối quan hệ giữa Đảng, Nhà nước và Nhân dân",
+      "Giới hạn thành phần tham gia",
+      "Chỉ dựa vào sức mạnh quốc tế",
+    ],
+    correctAnswer: 1,
+  },
+  {
+    id: 10,
+    question:
+      "Ý nghĩa lớn nhất của việc xây dựng khối đại đoàn kết dân tộc theo Hồ Chí Minh là:",
+    options: [
+      "Tạo sức mạnh tổng hợp để giành và giữ độc lập dân tộc",
+      "Chỉ để phát triển kinh tế",
+      "Giải quyết mâu thuẫn giai cấp",
+      "Hạn chế vai trò của các tổ chức xã hội",
+    ],
+    correctAnswer: 0,
+  },
+  {
+    id: 11,
+    question:
+      "Trong các giai đoạn cách mạng, Mặt trận dân tộc thống nhất có thể thay đổi tên gọi, nhưng bản chất là gì?",
+    options: [
+      "Tổ chức chính trị đối lập với Đảng",
+      "Tổ chức tập hợp mọi lực lượng yêu nước dưới sự lãnh đạo của Đảng",
+      "Tổ chức quân sự thuần túy",
+      "Cơ quan quản lý nhà nước",
+    ],
+    correctAnswer: 1,
+  },
+  {
+    id: 12,
+    question:
+      "Theo Hồ Chí Minh, đoàn kết trong Mặt trận dân tộc thống nhất phải dựa trên phương châm nào?",
+    options: [
+      '"Cầu đồng tồn dị"',
+      '"Chia để trị"',
+      '"Dĩ công vi thượng"',
+      '"Mạnh được yếu thua"',
+    ],
+    correctAnswer: 0,
+  },
+  {
+    id: 13,
+    question:
+      "Hồ Chí Minh yêu cầu việc phê bình trong khối đoàn kết phải được thực hiện như thế nào?",
+    options: [
+      "Thẳng thắn, kiên quyết, không cần giữ tình cảm",
+      "Trên lập trường thân ái, vì nước, vì dân",
+      "Công khai trước toàn dân",
+      "Bí mật, nội bộ Đảng",
+    ],
+    correctAnswer: 1,
+  },
+  {
+    id: 14,
+    question:
+      "Phương thức cơ bản nhất để xây dựng khối đại đoàn kết dân tộc, theo Hồ Chí Minh, là gì?",
+    options: [
+      "Dân vận khéo",
+      "Phát triển kinh tế thị trường",
+      "Đào tạo cán bộ quản lý",
+      "Hợp tác quốc tế",
+    ],
+    correctAnswer: 0,
+  },
+  {
+    id: 15,
+    question:
+      "Mục đích cuối cùng của việc thành lập các đoàn thể quần chúng (Công đoàn, Hội Nông dân, Đoàn Thanh niên, Hội Phụ nữ…) là gì?",
+    options: [
+      "Tạo cơ hội cho mỗi tầng lớp có tổ chức riêng biệt",
+      "Gắn kết quần chúng vào khối đại đoàn kết chung trong Mặt trận",
+      "Đảm bảo lợi ích riêng của từng tầng lớp",
+      "Tách biệt quần chúng với hoạt động của Đảng",
+    ],
+    correctAnswer: 1,
+  },
+];
+
+const doanKetQuocTeQuizData: Question[] = [
+  {
+    id: 1,
+    question:
+      "Trong tư tưởng Hồ Chí Minh, đoàn kết quốc tế trước hết xuất phát từ lợi ích nào?",
+    options: [
+      "Lợi ích dân tộc riêng lẻ",
+      "Lợi ích của giai cấp công nhân quốc tế",
+      "Lợi ích dân tộc gắn liền với lợi ích nhân loại tiến bộ",
+      "Lợi ích kinh tế trước mắt",
+    ],
+    correctAnswer: 2,
+  },
+  {
+    id: 2,
+    question:
+      'Hồ Chí Minh từng khẳng định: "Cách mạng Việt Nam là một bộ phận khăng khít của…?"',
+    options: [
+      "Cách mạng dân chủ tư sản",
+      "Cách mạng giải phóng dân tộc ở châu Á",
+      "Phong trào cộng sản và công nhân quốc tế",
+      "Cách mạng văn hóa thế giới",
+    ],
+    correctAnswer: 2,
+  },
+  {
+    id: 3,
+    question:
+      "Hồ Chí Minh cho rằng đoàn kết quốc tế là điều kiện sống còn để cách mạng Việt Nam đi đến thắng lợi.",
+    options: ["Đúng", "Sai"],
+    correctAnswer: 0,
+  },
+  {
+    id: 4,
+    question:
+      "Những lực lượng nào Hồ Chí Minh chủ trương tranh thủ đoàn kết quốc tế?",
+    options: [
+      "Phong trào cộng sản và công nhân quốc tế",
+      "Phong trào giải phóng dân tộc",
+      "Các lực lượng tiến bộ, yêu chuộng hòa bình, dân chủ và công lý",
+      "Tất cả các đáp án trên",
+    ],
+    correctAnswer: 3,
+  },
+  {
+    id: 5,
+    question:
+      "Năm 1920, Hồ Chí Minh đã tham gia tổ chức quốc tế nào, mở ra cơ sở cho tư tưởng đoàn kết quốc tế?",
+    options: [
+      "Quốc tế Cộng sản (Quốc tế III)",
+      "Hội Liên hiệp thuộc địa",
+      "Quốc tế Xã hội",
+      "Quốc tế Thanh niên",
+    ],
+    correctAnswer: 0,
+  },
+  {
+    id: 6,
+    question:
+      'Hồ Chí Minh luôn coi đoàn kết quốc tế là "một trong những nhân tố quyết định thắng lợi của cách mạng Việt Nam".',
+    options: ["Đúng", "Sai"],
+    correctAnswer: 0,
+  },
+  {
+    id: 7,
+    question:
+      "Trong kháng chiến chống Pháp và chống Mỹ, sự ủng hộ của bạn bè thế giới dành cho Việt Nam thể hiện ở:",
+    options: [
+      "Biểu tình phản đối chiến tranh xâm lược",
+      "Viện trợ vật chất, vũ khí, y tế",
+      "Sự lên tiếng của các tổ chức quốc tế ủng hộ Việt Nam",
+      "Tất cả các đáp án trên",
+    ],
+    correctAnswer: 3,
+  },
+  {
+    id: 8,
+    question:
+      "Hồ Chí Minh khẳng định, cách mạng Việt Nam chỉ có thể dựa vào nội lực, không cần tranh thủ sự giúp đỡ quốc tế.",
+    options: ["Đúng", "Sai"],
+    correctAnswer: 1,
+  },
+  {
+    id: 9,
+    question: "Trong tư tưởng Hồ Chí Minh, đoàn kết quốc tế dựa trên nguyên tắc:",
+    options: [
+      "Bình đẳng, tôn trọng lẫn nhau",
+      "Hợp tác cùng có lợi",
+      "Vì mục tiêu hòa bình, độc lập dân tộc, dân chủ và tiến bộ xã hội",
+      "Cả A, B, C",
+    ],
+    correctAnswer: 3,
+  },
+  {
+    id: 10,
+    question:
+      "Phong trào giải phóng dân tộc có đặc điểm gì trong việc hỗ trợ cách mạng Việt Nam?",
+    options: [
+      "Đấu tranh vì hòa bình, dân chủ, công bằng xã hội",
+      "Chung mục tiêu lật đổ chủ nghĩa thực dân, giành độc lập",
+      "Hỗ trợ về lý luận, tổ chức và tinh thần cho cách mạng Việt Nam",
+      "Không có sự hỗ trợ nào đáng kể",
+    ],
+    correctAnswer: 1,
+  },
+  {
+    id: 11,
+    question:
+      "Hồ Chí Minh từng gửi thư, điện cảm ơn sự ủng hộ của nhân dân các nước nào trong kháng chiến chống Mỹ?",
+    options: [
+      "Liên Xô, Trung Quốc, Cuba, Lào, Campuchia",
+      "Mỹ, Nhật Bản, Hàn Quốc",
+      "Thái Lan, Singapore, Malaysia",
+      "Ấn Độ, Myanmar, Bhutan",
+    ],
+    correctAnswer: 0,
+  },
+  {
+    id: 12,
+    question:
+      "Hồ Chí Minh đánh giá cao tinh thần quốc tế vô sản và coi đó là cơ sở lý luận để đoàn kết cách mạng Việt Nam với phong trào cộng sản thế giới.",
+    options: ["Đúng", "Sai"],
+    correctAnswer: 0,
+  },
+  {
+    id: 13,
+    question:
+      "Theo Hồ Chí Minh, mục tiêu cuối cùng của đoàn kết quốc tế là:",
+    options: [
+      "Giành thắng lợi cho cách mạng Việt Nam",
+      "Đem lại độc lập, tự do, hạnh phúc cho các dân tộc bị áp bức và nhân loại",
+      "Khẳng định vị thế Việt Nam trên trường quốc tế",
+      "Tăng cường quan hệ ngoại giao",
+    ],
+    correctAnswer: 1,
+  },
+  {
+    id: 14,
+    question:
+      "Một trong những biểu tượng tiêu biểu của tình đoàn kết quốc tế với Việt Nam trong thế kỷ XX là:",
+    options: [
+      "Tượng đài Fidel Castro bên cạnh nhân dân Việt Nam",
+      "Lời kêu gọi phản chiến của nhân dân Mỹ",
+      "Sự hỗ trợ y tế từ nhân dân Cuba trong thời kỳ khó khăn",
+      "Tất cả các đáp án trên",
+    ],
+    correctAnswer: 3,
+  },
+  {
+    id: 15,
+    question:
+      "Thông điệp quan trọng nhất mà tư tưởng Hồ Chí Minh về đoàn kết quốc tế gửi tới hôm nay là gì?",
+    options: [
+      "Đặt lợi ích quốc gia lên trên hết, không cần quan hệ quốc tế",
+      "Hội nhập quốc tế trên tinh thần độc lập, tự chủ, hòa bình, hợp tác cùng phát triển",
+      "Chỉ đoàn kết trong phạm vi khu vực châu Á",
+      "Ưu tiên phát triển kinh tế, gác lại quan hệ chính trị",
+    ],
+    correctAnswer: 1,
+  },
+];
+
+const quizDataMap: QuizDataMap = {
+  "mat-tran-dan-toc": matTranDanTocQuizData,
+  "doan-ket-quoc-te": doanKetQuocTeQuizData,
+  default: defaultQuizData,
+};
 
 // Function to shuffle array
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -139,13 +551,29 @@ const shuffleArray = <T,>(array: T[]): T[] => {
 };
 
 export default function Quiz() {
-  const [shuffledQuestions, setShuffledQuestions] = useState<Question[]>(() => shuffleArray(quizData));
+  const [searchParams] = useSearchParams();
+  const chapter = searchParams.get("chapter") || "default";
+  const currentQuizData = quizDataMap[chapter] || defaultQuizData;
+
+  const [shuffledQuestions, setShuffledQuestions] = useState<Question[]>(() =>
+    shuffleArray(currentQuizData)
+  );
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>(
-    new Array(quizData.length).fill(-1)
+    new Array(currentQuizData.length).fill(-1)
   );
   const [showResults, setShowResults] = useState(false);
   const [selectedOption, setSelectedOption] = useState(-1);
+
+  // Update quiz data when chapter changes
+  useEffect(() => {
+    const newQuizData = quizDataMap[chapter] || defaultQuizData;
+    setShuffledQuestions(shuffleArray(newQuizData));
+    setCurrentQuestion(0);
+    setSelectedAnswers(new Array(newQuizData.length).fill(-1));
+    setShowResults(false);
+    setSelectedOption(-1);
+  }, [chapter]);
 
   const handleAnswerSelect = (optionIndex: number) => {
     setSelectedOption(optionIndex);
@@ -172,14 +600,16 @@ export default function Quiz() {
 
   const calculateScore = () => {
     return selectedAnswers.reduce((score, answer, index) => {
-      return score + (answer === shuffledQuestions[index].correctAnswer ? 1 : 0);
+      return (
+        score + (answer === shuffledQuestions[index].correctAnswer ? 1 : 0)
+      );
     }, 0);
   };
 
   const resetQuiz = () => {
-    setShuffledQuestions(shuffleArray(quizData));
+    setShuffledQuestions(shuffleArray(currentQuizData));
     setCurrentQuestion(0);
-    setSelectedAnswers(new Array(quizData.length).fill(-1));
+    setSelectedAnswers(new Array(currentQuizData.length).fill(-1));
     setShowResults(false);
     setSelectedOption(-1);
   };
@@ -191,22 +621,23 @@ export default function Quiz() {
     const percentage = (score / shuffledQuestions.length) * 100;
 
     return (
-      <div 
+      <div
         className="min-h-screen relative p-6 pt-20"
         style={{
           backgroundImage: 'url("/imgs/Quiz đại đoàn kết dân tộc.jpg")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          zIndex: 1
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          zIndex: 1,
         }}
       >
         {/* Background overlay */}
-        <div 
+        <div
           className="absolute inset-0"
           style={{
-            background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 58, 138, 0.85) 50%, rgba(15, 23, 42, 0.9) 100%)',
-            zIndex: 2
+            background:
+              "linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 58, 138, 0.85) 50%, rgba(15, 23, 42, 0.9) 100%)",
+            zIndex: 2,
           }}
         ></div>
         <div className="max-w-4xl mx-auto relative z-40">
@@ -238,12 +669,13 @@ export default function Quiz() {
             </div>
 
             <div className="text-center">
-                <div className="text-6xl font-bold text-white mb-2">
-                  {score}/{shuffledQuestions.length}
-                </div>
-                <p className="text-xl text-gray-300 mb-4">
-                  Bạn đã trả lời đúng {score} trên {shuffledQuestions.length} câu hỏi
-                </p>
+              <div className="text-6xl font-bold text-white mb-2">
+                {score}/{shuffledQuestions.length}
+              </div>
+              <p className="text-xl text-gray-300 mb-4">
+                Bạn đã trả lời đúng {score} trên {shuffledQuestions.length} câu
+                hỏi
+              </p>
 
               <div className="mb-6">
                 {percentage >= 80 ? (
@@ -383,22 +815,23 @@ export default function Quiz() {
   }
 
   return (
-    <div 
+    <div
       className="min-h-screen relative flex items-center justify-center p-6 pt-20"
       style={{
         backgroundImage: 'url("/imgs/Quiz đại đoàn kết dân tộc.jpg")',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        zIndex: 1
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        zIndex: 1,
       }}
     >
       {/* Background overlay */}
-      <div 
+      <div
         className="absolute inset-0"
         style={{
-          background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 58, 138, 0.85) 50%, rgba(15, 23, 42, 0.9) 100%)',
-          zIndex: 2
+          background:
+            "linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 58, 138, 0.85) 50%, rgba(15, 23, 42, 0.9) 100%)",
+          zIndex: 2,
         }}
       ></div>
       <div className="max-w-4xl w-full relative z-40">
@@ -431,30 +864,32 @@ export default function Quiz() {
 
             {/* Options */}
             <div className="space-y-4 mb-8">
-              {shuffledQuestions[currentQuestion].options.map((option, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleAnswerSelect(index)}
-                  className={`w-full p-4 text-left rounded-xl border-2 transition-all duration-300 transform hover:scale-[1.02] ${
-                    selectedOption === index
-                      ? "border-red-500 bg-red-50 text-red-700 shadow-lg"
-                      : "border-gray-200 hover:border-red-300 hover:bg-gray-50"
-                  }`}
-                >
-                  <div className="flex items-center">
-                    <span
-                      className={`w-8 h-8 rounded-full border-2 flex items-center justify-center mr-4 text-sm font-semibold ${
-                        selectedOption === index
-                          ? "border-red-500 bg-red-500 text-white"
-                          : "border-gray-300"
-                      }`}
-                    >
-                      {String.fromCharCode(97 + index)}
-                    </span>
-                    <span className="text-gray-700">{option}</span>
-                  </div>
-                </button>
-              ))}
+              {shuffledQuestions[currentQuestion].options.map(
+                (option, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleAnswerSelect(index)}
+                    className={`w-full p-4 text-left rounded-xl border-2 transition-all duration-300 transform hover:scale-[1.02] ${
+                      selectedOption === index
+                        ? "border-red-500 bg-red-50 text-red-700 shadow-lg"
+                        : "border-gray-200 hover:border-red-300 hover:bg-gray-50"
+                    }`}
+                  >
+                    <div className="flex items-center">
+                      <span
+                        className={`w-8 h-8 rounded-full border-2 flex items-center justify-center mr-4 text-sm font-semibold ${
+                          selectedOption === index
+                            ? "border-red-500 bg-red-500 text-white"
+                            : "border-gray-300"
+                        }`}
+                      >
+                        {String.fromCharCode(97 + index)}
+                      </span>
+                      <span className="text-gray-700">{option}</span>
+                    </div>
+                  </button>
+                )
+              )}
             </div>
 
             {/* Navigation Buttons */}
