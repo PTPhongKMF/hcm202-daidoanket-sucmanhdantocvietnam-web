@@ -7,45 +7,59 @@ import ChatGPT from "../assets/ChatGPT.svg?react"
 import GeminiLogo from "../assets/Google-gemini-icon.svg?react"
 import GeminiLetter from "../assets/Google_Gemini_logo.svg?react"
 import { Pointer } from "../components/magicui/pointer";
-import { useMemo, useState } from "react";
 
+const rules = [
+  {
+    title: "Nguyên tắc 1",
+    content:
+      "AI được sử dụng với vai trò công cụ hỗ trợ, không thay thế tư duy, phân tích và sáng tạo của nhóm.",
+  },
+  {
+    title: "Nguyên tắc 2",
+    content:
+      "Mọi thông tin do AI cung cấp đều được kiểm chứng, đối chiếu với nguồn chính thống.",
+  },
+  {
+    title: "Nguyên tắc 3",
+    content:
+      "Nội dung cuối cùng được chỉnh sửa, biên tập bởi các thành viên, không sao chép nguyên văn từ AI.",
+  },
+  {
+    title: "Nguyên tắc 4",
+    content:
+      "Đảm bảo tính minh bạch, liêm chính học thuật và đạo đức trong việc ứng dụng công nghệ.",
+  },
+];
+
+const LOs = [
+  {
+    code: "LO3",
+    content:
+      "Hiểu hệ thống tư tưởng Hồ Chí Minh (độc lập dân tộc, CNXH, đại đoàn kết, đoàn kết quốc tế, xây dựng Đảng – Nhà nước, đạo đức – văn hóa – con người).",
+  },
+  {
+    code: "LO4",
+    content:
+      "Hiểu được vai trò nền tảng lý luận của Chủ nghĩa Mác-Lênin, tư tưởng Hồ Chí Minh đối với đường lối của Đảng, Nhà nước.",
+  },
+  {
+    code: "LO6",
+    content:
+      "Phát triển kỹ năng làm việc nhóm, tư duy phân tích – đánh giá, tìm kiếm và trình bày tài liệu, ứng dụng AI có đạo đức.",
+  },
+  {
+    code: "LO7",
+    content:
+      "Củng cố tinh thần yêu nước, ý thức công dân, kỷ luật, thái độ nghề nghiệp đúng đắn, tinh thần học tập suốt đời.",
+  },
+  {
+    code: "LO8",
+    content:
+      "Hình thành tác phong chuyên nghiệp, khoa học, có khả năng cập nhật kiến thức mới chủ động.",
+  },
+];
 
 export default function Overview() {
-  const rules = useMemo(
-    () => [
-      {
-        title: "Nguyên tắc 1",
-        content:
-          "AI được sử dụng với vai trò công cụ hỗ trợ, không thay thế tư duy, phân tích và sáng tạo của nhóm.",
-      },
-      {
-        title: "Nguyên tắc 2",
-        content:
-          "Mọi thông tin do AI cung cấp đều được kiểm chứng, đối chiếu với nguồn chính thống.",
-      },
-      {
-        title: "Nguyên tắc 3",
-        content:
-          "Nội dung cuối cùng được chỉnh sửa, biên tập bởi các thành viên, không sao chép nguyên văn từ AI.",
-      },
-      {
-        title: "Nguyên tắc 4",
-        content:
-          "Đảm bảo tính minh bạch, liêm chính học thuật và đạo đức trong việc ứng dụng công nghệ.",
-      },
-    ],
-    []
-  );
-
-  const [openFolders, setOpenFolders] = useState<boolean[]>(() => new Array(rules.length).fill(false));
-
-  function toggleFolder(index: number) {
-    setOpenFolders((prev) => {
-      const next = [...prev];
-      next[index] = !next[index];
-      return next;
-    });
-  };
   return (
     <div className="relative text-white w-full min-h-[200svh] bg-neutral-800 px-10 pt-16 pb-16 -z-20">
       <img className="fixed brightness-30 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none -z-10" src="/imgs/Vietnam_(orthographic_projection).svg" />
@@ -112,11 +126,25 @@ export default function Overview() {
           </div>
 
           <div className="flex flex-col">
-            <h3 className="text-2xl font-semibold mb-4 uppercase">II. Learning Outcomes</h3>
-            <div className="grid grid-rows-2 grid-cols-6 gap-4">
-              {/* {LOs.map((lo, index) => (
-                
-              ))} */}
+            <h3 className="text-2xl font-semibold mb-4 uppercase px-4 py-2 rounded-md shadow">II. Learning Outcomes</h3>
+
+            <div className="grid grid-cols-6 items-stretch gap-4">
+              {LOs.map((lo, index) => {
+                const spanClasses = "col-span-2";
+                const positionClasses =
+                  index === 3 ? "col-start-2" : index === 4 ? "col-start-4" : "";
+                return (
+                  <div key={lo.code} className={`${spanClasses} ${positionClasses} h-full`}>
+                    <div className="relative h-full overflow-hidden rounded-xl border border-red-500/25 bg-gradient-to-br from-red-500/10 via-transparent to-amber-400/10 p-5 shadow-sm hover:shadow-md transition flex">
+                      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(260px_160px_at_15%_0%,rgba(239,68,68,0.12),transparent_60%),radial-gradient(260px_160px_at_85%_100%,rgba(245,158,11,0.10),transparent_60%)]" />
+                      <div className="relative z-10 flex items-start gap-3">
+                        <span className="shrink-0 px-2 py-1 rounded-md bg-amber-400 text-neutral-900 text-xs font-bold tracking-wider">{lo.code}</span>
+                        <p className="text-neutral-200 leading-relaxed">{lo.content}</p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
@@ -160,20 +188,13 @@ export default function Overview() {
                 <h4 className="text-lg font-semibold text-white flex items-center gap-2">4. Nguyên tắc sử dụng AI</h4>
                 <div className="grid grid-cols-4 gap-6">
                   {rules.map((rule, index) => (
-                    <div key={rule.title} className="group relative cursor-pointer select-none" role="button" tabIndex={0} onClick={() => toggleFolder(index)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggleFolder(index) }}>
-                      <div className="relative h-6 w-28 ml-3 -mb-2 rounded-t-md bg-amber-300/80 shadow shadow-amber-500/20" />
+                    <div key={index} className="group relative cursor-pointer select-none">
                       <div className="relative overflow-hidden rounded-xl border border-amber-400/20 bg-gradient-to-br from-amber-400/10 via-transparent to-orange-400/10 p-5 shadow-sm hover:shadow-md transition">
                         <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(220px_140px_at_15%_0%,rgba(251,191,36,0.12),transparent_60%),radial-gradient(220px_140px_at_85%_100%,rgba(251,146,60,0.10),transparent_60%)]" />
-                        <div className="relative z-10">
-                          <div className="text-sm font-semibold text-amber-200">{rule.title}</div>
-                          <div className="text-neutral-300 text-xs">Nhấn để mở file</div>
+                        <div className="relative z-10 mb-6">
+                          <div className="text-sm font-semibold text-amber-200 flex justify-start items-center gap-2"><Scale /> {rule.title}</div>
                         </div>
-                        <div className="h-40" />
-                        <div className={`absolute left-3 right-3 bottom-3 top-16 transition-all duration-300 ease-out will-change-transform ${openFolders[index] ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'}`}>
-                          <div className="h-full w-full rounded-md bg-white/95 text-neutral-800 shadow-md ring-1 ring-black/5 p-3 text-sm leading-relaxed">
-                            {rule.content}
-                          </div>
-                        </div>
+                        {rule.content}
                       </div>
                     </div>
                   ))}
