@@ -157,7 +157,7 @@ export default function QnANotePaper({ name, content, color, isComplete, id, uid
             className={`px-4 py-2 rounded-lg font-medium transition-colors duration-200 cursor-pointer ${
               canDelete
                 ? 'bg-red-500 hover:bg-red-600 text-white disabled:bg-gray-300 disabled:cursor-not-allowed'
-                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                : 'bg-gray-300 text-gray-500 disabled:cursor-not-allowed'
             }`}
           >
             {deleteNote.isPending ? 'Deleting...' : 'Delete'}
