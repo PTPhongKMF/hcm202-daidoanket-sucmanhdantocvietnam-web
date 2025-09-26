@@ -35,13 +35,13 @@ export default function NavBar() {
           </p>
         </Link>
 
-        {/* <Link to="/quiz" onClick={(e) => handleInternalNav(e, "/members")}>
+        <Link to="/quiz" onClick={(e) => handleInternalNav(e, "/members")}>
           <p className="font-semibold text-black/10 group-hover:text-black hover:text-red-700 transition-colors duration-100">
             Thành viên
           </p>
         </Link>
 
-        <Link to="/sources" onClick={(e) => handleInternalNav(e, "/sources")}>
+        {/* <Link to="/sources" onClick={(e) => handleInternalNav(e, "/sources")}>
           <p className="font-semibold text-black/10 group-hover:text-black hover:text-red-700 transition-colors duration-100">
             Nguồn
           </p>
