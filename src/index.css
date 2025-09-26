@@ -330,7 +330,7 @@
   }
 
   ::view-transition-new(page) {
-    animation: vt-fade-new 300ms ease both;
+    animation: vt-fade-new 500ms ease both;
   }
 
   @keyframes vt-fade-old {
@@ -338,7 +338,7 @@
       opacity: 1;
     }
     to {
-      opacity: 1;
+      opacity: 0.75;
     }
   }
 
