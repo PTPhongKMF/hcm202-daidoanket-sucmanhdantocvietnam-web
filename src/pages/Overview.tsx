@@ -188,7 +188,7 @@ export default function Overview() {
                 <h4 className="text-lg font-semibold text-white flex items-center gap-2">4. Nguyên tắc sử dụng AI</h4>
                 <div className="grid grid-cols-4 gap-6">
                   {rules.map((rule, index) => (
-                    <div key={index} className="group relative cursor-pointer select-none">
+                    <div key={index} className="group relative select-none">
                       <div className="relative overflow-hidden rounded-xl border border-amber-400/20 bg-gradient-to-br from-amber-400/10 via-transparent to-orange-400/10 p-5 shadow-sm hover:shadow-md transition">
                         <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(220px_140px_at_15%_0%,rgba(251,191,36,0.12),transparent_60%),radial-gradient(220px_140px_at_85%_100%,rgba(251,146,60,0.10),transparent_60%)]" />
                         <div className="relative z-10 mb-6">
