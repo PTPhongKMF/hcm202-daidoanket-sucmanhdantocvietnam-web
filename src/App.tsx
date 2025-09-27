@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router";
 import { Suspense, lazy } from "react";
 import FloatAIChat from "./components/FloatAIChat";
 import Loading from "./pages/Loading";
+import EasterEgg from "./components/EasterEgg/EasterEgg";
 
 const Layout = lazy(() => import("./components/Layout"));
 const Home = lazy(() => import("./pages/Home"));
@@ -35,6 +36,7 @@ function App() {
       </Suspense>
 
       <FloatAIChat />
+      <EasterEgg />
     </>
   );
 }
