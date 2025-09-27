@@ -148,7 +148,7 @@ export default function QnANotePaper({ name, content, color, isComplete, id, uid
                 : 'bg-gray-300 text-gray-500 disabled:cursor-not-allowed'
             }`}
           >
-            {completeNote.isPending ? 'Completing...' : 'Complete'}
+            {completeNote.isPending ? 'Xong...' : 'Xong'}
           </button>
           
           <button
@@ -160,7 +160,7 @@ export default function QnANotePaper({ name, content, color, isComplete, id, uid
                 : 'bg-gray-300 text-gray-500 disabled:cursor-not-allowed'
             }`}
           >
-            {deleteNote.isPending ? 'Deleting...' : 'Delete'}
+            {deleteNote.isPending ? 'Xóa...' : 'Xóa'}
           </button>
         </DialogFooter>
       </DialogContent>

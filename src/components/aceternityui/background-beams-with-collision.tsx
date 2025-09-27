@@ -71,7 +71,7 @@ export const BackgroundBeamsWithCollision = ({
       ref={parentRef}
       className={cn(
         // Use full viewport height by default so consumers aren't clipped
-        "min-h-[100svh] bg-gradient-to-b from-white to-neutral-100 dark:from-neutral-950 dark:to-neutral-800 relative flex items-center w-full justify-center overflow-hidden",
+        "min-h-[100svh] bg-gradient-to-b from-white to-neutral-100 relative flex items-center w-full justify-center overflow-hidden",
         // h-screen if you want bigger
         className
       )}
