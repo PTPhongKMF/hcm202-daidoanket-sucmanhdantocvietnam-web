@@ -1,7 +1,53 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { ShineBorder } from "../magicui/Special Effect/shineBorder";
 import { Particles } from "../magicui/Special Effect/particles";
+
+// Custom CSS for animations
+const customStyles = `
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes pulse-gentle {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+  
+  @keyframes ripple {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+  
+  .animate-fade-in-up {
+    animation: fade-in-up 0.8s ease-out;
+  }
+  
+  .animate-pulse-gentle {
+    animation: pulse-gentle 2s ease-in-out infinite;
+  }
+  
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.6);
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    pointer-events: none;
+  }
+`;
 
 interface QuizChapter {
   id: string;
@@ -46,15 +92,19 @@ export default function QuizSelection() {
   const [selectedChapter, setSelectedChapter] = useState<string>("");
 
   return (
-    <div
-      className="min-h-screen relative p-6 pt-20"
-      style={{
-        backgroundImage: 'url("/imgs/Quiz đại đoàn kết dân tộc.jpg")',
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
+    <>
+      {/* Inject custom animations */}
+      <style dangerouslySetInnerHTML={{ __html: customStyles }} />
+      
+      <div
+        className="min-h-screen relative p-6 pt-20"
+        style={{
+          backgroundImage: 'url("/imgs/Quiz đại đoàn kết dân tộc.jpg")',
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
       {/* Background overlay */}
       <div
         className="absolute inset-0 z-10"
@@ -169,51 +219,79 @@ export default function QuizSelection() {
           ))}
         </div>
 
-        {/* Featured Quiz Card (Main Topic) */}
+        {/* Featured Quiz Card (Kahoot) */}
         <div className="mt-16">
-          <div className="relative group bg-gradient-to-r from-gray-800/90 to-gray-700/90 backdrop-blur-sm rounded-3xl p-8 hover:shadow-2xl transition-all duration-300">
-            <ShineBorder
-              borderWidth={2}
-              duration={3}
-              shineColor={["#fbbf24", "#f59e0b", "#fbbf24"]}
-            />
+          <div className="relative group bg-gradient-to-r from-purple-800 via-violet-700 to-purple-600 backdrop-blur-sm rounded-3xl p-8 hover:shadow-2xl transition-all duration-300 animate-fade-in-up overflow-hidden">
+            {/* Kahoot Brand Border Effect */}
+            <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-purple-500 via-violet-400 to-purple-500 p-[2px]">
+              <div className="h-full w-full rounded-3xl bg-gradient-to-r from-purple-800 via-violet-700 to-purple-600"></div>
+            </div>
+            
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute top-0 left-0 w-32 h-32 bg-white rounded-full -translate-x-16 -translate-y-16"></div>
+              <div className="absolute bottom-0 right-0 w-24 h-24 bg-white rounded-full translate-x-12 translate-y-12"></div>
+            </div>
             
             <div className="flex items-start gap-6 relative z-10">
-              <div className="text-6xl">🤝</div>
+              {/* Animated Kahoot Icon */}
+              <div className="text-6xl animate-pulse-gentle">🎉</div>
 
               <div className="flex-1">
-                <h3 className="text-3xl font-bold text-white mb-4">
+                <h3 className="text-3xl font-bold text-white mb-4 tracking-tight">
                   Điều kiện để xây dựng khối đại đoàn kết toàn dân tộc
                 </h3>
 
-                <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                  Kiểm tra kiến thức về các điều kiện cần thiết để xây dựng khối
-                  đại đoàn kết toàn dân tộc trong tư tưởng Hồ Chí Minh thông qua
-                  các câu hỏi đa dạng
+                <p className="text-purple-100 text-lg leading-relaxed mb-6">
+                  Tham gia ngay trò chơi Kahoot! để kiểm tra kiến thức thú vị
                 </p>
 
                 <div className="flex items-center justify-between">
-                  <Link
-                    to="/quiz"
-                    className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-orange-500 to-red-600 text-white font-bold text-lg rounded-xl hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+                  <a
+                    href="https://play.kahoot.it/v2/?quizId=78a20d77-04e5-4064-be5b-adc1d7e67556"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group/btn relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-600 to-violet-600 text-white font-bold text-lg rounded-xl hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 hover:from-purple-500 hover:to-violet-500 overflow-hidden"
+                    onClick={(e) => {
+                      // Add ripple effect
+                      const button = e.currentTarget;
+                      const ripple = document.createElement('span');
+                      const rect = button.getBoundingClientRect();
+                      const size = Math.max(rect.width, rect.height);
+                      const x = e.clientX - rect.left - size / 2;
+                      const y = e.clientY - rect.top - size / 2;
+                      
+                      ripple.style.width = ripple.style.height = size + 'px';
+                      ripple.style.left = x + 'px';
+                      ripple.style.top = y + 'px';
+                      ripple.classList.add('ripple');
+                      
+                      button.appendChild(ripple);
+                      
+                      setTimeout(() => {
+                        ripple.remove();
+                      }, 600);
+                    }}
                   >
-                    Bắt đầu Quiz
+                    {/* Glow effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-violet-400 opacity-0 group-hover/btn:opacity-20 transition-opacity duration-300 rounded-xl"></div>
+                    
+                    <span className="relative z-10">🚀 Tham gia Kahoot</span>
+                    
+                    {/* Play icon */}
                     <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
+                      className="w-5 h-5 relative z-10 group-hover/btn:rotate-12 transition-transform duration-300"
+                      fill="currentColor"
                       viewBox="0 0 24 24"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
+                      <path d="M8 5v14l11-7z"/>
                     </svg>
-                  </Link>
+                  </a>
 
-                  <span className="text-gray-400 text-lg">10 phần</span>
+                  <div className="flex items-center gap-2 text-purple-200 text-lg">
+                    <div className="w-2 h-2 bg-purple-300 rounded-full animate-ping"></div>
+                    <span>Live Game</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -221,5 +299,6 @@ export default function QuizSelection() {
         </div>
       </div>
     </div>
+    </>
   );
 }

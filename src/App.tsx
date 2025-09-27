@@ -34,7 +34,6 @@ function App() {
           </Route>
         </Routes>
       </Suspense>
-
       <FloatAIChat />
       <EasterEgg />
     </>
