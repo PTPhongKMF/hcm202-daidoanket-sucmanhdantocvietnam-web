@@ -14,6 +14,8 @@
 }
 
 @theme {
+  --darkMode: false;
+
   --font-title: "UTM-Gunslinger", system-ui;
   --font-heading: "EB Garamond", system-ui;
 
