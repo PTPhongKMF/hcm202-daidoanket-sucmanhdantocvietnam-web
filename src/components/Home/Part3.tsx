@@ -329,7 +329,10 @@ const AnimatedTabs = ({ cardData }: { cardData: CardData[] }) => {
                 >
                   <strong className="text-yellow-300">Ý nghĩa hôm nay:</strong>
                   <p className="text-gray-200 mt-2">
-                    Trong xã hội hiện đại, khi mâu thuẫn lợi ích xuất hiện, việc đặt lợi ích chung lên cao nhất và có thái độ khoan dung vẫn là chìa khóa để giữ gìn sự ổn định và đoàn kết.
+                    {activeCard.id === "a" && "Lợi ích chung là mẫu số chung giúp hoà giải khác biệt và tạo nền tảng hợp tác. Khi đặt lợi ích tối cao của dân tộc và lợi ích căn bản của nhân dân lao động lên trên, mọi chính sách, quyết sách và hành động đều dễ được đồng thuận hơn; từ đó giảm xung đột lợi ích, gia tăng tính bền vững trong liên kết xã hội và thúc đẩy phát triển toàn diện."}
+                    {activeCard.id === "b" && "Truyền thống lịch sử là nguồn sức mạnh tinh thần, kết nối thế hệ này với thế hệ khác. Việc khơi dậy và gìn giữ giá trị yêu nước, tinh thần nhân nghĩa và truyền thống đoàn kết không chỉ nuôi dưỡng bản sắc dân tộc mà còn tạo động lực tinh thần để cộng đồng cùng vượt khó, chung tay đối mặt thử thách thời đại."}
+                    {activeCard.id === "c" && "Khoan dung là điều kiện then chốt để hoá giải mâu thuẫn xã hội và mở cửa cho quá trình hòa giải, tái hoà nhập. Thái độ bao dung giúp xây dựng môi trường chính trị – xã hội ổn định, thu hút sự trở về của những người lầm lạc hay bất đồng trước đây, đồng thời khuyến khích đối thoại, chia sẻ thay vì đối đầu."}
+                    {activeCard.id === "d" && "Tin tưởng vào năng lực và phẩm giá của nhân dân là cốt lõi để thúc đẩy sự tham gia rộng rãi và sáng tạo của xã hội. Khi Đảng và Nhà nước dựa vào nhân dân, lắng nghe và trao quyền cho cộng đồng, chính sách sẽ thực tế, hiệu quả hơn; niềm tin ấy cũng tạo nên sức mạnh nội tại để quốc gia tự cường và phát triển bền vững."}
                   </p>
                 </motion.div>
 

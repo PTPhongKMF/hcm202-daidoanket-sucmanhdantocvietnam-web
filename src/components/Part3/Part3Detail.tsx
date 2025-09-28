@@ -85,7 +85,7 @@ const carouselData: CarouselItem[] = [
       "Phải lấy lợi ích chung làm điểm quy tụ, đồng thời tôn trọng những lợi ích khác biệt chính đáng. Phải xử lý tốt quan hệ lợi ích, tìm ra điểm tương đồng và lợi ích chung. Lấy lợi ích tối cao của dân tộc và lợi ích căn bản của nhân dân lao động làm mục tiêu phấn đấu.",
     color: "#dc2626",
     audio: {
-      src: "/audios/P1.mp3",
+      src: "/audios/a.mp3",
       transcript:
         "Phải lấy lợi ích chung làm điểm quy tụ, đồng thời tôn trọng những lợi ích khác biệt chính đáng. Phải xử lý tốt quan hệ lợi ích, tìm ra điểm tương đồng và lợi ích chung.",
       duration: 4282,
@@ -139,7 +139,7 @@ const carouselData: CarouselItem[] = [
       "Yêu nước – nhân nghĩa – đoàn kết là cội nguồn sức mạnh giúp dân tộc vượt qua thiên tai, địch họa và giành thắng lợi.",
     color: "#d97706",
     audio: {
-      src: "/audios/P2.mp3",
+      src: "/audios/b.mp3",
       transcript:
         "Yêu nước – nhân nghĩa – đoàn kết là cội nguồn sức mạnh giúp dân tộc vượt qua thiên tai, địch họa và giành thắng lợi.",
       duration: 755,
@@ -184,7 +184,7 @@ const carouselData: CarouselItem[] = [
       'Hồ Chí Minh dạy: "Năm ngón tay có ngón dài ngón ngắn, nhưng cả năm ngón đều thuộc về một bàn tay. Trong mấy triệu người cũng có người thế này thế khác, nhưng thế này hay thế khác đều dòng dõi tổ tiên ta. Vậy nên phải khoan hồng, đại độ... Có như thế mới thành đoàn kết, có đại đoàn kết thì tương lai chắc chắn sẽ vẻ vang."',
     color: "#059669",
     audio: {
-      src: "/audios/P3.mp3",
+      src: "/audios/c.mp3",
       transcript:
         "Năm ngón tay có ngón dài ngón ngắn, nhưng cả năm ngón đều thuộc về một bàn tay. Trong mấy triệu người cũng có người thế này thế khác, nhưng thế này hay thế khác đều dòng dõi tổ tiên ta.",
       duration: 1086,
@@ -229,7 +229,7 @@ const carouselData: CarouselItem[] = [
       "Nhân dân là nền tảng, gốc rễ, chủ thể của mặt trận. Là chỗ dựa vững chắc của Đảng, là cội nguồn sức mạnh vô tận quyết định thắng lợi của cách mạng.",
     color: "#2563eb",
     audio: {
-      src: "/audios/P4.mp3",
+      src: "/audios/d.mp3",
       transcript:
         "Nhân dân là nền tảng, gốc rễ, chủ thể của mặt trận. Là chỗ dựa vững chắc của Đảng, là cội nguồn sức mạnh vô tận quyết định thắng lợi của cách mạng.",
       duration: 835,
@@ -699,7 +699,6 @@ function AudioPlayer({
       {/* Header with title and status */}
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <h4 className="font-semibold text-gray-900">P{item.index}</h4>
           {isActive && isPlaying && (
             <div className="flex items-center gap-1">
               <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
@@ -1428,7 +1427,7 @@ export default function Part3Detail() {
       {/* Header - now scrolls with content */}
       <header
         className="relative z-10 h-80 md:h-96 bg-cover bg-center flex items-center justify-center"
-        style={{ backgroundImage: 'url("/imgs/Part3/Hồ Chí MInh.jpg")' }}
+        style={{ backgroundImage: 'url("/imgs/Part3/Bác Hồ.jpg")' }}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent" />
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
