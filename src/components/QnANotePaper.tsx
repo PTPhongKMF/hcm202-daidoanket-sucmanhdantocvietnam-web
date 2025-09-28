@@ -35,7 +35,7 @@ export default function QnANotePaper({ name, content, color, isComplete, id, uid
   const completeNote = useMutation({
     mutationFn: async () => {
       if (!canComplete) {
-        alert("You don't have permission to complete this note");
+        alert("Bạn không có quyền đánh dấu hoàn thành câu hỏi này!");
         return;
       }
       
@@ -53,14 +53,19 @@ export default function QnANotePaper({ name, content, color, isComplete, id, uid
     },
     onError: (err) => {
       console.error("Complete note error:", err);
-      alert("Failed to complete note. See console for details.");
+      alert("Không thể đánh dấu hoàn thành câu hỏi. Vui lòng kiểm tra console để biết thêm chi tiết.");
     }
   });
 
   const deleteNote = useMutation({
     mutationFn: async () => {
       if (!canDelete) {
-        alert("You don't have permission to delete this note");
+        alert("Bạn không có quyền xóa câu hỏi này!");
+        return;
+      }
+
+      const confirmDelete = confirm("Bạn có chắc chắn muốn xóa câu hỏi này không?");
+      if (!confirmDelete) {
         return;
       }
       
@@ -72,7 +77,7 @@ export default function QnANotePaper({ name, content, color, isComplete, id, uid
     },
     onError: (err) => {
       console.error("Delete note error:", err);
-      alert("Failed to delete note. See console for details.");
+        alert("Không thể xóa câu hỏi. Vui lòng kiểm tra console để biết thêm chi tiết.");
     }
   });
 
