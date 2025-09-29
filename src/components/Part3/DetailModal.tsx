@@ -226,7 +226,18 @@ export function DetailModal({
                       <ul className="space-y-2">
                         {item.references.map((ref, index) => (
                           <li key={index} className="text-gray-700 text-sm">
-                            {ref}
+                            {typeof ref === 'string' ? (
+                              ref
+                            ) : (
+                              <a
+                                href={ref.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-600 hover:text-blue-800 underline"
+                              >
+                                {ref.title}
+                              </a>
+                            )}
                           </li>
                         ))}
                       </ul>

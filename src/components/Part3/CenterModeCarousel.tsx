@@ -52,7 +52,10 @@ const carouselData: CarouselItem[] = [
       },
     ],
     references: [
-      "Toàn tập Hồ Chí Minh — tập 5, trang 123",
+      {
+        title: "Toàn tập Hồ Chí Minh — tập 5, trang 123",
+        url: "https://moet.gov.vn/van-ban/vbdh/Pages/chi-tiet-van-ban.aspx?ItemID=2729#divShowDialogDownload"
+      },
       "Tư tưởng Hồ Chí Minh về đại đoàn kết dân tộc",
     ],
     footerNote: "Tư tưởng Hồ Chí Minh về đại đoàn kết dân tộc",
@@ -99,7 +102,12 @@ const carouselData: CarouselItem[] = [
         external: false,
       },
     ],
-    references: ["Toàn tập Hồ Chí Minh — tập 6, trang 89"],
+    references: [
+      {
+        title: "Toàn tập Hồ Chí Minh — tập 6, trang 89",
+        url: "https://moet.gov.vn/van-ban/vbdh/Pages/chi-tiet-van-ban.aspx?ItemID=2729#divShowDialogDownload"
+      }
+    ],
     footerNote: "Truyền thống dân tộc Việt Nam",
   },
   {
@@ -144,7 +152,12 @@ const carouselData: CarouselItem[] = [
         external: false,
       },
     ],
-    references: ["Toàn tập Hồ Chí Minh — tập 7, trang 156"],
+    references: [
+      {
+        title: "Toàn tập Hồ Chí Minh — tập 7, trang 156",
+        url: "https://moet.gov.vn/van-ban/vbdh/Pages/chi-tiet-van-ban.aspx?ItemID=2729#divShowDialogDownload"
+      }
+    ],
     footerNote: "Tư tưởng Hồ Chí Minh về khoan dung, độ lượng",
   },
   {
@@ -189,7 +202,12 @@ const carouselData: CarouselItem[] = [
         external: false,
       },
     ],
-    references: ["Toàn tập Hồ Chí Minh — tập 8, trang 234"],
+    references: [
+      {
+        title: "Toàn tập Hồ Chí Minh — tập 8, trang 234",
+        url: "https://moet.gov.vn/van-ban/vbdh/Pages/chi-tiet-van-ban.aspx?ItemID=2729#divShowDialogDownload"
+      }
+    ],
     footerNote: "Tư tưởng Hồ Chí Minh về nhân dân",
   },
 ];

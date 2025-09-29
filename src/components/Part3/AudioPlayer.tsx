@@ -36,7 +36,7 @@ export type CarouselItem = {
     link?: string | null;
     external?: boolean;
   }>;
-  references?: string[];
+  references?: (string | { title: string; url: string })[];
   footerNote?: string;
 };
 
