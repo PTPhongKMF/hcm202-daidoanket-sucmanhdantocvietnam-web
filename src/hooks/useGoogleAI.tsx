@@ -74,9 +74,10 @@ export function useAiChatMutation() {
       }])
     },
     onError: (error, chatData) => {
+      console.log("Error:" + error.message)
       chatData.setChatHistory(prev => [...prev, {
         isBot: true,
-        msg: error.message,
+        msg: "Lỗi mạng! (mạng fpt chán lắm)",
         sentAt: new Date()
       }])
     }

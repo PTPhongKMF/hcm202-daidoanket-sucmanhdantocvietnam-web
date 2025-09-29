@@ -53,7 +53,7 @@ export default function Footer() {
       </div>
 
       <p className="flex items-center gap-1">
-        {/* Bấm giữ 
+        Bấm giữ 
         <kbd className="px-1 py-[0.1rem] text-sm text-gray-700 font-semibold bg-gray-100 border border-gray-200 rounded-lg shadow-sm">Shift</kbd>
         + lần lượt
         {['P', 'H', 'O', 'N', 'G'].map((key, i) => (
@@ -61,7 +61,7 @@ export default function Footer() {
             {key}
           </kbd>
         ))}
-        để xem easter egg */}
+        để xem easter egg
       </p>
     </footer>
   );
