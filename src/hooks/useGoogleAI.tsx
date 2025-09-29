@@ -1,6 +1,6 @@
 import { GoogleGenAI, type GenerateContentResponse } from "@google/genai";
 import { useMutation } from "@tanstack/react-query";
-import ky from "ky";
+// import ky from "ky";
 import type { ChatMessage } from "../components/FloatAIChat";
 
 interface chatData {
@@ -32,6 +32,7 @@ Nhiệm vụ của bạn:
 `;
 
 // hard-coded :(((
+// fpt wifi tệ vcl, không chạy nổi cloudfare functions để mà giấu api key, chán
 const googleGemini = new GoogleGenAI({apiKey: "AIzaSyCABLZZ3MtFdDjZX4eNURBB7GNlxSV9WCo"});
 
 export function useAiChatMutation() {
@@ -43,6 +44,7 @@ export function useAiChatMutation() {
       { isBot: false, msg: chatData.userChat, sentAt: new Date() }
       ])
 
+      // nếu wifi mạnh hơn thì nên dùng cloudfare function như này
       // return await ky.post("/api/gemini", {
       //   json: chatData
       // }).json<GenerateContentResponse>()
