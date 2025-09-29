@@ -226,7 +226,18 @@ export function DetailModal({
                       <ul className="space-y-2">
                         {item.references.map((ref, index) => (
                           <li key={index} className="text-gray-700 text-sm">
-                            {ref}
+                            {typeof ref === 'string' ? (
+                              ref
+                            ) : (
+                              <a
+                                href={ref.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-600 hover:text-blue-800 underline"
+                              >
+                                {ref.title}
+                              </a>
+                            )}
                           </li>
                         ))}
                       </ul>
@@ -257,7 +268,7 @@ export function DetailModal({
                             onClick={() => setIsLightboxOpen(true)}
                             className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors duration-200"
                           >
-                            Xem ảnh lớn
+                            Xem ảnh
                           </button>
                         </div>
                       </div>

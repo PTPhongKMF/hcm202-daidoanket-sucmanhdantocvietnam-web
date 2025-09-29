@@ -52,7 +52,10 @@ const carouselData: CarouselItem[] = [
       },
     ],
     references: [
-      "Toàn tập Hồ Chí Minh — tập 5, trang 123",
+      {
+        title: "Toàn tập Hồ Chí Minh — tập 5, trang 123",
+        url: "https://moet.gov.vn/van-ban/vbdh/Pages/chi-tiet-van-ban.aspx?ItemID=2729#divShowDialogDownload"
+      },
       "Tư tưởng Hồ Chí Minh về đại đoàn kết dân tộc",
     ],
     footerNote: "Tư tưởng Hồ Chí Minh về đại đoàn kết dân tộc",
@@ -99,7 +102,12 @@ const carouselData: CarouselItem[] = [
         external: false,
       },
     ],
-    references: ["Toàn tập Hồ Chí Minh — tập 6, trang 89"],
+    references: [
+      {
+        title: "Toàn tập Hồ Chí Minh — tập 6, trang 89",
+        url: "https://moet.gov.vn/van-ban/vbdh/Pages/chi-tiet-van-ban.aspx?ItemID=2729#divShowDialogDownload"
+      }
+    ],
     footerNote: "Truyền thống dân tộc Việt Nam",
   },
   {
@@ -144,7 +152,12 @@ const carouselData: CarouselItem[] = [
         external: false,
       },
     ],
-    references: ["Toàn tập Hồ Chí Minh — tập 7, trang 156"],
+    references: [
+      {
+        title: "Toàn tập Hồ Chí Minh — tập 7, trang 156",
+        url: "https://moet.gov.vn/van-ban/vbdh/Pages/chi-tiet-van-ban.aspx?ItemID=2729#divShowDialogDownload"
+      }
+    ],
     footerNote: "Tư tưởng Hồ Chí Minh về khoan dung, độ lượng",
   },
   {
@@ -189,7 +202,12 @@ const carouselData: CarouselItem[] = [
         external: false,
       },
     ],
-    references: ["Toàn tập Hồ Chí Minh — tập 8, trang 234"],
+    references: [
+      {
+        title: "Toàn tập Hồ Chí Minh — tập 8, trang 234",
+        url: "https://moet.gov.vn/van-ban/vbdh/Pages/chi-tiet-van-ban.aspx?ItemID=2729#divShowDialogDownload"
+      }
+    ],
     footerNote: "Tư tưởng Hồ Chí Minh về nhân dân",
   },
 ];
@@ -205,6 +223,8 @@ export function CenterModeCarousel({
   const [isHovered, setIsHovered] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
   const intervalRef = useRef<number | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
 
@@ -214,9 +234,19 @@ export function CenterModeCarousel({
   const startAutoplay = useCallback(() => {
     if (intervalRef.current) clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % totalItems);
+      if (!isTransitioning) {
+        setIsTransitioning(true);
+        setSlideDirection('left');
+        setTimeout(() => {
+          setCurrentIndex((prev) => (prev + 1) % totalItems);
+          setTimeout(() => {
+            setIsTransitioning(false);
+            setSlideDirection(null);
+          }, 100);
+        }, 100);
+      }
     }, 5000);
-  }, [totalItems]);
+  }, [totalItems, isTransitioning]);
 
   const stopAutoplay = useCallback(() => {
     if (intervalRef.current) {
@@ -235,13 +265,31 @@ export function CenterModeCarousel({
     return () => stopAutoplay();
   }, [isPlaying, isHovered, startAutoplay, stopAutoplay]);
 
-  // Navigation functions
+  // Navigation functions with smooth animations
   const goToPrevious = () => {
-    setCurrentIndex((prev) => (prev - 1 + totalItems) % totalItems);
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setSlideDirection('right');
+    setTimeout(() => {
+      setCurrentIndex((prev) => (prev - 1 + totalItems) % totalItems);
+      setTimeout(() => {
+        setIsTransitioning(false);
+        setSlideDirection(null);
+      }, 100);
+    }, 100);
   };
 
   const goToNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % totalItems);
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setSlideDirection('left');
+    setTimeout(() => {
+      setCurrentIndex((prev) => (prev + 1) % totalItems);
+      setTimeout(() => {
+        setIsTransitioning(false);
+        setSlideDirection(null);
+      }, 100);
+    }, 100);
   };
 
   const togglePlayPause = () => {
@@ -259,7 +307,7 @@ export function CenterModeCarousel({
   };
 
   const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
+    if (!touchStart || !touchEnd || isTransitioning) return;
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > 50;
     const isRightSwipe = distance < -50;
@@ -274,6 +322,7 @@ export function CenterModeCarousel({
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (isTransitioning) return;
       if (e.key === "ArrowLeft") {
         goToPrevious();
       } else if (e.key === "ArrowRight") {
@@ -286,7 +335,7 @@ export function CenterModeCarousel({
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [isTransitioning]);
 
   // Get visible items (center + adjacent)
   const getVisibleItems = () => {
@@ -400,19 +449,46 @@ export function CenterModeCarousel({
           {visibleItems.map((item, index) => {
             const isCenter = item.isCenter;
             const isLeft = item.position === -1;
+            const isRight = item.position === 1;
 
             return (
               <div
                 key={`${item.id}-${index}`}
-                className={`relative transition-all duration-500 ease-[cubic-bezier(0.22,0.9,0.36,1)] ${
+                className={`relative transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] transform ${
                   isCenter
                     ? "w-full max-w-[320px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[760px] h-[400px] sm:h-[450px] md:h-[480px] z-30 scale-100"
                     : isLeft
-                    ? "hidden md:block w-[180px] lg:w-[240px] h-[270px] lg:h-[288px] z-20 scale-90 -translate-x-4 lg:-translate-x-8 opacity-60"
-                    : "hidden md:block w-[180px] lg:w-[240px] h-[270px] lg:h-[288px] z-20 scale-90 translate-x-4 lg:translate-x-8 opacity-60"
+                    ? "hidden md:block w-[180px] lg:w-[240px] h-[270px] lg:h-[288px] z-20 scale-90 opacity-60"
+                    : isRight
+                    ? "hidden md:block w-[180px] lg:w-[240px] h-[270px] lg:h-[288px] z-20 scale-90 opacity-60"
+                    : "hidden"
+                } ${
+                  isTransitioning && isCenter
+                    ? slideDirection === 'left'
+                      ? 'translate-x-8 opacity-70'
+                      : slideDirection === 'right'
+                      ? '-translate-x-8 opacity-70'
+                      : ''
+                    : ''
                 }`}
                 role="group"
                 aria-label={`${item.badge}: ${item.title}`}
+                style={{
+                  transform: isCenter 
+                    ? isTransitioning
+                      ? slideDirection === 'left'
+                        ? 'translateX(32px) scale(1)'
+                        : slideDirection === 'right'
+                        ? 'translateX(-32px) scale(1)'
+                        : 'translateX(0) scale(1)'
+                      : 'translateX(0) scale(1)'
+                    : isLeft 
+                    ? 'translateX(-64px) scale(0.9)' 
+                    : isRight 
+                    ? 'translateX(64px) scale(0.9)' 
+                    : 'translateX(0) scale(0.9)',
+                  transition: 'all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                }}
               >
                 <div className="relative w-full h-full bg-white rounded-2xl shadow-xl overflow-hidden cursor-pointer hover:shadow-2xl transition-shadow duration-300">
                   {/* Hero Image */}
