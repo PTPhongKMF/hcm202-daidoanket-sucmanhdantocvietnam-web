@@ -5,6 +5,7 @@ import Loading from "./pages/Loading";
 import EasterEgg from "./components/EasterEgg/EasterEgg";
 import { QuizLoading, Part3Loading } from "./components/Loading/SpecializedLoading";
 import { QuizWrapper, Part3DetailWrapper } from "./components/Loading/RouteWrappers";
+import { useAlertOnMobile } from "./hooks/useMobileCheck";
 
 const Layout = lazy(() => import("./components/Layout"));
 const Home = lazy(() => import("./pages/Home"));
@@ -17,6 +18,8 @@ const FlashCardStudySimple = lazy(() => import("./pages/FlashCardStudySimple"));
 
 
 function App() {
+  useAlertOnMobile();
+
   return (
     <>
       <Routes>
