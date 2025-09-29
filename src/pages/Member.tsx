@@ -5,31 +5,31 @@ import PinNotePaper from "../components/PinNotePaper";
 const members = [
   {
     name: "Phạm Thanh Phong",
-    works: "Dev Web, Phản biện, Thiết kế web"
+    works: "Dev Web, Thuyết trình, Phản biện, Thiết kế web"
   },
   {
     name: "Nguyễn Vương Văn Khiêm",
-    works: "Dev Web, Phản biện, Thiết kế web"
+    works: "Dev Web, Thuyết trình, Phản biện, Thiết kế web"
   },
   {
     name: "Hoàng Lê Nhật Minh",
-    works: "Dev Web, Phản biện, Thiết kế web"
+    works: "Dev Web, Thuyết trình, Phản biện, Thiết kế web"
   },
   {
     name: "Tấn Đạt - TRƯỞNG NHÓM",
-    works: "Dev Web, Nghiên cứu giáo trình & rút gọn ý chính, Thuyết trình, điều phối & tổng hợp"
+    works: "Dev Web, Nghiên cứu giáo trình & rút gọn ý chính, Thuyết trình, Phản biện, điều phối & tổng hợp"
   },
   {
     name: "Trần Nhật Hoàng",
-    works: "Dev Web, Phản biện, Thiết kế web"
+    works: "Dev Web, Thuyết trình, Phản biện, Thiết kế web"
   },
   {
     name: "Ánh Minh",
-    works: "Nghiên cứu giáo trình & rút gọn ý chính, Thuyết trình, Soạn nội dung"
+    works: "Nghiên cứu giáo trình & rút gọn ý chính, Thuyết trình, Phản biện, Soạn nội dung"
   },
   {
     name: "Yến Vy",
-    works: "Nghiên cứu giáo trình & rút gọn ý chính, Thuyết trình, Soạn nội dung"
+    works: "Nghiên cứu giáo trình & rút gọn ý chính, Thuyết trình, Phản biện, Soạn nội dung"
   }
 ];
 
