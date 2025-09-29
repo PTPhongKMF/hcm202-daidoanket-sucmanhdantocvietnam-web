@@ -257,7 +257,7 @@ export function DetailModal({
                             onClick={() => setIsLightboxOpen(true)}
                             className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors duration-200"
                           >
-                            Xem ảnh lớn
+                            Xem ảnh
                           </button>
                         </div>
                       </div>
